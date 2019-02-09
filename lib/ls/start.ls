@@ -9,6 +9,9 @@ require! {
   compression
 }
 
+# Are we in prod or dev
+prod = if process.env.NODE_ENV is \production then yes else no
+
 /* ## lost
   Router for anything we don't have an end point for.
   @param req {object} Node/Express request object
