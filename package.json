@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-ex",
-  "version": "0.0.1",
-  "description": "Node.js sample app for OpenShift 3",
+  "name": "ar-pathfinder",
+  "version": "0.1.0",
+  "description": "Proof of concept Accounts Receiveable application for the Enviroment Assessment",
   "main": "index.js",
   "dependencies": {
     "chai": "^3.5.0",
@@ -26,12 +26,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/sclorg/nodejs-ex.git"
+    "url": "https://github.com/popkinj/ar-pathfinder"
   },
-  "author": "Steve Speicher <sspeiche@gmail.com>",
-  "license": "CC-BY-1.0",
-  "bugs": {
-    "url": "http://github.com/sclorg/nodejs-ex/issues"
-  },
-  "homepage": "http://github.com/sclorg/nodejs-ex"
+  "author": "Jamie Popkin <popkinj@littleearth.ca> (https://littleearth.ca)",
+  "license": "UNLICENSED",
+  "homepage": "http://ar-pathfinder2-bbgloi-dev.pathfinder.gov.bc.ca"
 }
