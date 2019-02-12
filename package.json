@@ -30,5 +30,7 @@
   },
   "author": "Jamie Popkin <popkinj@littleearth.ca> (https://littleearth.ca)",
   "license": "UNLICENSED",
-  "homepage": "http://ar-pathfinder2-bbgloi-dev.pathfinder.gov.bc.ca"
+  "homepage": "http://ar-pathfinder2-bbgloi-dev.pathfinder.gov.bc.ca",
+  "vue": "frontend/vue.config.js",
+  "babel": "frontend/babel.config.js"
 }
