@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "node_modules/supervisor/lib/cli-wrapper.js -x node_modules/livescript/bin/lsc -w backend/ls/server.ls -e ls backend/ls/server.ls & vue-cli-service serve",
-    "pack":"vue-cli-service serve",
+    "pack": "vue-cli-service serve",
     "start": "node index.js",
     "build": "vue-cli-service build"
   },
@@ -48,6 +48,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "supervisor": "^0.12.0",
+    "vue-cli-plugin-source-dir": "^0.1.0",
     "vue-template-compiler": "^2.6.6"
   },
   "eslintConfig": {
@@ -78,10 +79,13 @@
   ],
   "vue": {
     "outputDir": "frontend/dist",
+    "pluginOptions": {
+      "sourceDir": "frontend/src"
+    },
     "configureWebpack": {
       "devServer": {
-        "inline":true,
-        "port":8081
+        "inline": true,
+        "port": 8081
       }
     }
   },
@@ -90,5 +94,4 @@
       "@vue/app"
     ]
   }
-
 }
