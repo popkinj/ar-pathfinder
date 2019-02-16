@@ -42,7 +42,7 @@ app = express!
   .use helmet!
   .use morgan if prod then 'combined' else 'dev' # verbose logs in dev
   .use compression!
-  .use express.static 'dist' # Only used in Prod
+  .use express.static 'frontend/dist' # Only used in Prod
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
   .get '/test-html', testHtml
