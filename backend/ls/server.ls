@@ -28,8 +28,8 @@ app = express!
   .use helmet!
   .use morgan logger
   .use compression!
-  .use express.static 'views'
+  .use express.static 'dist'
   .set 'view engine', 'pug'
-  .set 'views', 'lib/pug'
+  .set 'views', 'backend/lib/pug'
   .get '*', lost
   .listen 8080
