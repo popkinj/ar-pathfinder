@@ -1,7 +1,7 @@
 {
   "name": "ar-pathfinder",
   "version": "0.1.0",
-  "description": "Proof of concept Accounts Receiveable application for the Enviroment Assessment",
+  "description": "Proof of concept Accounts Receiveable application for the Environmental Assessment Office",
   "main": "index.js",
   "dependencies": {
     "compression": "^1.7.3",
@@ -23,6 +23,7 @@
   },
   "scripts": {
     "dev": "node_modules/supervisor/lib/cli-wrapper.js -x node_modules/livescript/bin/lsc -w backend/ls/server.ls -e ls backend/ls/server.ls & vue-cli-service serve",
+    "pack":"vue-cli-service serve",
     "start": "node index.js",
     "build": "vue-cli-service build"
   },
@@ -76,6 +77,7 @@
     "not ie <= 8"
   ],
   "vue": {
+    "outputDir": "frontend/dist",
     "configureWebpack": {
       "devServer": {
         "inline":true,
