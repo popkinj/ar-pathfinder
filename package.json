@@ -82,5 +82,11 @@
         "port":8081
       }
     }
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
   }
+
 }
