@@ -23,7 +23,7 @@
     "npm": "*"
   },
   "scripts": {
-    "dev": "node index.js & vue-cli-service serve",
+    "dev": "node_modules/supervisor/lib/cli-wrapper.js -x node_modules/livescript/bin/lsc -w backend/ls/server.ls -e ls backend/ls/server.ls & vue-cli-service serve",
     "start": "node index.js",
     "build": "vue-cli-service build"
   },
@@ -35,18 +35,19 @@
   "license": "UNLICENSED",
   "homepage": "http://ar-pathfinder2-bbgloi-dev.pathfinder.gov.bc.ca",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
     "babel-eslint": "^10.0.1",
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
     "eslint": "^5.13.0",
     "eslint-plugin-vue": "^5.1.0",
     "mocha": "^2.4.5",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "supervisor": "^0.12.0",
     "vue-template-compiler": "^2.6.6"
   },
   "eslintConfig": {
@@ -75,5 +76,4 @@
     "last 2 versions",
     "not ie <= 8"
   ]
-
 }
