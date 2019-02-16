@@ -29,13 +29,10 @@ lost = (req,res) ->
 testHtml = (req,res) -> res.render 'test', req.params <<< req.query
 
 
-# More logs if in dev
-logger = if prod then 'combined' else 'dev'
-
 # Configure and start server
 app = express!
   .use helmet!
-  .use morgan logger
+  .use morgan if prod then 'combined' else 'dev' # verbose logs in dev
   .use compression!
   .use express.static 'dist' # Only used in Prod
   .set 'view engine', 'pug'
