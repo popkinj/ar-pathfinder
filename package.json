@@ -23,7 +23,8 @@
     "npm": "*"
   },
   "scripts": {
-    "start": "node index.js & vue-cli-service serve",
+    "dev": "node index.js & vue-cli-service serve",
+    "start": "node index.js",
     "build": "vue-cli-service build"
   },
   "repository": {
