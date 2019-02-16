@@ -4,15 +4,12 @@
   "description": "Proof of concept Accounts Receiveable application for the Enviroment Assessment",
   "main": "index.js",
   "dependencies": {
-    "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
     "compression": "^1.7.3",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "helmet": "^3.15.0",
     "livescript": "^1.6.0",
     "material-icons": "^0.3.0",
-    "mocha": "^2.4.5",
     "morgan": "^1.7.0",
     "object-assign": "4.1.0",
     "pug": "^2.0.3",
@@ -28,8 +25,7 @@
   "scripts": {
     "start": "node index.js",
     "vue": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js"
+    "build": "vue-cli-service build"
   },
   "repository": {
     "type": "git",
@@ -39,12 +35,15 @@
   "license": "UNLICENSED",
   "homepage": "http://ar-pathfinder2-bbgloi-dev.pathfinder.gov.bc.ca",
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.13.0",
     "eslint-plugin-vue": "^5.1.0",
+    "mocha": "^2.4.5",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
