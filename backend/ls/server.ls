@@ -28,6 +28,14 @@ lost = (req,res) ->
  */
 testHtml = (req,res) -> res.render 'test', req.params <<< req.query
 
+/* ## testData
+  Serving test data
+  Pass in the express parameters and the url query stuff
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+testData = (req,res) -> res.json testing:true
+
 
 # Configure and start server
 app = express!
@@ -38,5 +46,6 @@ app = express!
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
   .get '/test-html', testHtml
+  .get '/test-data', testData
   .get '*', lost
   .listen 8080
