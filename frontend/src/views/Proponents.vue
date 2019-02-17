@@ -18,7 +18,7 @@
         th
           vs-input(
             class="inputx"
-            label-placeholder="Name"
+            label-placeholder="Enter a Name"
             v-model="value1"
           )
         th
