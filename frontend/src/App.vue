@@ -14,29 +14,29 @@
           h4 Environmental Assessment
 
         vs-sidebar-item(index="1" icon="build")
-          router-link(to="/") Settings
+          router-link(to="/") Home
 
         vs-sidebar-item(index="2" icon="get_app")
           router-link(to="/proponents") Proponents/Customers
 
         //- Place holders
-        vs-sidebar-item(index="4" icon="get_app")
+        vs-sidebar-item(index="3" icon="get_app")
           | &nbsp; Accounts Receivable
-        vs-sidebar-item(index="5" icon="get_app")
+        vs-sidebar-item(index="4" icon="get_app")
           | &nbsp; Invoices
-        vs-sidebar-item(index="6" icon="get_app")
+        vs-sidebar-item(index="5" icon="get_app")
           | &nbsp; Customer Accounts
-        vs-sidebar-item(index="7" icon="get_app")
+        vs-sidebar-item(index="6" icon="get_app")
           | &nbsp; Account Sites
-        vs-sidebar-item(index="8" icon="get_app")
+        vs-sidebar-item(index="7" icon="get_app")
           | &nbsp; Site Contacts
-        vs-sidebar-item(index="9" icon="get_app")
+        vs-sidebar-item(index="8" icon="get_app")
           | &nbsp; Deposits
-        vs-sidebar-item(index="10" icon="get_app")
+        vs-sidebar-item(index="9" icon="get_app")
           | &nbsp; Credit Memos
+        vs-sidebar-item(index="10" icon="get_app")
+          | &nbsp; Receipts
         vs-sidebar-item(index="11" icon="get_app")
-          | &nbsp; Receipts 
-        vs-sidebar-item(index="12" icon="get_app")
           | &nbsp; Adjustments 
     .page
       keep-alive

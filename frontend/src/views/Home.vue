@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Maybe have some global settings here??"/>
+    <HelloWorld msg="Dumping ground for API Testing"/>
   </div>
 </template>
 
