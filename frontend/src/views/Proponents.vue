@@ -1,5 +1,6 @@
 <template lang="pug">
   div.proponents
+    h2 Proponents
     table
       tr
         th Fetch all Proponents

@@ -25,6 +25,12 @@ var router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import('./views/Proponents.vue'),
       meta: {title: 'AR Proponents'}
+    },
+    {
+      path: '/accounts-receivable',
+      name: 'accounts receivable',
+      component: () => import('./views/AccountsReceivable.vue'),
+      meta: {title: 'AR Accounts Receivable'}
     }
  ]
 })

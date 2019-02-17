@@ -19,9 +19,9 @@
         vs-sidebar-item(index="2" icon="get_app")
           router-link(to="/proponents") Proponents/Customers
 
-        //- Place holders
         vs-sidebar-item(index="3" icon="get_app")
-          | &nbsp; Accounts Receivable
+          router-link(to="accounts-receivable") Accounts Receivable
+
         vs-sidebar-item(index="4" icon="get_app")
           | &nbsp; Invoices
         vs-sidebar-item(index="5" icon="get_app")
