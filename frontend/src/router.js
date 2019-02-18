@@ -31,7 +31,59 @@ var router = new Router({
       name: 'accounts receivable',
       component: () => import('./views/AccountsReceivable.vue'),
       meta: {title: 'AR Accounts Receivable'}
+    },
+    {
+      path: '/invoices',
+      name: 'invoices',
+      component: () => import('./views/Invoices.vue'),
+      meta: {title: 'AR Invoices'}
+    },
+    {
+      path: '/customer-accounts',
+      name: 'customer accounts',
+      component: () => import('./views/CustomerAccounts.vue'),
+      meta: {title: 'AR Customer Accounts'}
+    },
+    {
+      path: '/account-sites',
+      name: 'account sites',
+      component: () => import('./views/AccountSites.vue'),
+      meta: {title: 'AR Account Sites'}
+    },
+    {
+      path: '/site-contacts',
+      name: 'site contacts',
+      component: () => import('./views/SiteContacts.vue'),
+      meta: {title: 'AR Site Contacts'}
+    },
+    {
+      path: '/deposits',
+      name: 'deposits',
+      component: () => import('./views/Deposits.vue'),
+      meta: {title: 'AR Deposits'}
+    },
+    {
+      path: '/credit-memos',
+      name: 'credit memos',
+      component: () => import('./views/CreditMemos.vue'),
+      meta: {title: 'AR Credit Memos'}
+    },
+    {
+      path: '/receipts',
+      name: 'receipts',
+      component: () => import('./views/Receipts.vue'),
+      meta: {title: 'AR Receipts'}
+    },
+    {
+      path: '/adjustments',
+      name: 'adjustments',
+      component: () => import('./views/Adjustments.vue'),
+      meta: {title: 'AR Adjustments'}
     }
+
+
+
+
  ]
 })
 
