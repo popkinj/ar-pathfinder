@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Dumping ground for API Testing"/>
+    <HelloWorld msg="API Testing Playground for Iterative Development"/>
   </div>
 </template>
 
