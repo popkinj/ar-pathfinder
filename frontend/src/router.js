@@ -104,9 +104,10 @@ router.beforeEach((to,from,next) => {
 });
 
 router.afterEach((to,from) => {
-  console.log(to);
-  console.log(document.getElementsByClassName("vs-sidebar--item page-" + to.name));
-  console.log(from);
+  if (!from.name) { // This is the first render
+    var item = document.querySelector("div.page-" + to.name);
+    item.classList.add('vs-sidebar-item-active');
+  }
 })
 
 export default router;
