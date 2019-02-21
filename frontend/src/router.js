@@ -46,13 +46,13 @@ var router = new Router({
     },
     {
       path: '/account-sites',
-      name: 'account sites',
+      name: 'account-sites',
       component: () => import('./views/AccountSites.vue'),
       meta: {title: 'AR Account Sites'}
     },
     {
       path: '/site-contacts',
-      name: 'site contacts',
+      name: 'site-contacts',
       component: () => import('./views/SiteContacts.vue'),
       meta: {title: 'AR Site Contacts'}
     },
@@ -64,7 +64,7 @@ var router = new Router({
     },
     {
       path: '/credit-memos',
-      name: 'credit memos',
+      name: 'credit-memos',
       component: () => import('./views/CreditMemos.vue'),
       meta: {title: 'AR Credit Memos'}
     },
@@ -93,7 +93,7 @@ router.beforeEach((to,from,next) => {
   // page change.. Make sure the button on entry is turned off
   if ( ++historyCount === 2) {
     var item = document.querySelector("div.page-" + from.name);
-    item.classList.remove('vs-sidebar-item-active');
+    // item.classList.remove('vs-sidebar-item-active');
   }
 
   next();
@@ -104,8 +104,11 @@ router.afterEach((to,from) => {
   // If this is the first render, highlight the current page
   // Oddly enough this isn't the default behaviour.
   if (!from.name) {
+    console.log('from',from);
+    console.log('to',to);
     var item = document.querySelector("div.page-" + to.name);
-    item.classList.add('vs-sidebar-item-active');
+    console.log('item',item)
+    // item.classList.add('vs-sidebar-item-active');
   }
 })
 

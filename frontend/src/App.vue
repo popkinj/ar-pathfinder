@@ -33,7 +33,7 @@
           router-link(to="site-contacts") Site Contacts
 
         vs-sidebar-item(index="8" icon="get_app" class="page-deposits")
-          router-link(to="deposites") Deposits
+          router-link(to="deposits") Deposits
 
         vs-sidebar-item(index="9" icon="get_app" class="page-credit-memos")
           router-link(to="credit-memos") Credit Memos
