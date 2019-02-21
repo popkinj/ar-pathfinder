@@ -80,10 +80,6 @@ var router = new Router({
       component: () => import('./views/Adjustments.vue'),
       meta: {title: 'AR Adjustments'}
     }
-
-
-
-
  ]
 })
 
@@ -93,6 +89,8 @@ var historyCount = 0;
 router.beforeEach((to,from,next) => {
   document.title = to.meta.title // Set the page title
 
+  // If this is the second render.. ie the first manual
+  // page change.. Make sure the button on entry is turned off
   if ( ++historyCount === 2) {
     var item = document.querySelector("div.page-" + from.name);
     item.classList.remove('vs-sidebar-item-active');
@@ -102,7 +100,10 @@ router.beforeEach((to,from,next) => {
 });
 
 router.afterEach((to,from) => {
-  if (!from.name) { // This is the first render
+
+  // If this is the first render, highlight the current page
+  // Oddly enough this isn't the default behaviour.
+  if (!from.name) {
     var item = document.querySelector("div.page-" + to.name);
     item.classList.add('vs-sidebar-item-active');
   }
