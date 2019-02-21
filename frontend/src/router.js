@@ -105,7 +105,7 @@ router.afterEach((to,from) => {
   // Oddly enough this isn't the default behaviour.
   if (!from.name) {
     var item = document.querySelector("div.page-" + to.name);
-    if (item) {
+    if (item) { // If at home this doesn't exist
       item.classList.add('vs-sidebar-item-active');
     }
   }
