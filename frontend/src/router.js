@@ -87,19 +87,17 @@ var router = new Router({
  ]
 })
 
+var historyCount = 0;
+
 /* For each change of the Vue router */
 router.beforeEach((to,from,next) => {
   document.title = to.meta.title // Set the page title
-  if (!from.name) { // This is the first render
-    // For some reasone the menu item does not get highlighted 
-    var item = document.getElementsByClassName("vs-sidebar--item page-" + to.name);
-    // var item = document.querySelector("div.page-" + to.name);
-    console.log(item);
 
-    // item.item(0).classList.add("active");
-    // console.log(item);
-    // console.log(to.name);
+  if ( ++historyCount === 2) {
+    var item = document.querySelector("div.page-" + from.name);
+    item.classList.remove('vs-sidebar-item-active');
   }
+
   next();
 });
 
