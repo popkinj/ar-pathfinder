@@ -93,7 +93,7 @@ router.beforeEach((to,from,next) => {
   // page change.. Make sure the button on entry is turned off
   if ( ++historyCount === 2) {
     var item = document.querySelector("div.page-" + from.name);
-    // item.classList.remove('vs-sidebar-item-active');
+    item.classList.remove('vs-sidebar-item-active');
   }
 
   next();
@@ -104,11 +104,10 @@ router.afterEach((to,from) => {
   // If this is the first render, highlight the current page
   // Oddly enough this isn't the default behaviour.
   if (!from.name) {
-    console.log('from',from);
-    console.log('to',to);
     var item = document.querySelector("div.page-" + to.name);
-    console.log('item',item)
-    // item.classList.add('vs-sidebar-item-active');
+    if (item) {
+      item.classList.add('vs-sidebar-item-active');
+    }
   }
 })
 
