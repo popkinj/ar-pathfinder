@@ -90,8 +90,14 @@
       },
       "module": {
         "rules": [
-          {"test": "/.vue$/", "loader": "vue-livescript-loader"},
-          {"test": "/.ls$/", "loader": "vue-livescript-loader"}
+          {
+            "test": "/.vue$/",
+            "loader": "vue-livescript-loader"
+          },
+          {
+            "test": "/.ls$/",
+            "loader": "vue-livescript-loader"
+          }
         ]
       }
     }
