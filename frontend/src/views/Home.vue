@@ -1,7 +1,19 @@
-<template>
-  <div class="home">
-    <HelloWorld msg="API Testing Playground for Iterative Development"/>
-  </div>
+<template lang="pug">
+div
+  .home
+    HelloWorld(msg="API Testing Playground for Iterative Development")
+
+  vs-divider
+
+  form(
+    v-on:submit="handleSubmit"
+  )
+
+    vs-textarea(
+      v-model="blah"
+      label="Request String"
+    )
+    vs-button(color="primary" type="filled") Send
 </template>
 
 <script>
@@ -10,8 +22,18 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
+  data() {
+    return {
+      blah:""
+    }
+  },
   components: {
     HelloWorld
+  },
+  methods: {
+    handleSubmit() {
+      console.log(this.blah)
+    }
   }
 }
 </script>
