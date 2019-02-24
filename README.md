@@ -20,3 +20,18 @@ npm run dev
 npm run build
 git push
 ```
+
+## Testing
+### Connecting to a Openshift Pod
+Log into a shell
+```bash
+oc get pods
+oc rsh podname
+```
+
+...or run a command
+```bash
+oc get pods
+oc exec podname command
+```
+
