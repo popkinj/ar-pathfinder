@@ -32,6 +32,9 @@ export default {
   },
   methods: {
     handleSubmit() {
+      this.$http.post('/test',this.blah).then((res) => {
+        console.log(res);
+      });
       console.log(this.blah)
     }
   }

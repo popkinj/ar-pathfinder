@@ -3,11 +3,13 @@ import Vuesax from 'vuesax';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import VueResource from 'vue-resource';
 
 import 'vuesax/dist/vuesax.css';
 import 'material-icons/iconfont/material-icons.css';
 
 Vue.use(Vuesax);
+Vue.use(VueResource);
 
 Vue.config.productionTip = false;
 

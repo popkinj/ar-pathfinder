@@ -30,6 +30,7 @@
     "vue": "^2.6.6",
     "vue-cli-plugin-source-dir": "^0.1.0",
     "vue-livescript-loader": "0.0.1",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.6.6",
     "vuesax": "^3.8.18",
