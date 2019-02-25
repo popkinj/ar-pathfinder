@@ -34,6 +34,7 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       this.$http.post('/test',this.blah).then((res) => {
+        console.log(this.$store)
         console.log(res);
       });
       console.log(this.blah)
