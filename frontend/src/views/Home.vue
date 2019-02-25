@@ -31,7 +31,8 @@ export default {
     HelloWorld
   },
   methods: {
-    handleSubmit() {
+    handleSubmit(e) {
+      e.preventDefault();
       this.$http.post('/test',this.blah).then((res) => {
         console.log(res);
       });
