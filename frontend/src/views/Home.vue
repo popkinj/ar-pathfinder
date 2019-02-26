@@ -33,12 +33,16 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
+      console.log(this.$store.state.env)
       this.$http.post('/test',this.blah).then((res) => {
-        console.log(this.$store)
         console.log(res);
       });
-      console.log(this.blah)
     }
   }
 }
 </script>
+
+<style lang="stylus">
+form
+  margin-top 3rem
+</style>
