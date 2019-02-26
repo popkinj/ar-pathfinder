@@ -33,8 +33,9 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      console.log(this.$store.state.env)
-      this.$http.post('/test',this.blah).then((res) => {
+      var s = this.$store.state; // global state object
+      var query = {query: this.blah};
+      this.$http.post(`${s.serverUrl}/testing`,query).then((res) => {
         console.log(res);
       });
     }
