@@ -10,8 +10,16 @@ div
   )
 
     vs-textarea(
-      v-model="blah"
-      label="Request String"
+      v-model="url"
+      label="Request URL"
+    )
+    vs-textarea(
+      v-model="data"
+      label="Request Data"
+    )
+    vs-textarea(
+      v-model="headers"
+      label="Request Headers"
     )
     vs-button(color="primary" type="filled") Send
 </template>
@@ -24,7 +32,9 @@ export default {
   name: 'home',
   data() {
     return {
-      blah:""
+      url:"",
+      data:"",
+      headers:""
     }
   },
   components: {
@@ -34,7 +44,7 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       var s = this.$store.state; // global state object
-      var query = {query: this.blah};
+      var query = {url: this.url,data: this.data,headers: this.headers};
       this.$http.post(`${s.serverUrl}/testing`,query).then((res) => {
         console.log(res);
       });
