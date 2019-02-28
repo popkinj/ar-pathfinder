@@ -97,6 +97,6 @@ app = express!
   .get '/test-html', testHtml
   .get '/test-data', testData
   .post '/testing', govOnly, testing
-  # .get '/testing', testing
+  # .post '/testing', testing
   .get '*', lost
   .listen 8080
