@@ -7,6 +7,7 @@ require! {
   morgan
   helmet
   express
+  request
   \body-parser # Maps to bodyParser
   compression
 }
@@ -78,9 +79,14 @@ govOnly = (req,res,next) ->
   @param res {object} Node/Express response object
  */
 testing = (req,res) !->
-  console.log(req.body)
-  res.send 'Sorry Not Today Chachi'
-  # TODO: Send request to 
+  # Must have a url... Bare minimum
+  unless req.body.url then return res.send 'need a url'
+
+  # Use the handy request tool
+  request req.body.url, (err,res,body) ->
+    if err then return res.send that
+    console.log("res:",res)
+    console.log("body:",body)
 
 
 
