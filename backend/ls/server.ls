@@ -66,8 +66,9 @@ govOnly = (req,res,next) ->
     if address.match ip then allowed = yes
 
   # Formaulate the denied url
-  h = if req.secure then 'https' else 'http'
-  url = "#h://#{req.headers.host}/not-today"
+  # h = if req.secure then 'https' else 'http'
+  # url = "#h://#{req.headers.host}/not-today"
+  url = '/not-today'
 
   # pass or fail
   if allowed then next! else res.redirect url
