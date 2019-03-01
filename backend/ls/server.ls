@@ -83,10 +83,10 @@ testing = (req,res) !->
   # Must have a url... Bare minimum
   unless req.body?url then return res.send 'need a url'
 
-  try
-    json = JSON.parse req.body.data
-  catch
-    return res.send 'Invalid JSON data'
+  # try
+  #   json = JSON.parse req.body.data
+  # catch
+  #   return res.send 'Invalid JSON data'
 
   # Use the handy request tool
   # TODO: handle POST/GET
