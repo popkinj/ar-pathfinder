@@ -90,7 +90,11 @@ testing = (req,res) !->
 
   # Use the handy request tool
   # TODO: handle POST/GET
-  request.post req.body.url, json, (err,_,body) ->
+  # request.post req.body.url, json, (err,_,body) ->
+  #   if err then return res.send that # Exit and replay on error
+  #   res.send body # Return response from distination
+
+  request req.body.url, (err,_,body) ->
     if err then return res.send that # Exit and replay on error
     res.send body # Return response from distination
 
