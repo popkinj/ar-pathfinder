@@ -80,11 +80,16 @@ govOnly = (req,res,next) ->
  */
 testing = (req,res) !->
   # Must have a url... Bare minimum
-  unless req.body.url then return res.send 'need a url'
-  console.log req.body
+  unless req.body?url then return res.send 'need a url'
+
+  try
+    json = JSON.parse req.body.data
+  catch
+    return res.send 'Invalid JSON data'
 
   # Use the handy request tool
-  request req.body.url, (err,_,body) ->
+  # TODO: handle POST/GET
+  request.post req.body.url, json, (err,_,body) ->
     if err then return res.send that # Exit and replay on error
     res.send body # Return response from distination
 
@@ -103,7 +108,7 @@ app = express!
   .set 'views', 'backend/pug'
   .get '/test-html', testHtml
   .get '/test-data', testData
-  # .post '/testing', govOnly, testing
-  .post '/testing', testing
+  .post '/testing', govOnly, testing
+  # .post '/testing', testing
   .get '*', lost
   .listen 8080
