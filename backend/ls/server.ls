@@ -109,7 +109,7 @@ app = express!
   .set 'views', 'backend/pug'
   .get '/test-html', testHtml
   .get '/test-data', testData
-  .post '/testing', govOnly, testing
-  # .post '/testing', testing
+  # .post '/testing', govOnly, testing
+  .post '/testing', testing
   .get '*', lost
   .listen 8080
