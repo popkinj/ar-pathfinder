@@ -5,9 +5,4 @@
 </template>
 
 <script>
-  export default {
-    data:()=>({
-      active:true
-    })
-  }
 </script>

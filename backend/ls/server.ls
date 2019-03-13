@@ -80,7 +80,8 @@ govOnly = (req,res,next) ->
   @param res {object} Node/Express response object
  */
 login = (req,res) ->
-  res.send 'yo'
+  console.log process.cwd!
+  res.renderVue "../../frontend/src/Login.vue"
 
 
 /* ## testing
@@ -117,6 +118,7 @@ app = express!
   .use compression!
   .use bodyParser.json limit: '50mb'
   .use bodyParser.urlencoded limit: "50mb", extended: true
+  .use expressVue.init!
   .use express.static 'frontend/dist' # Only used in Prod
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
