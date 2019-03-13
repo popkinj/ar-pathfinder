@@ -7,6 +7,7 @@ require! {
   morgan
   helmet
   express
+  \express-vue # Maps to expressVuew
   request
   \body-parser # Maps to bodyParser
   compression
@@ -73,6 +74,14 @@ govOnly = (req,res,next) ->
   # pass or fail
   if allowed then next! else res.redirect url
 
+/* ## login
+  Server the login page
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+login = (req,res) ->
+  res.send 'yo'
+
 
 /* ## testing
   Test reverse proxy to CAS interface
@@ -111,6 +120,7 @@ app = express!
   .use express.static 'frontend/dist' # Only used in Prod
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
+  .get '/login', login
   .get '/test-html', testHtml
   .get '/test-data', testData
   # .post '/testing', govOnly, testing
