@@ -7,7 +7,6 @@ require! {
   morgan
   helmet
   express
-  \express-vue # Maps to expressVuew
   request
   \body-parser # Maps to bodyParser
   compression
@@ -75,13 +74,11 @@ govOnly = (req,res,next) ->
   if allowed then next! else res.redirect url
 
 /* ## login
-  Server the login page
+  Server the login page. Use Pug.
   @param req {object} Node/Express request object
   @param res {object} Node/Express response object
  */
-login = (req,res) ->
-  console.log process.cwd!
-  res.renderVue "../../frontend/src/Login.vue"
+login = (req,res) -> res.render 'login', req.params <<< req.query
 
 
 /* ## testing
@@ -109,7 +106,6 @@ testing = (req,res) !->
     res.send body # Return response from distination
 
 
-
 # Configure and start server
 app = express!
   .use helmet!
@@ -118,7 +114,6 @@ app = express!
   .use compression!
   .use bodyParser.json limit: '50mb'
   .use bodyParser.urlencoded limit: "50mb", extended: true
-  .use expressVue.init!
   .use express.static 'frontend/dist' # Only used in Prod
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
