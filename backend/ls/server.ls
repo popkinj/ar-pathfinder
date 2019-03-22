@@ -1,6 +1,7 @@
 /* Bare bones static file server */
 require! {
   fs
+  pg
   pug
   cors
   http
@@ -14,6 +15,30 @@ require! {
 
 # Are we in prod or dev
 prod = if process.env.NODE_ENV is \production then yes else no
+
+console.log 'username', process.env.AR_PATHFINDER_USERNAME
+console.log 'database', process.env.AR_PATHFINDER_DATABASE
+console.log 'password', process.env.AR_PATHFINDER_PASSWORD
+
+/* Connect to the database
+  The database server varies in prod
+*/
+pgPool = new pg.Pool do
+  user: process.env.AR_PATHFINDER_USERNAME
+  database: process.env.AR_PATHFINDER_DATABASE
+  password: process.env.AR_PATHFINDER_PASSWORD
+  host: if prod then 'postgresql' else 'localhost'
+  port: 5432
+  max: 10
+  idleTimeoutMillis: 30000
+
+testingDB = ->
+  # pgPool.query 'select * from user_sessions', (err,res) ->
+  pgPool.query 'select current_user', (err,res) ->
+    if err then throw console.error that
+    console.log "Database User #{res.rows.0.current_user}"
+
+setTimeout testingDB, 1000
 
 /* ## lost
   Router for anything we don't have an end point for.
