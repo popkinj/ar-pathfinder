@@ -1,5 +1,5 @@
 /* get-token.ls
-  Load a fresh CAS oAuth token into environment variable AR_PATHFINDER_CAS_TOKEN.
+  Fetch a fresh CAS token
   Dependencies: 
     The following environmnent variables:
     - AR_PATHFINDER_CAS_ID
