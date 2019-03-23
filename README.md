@@ -7,10 +7,22 @@
 - Git CLI
   
 ### Running Development Environment
+1. Install dependencies
 ```bash
 git clone git@github.com:popkinj/ar-pathfinder.git
 cd ar-pathfinder
 npm install
+npm run dev
+```
+
+2. Connect to database
+```bash
+oc get pods # Find the pod name
+oc port-forward pod-name 5432:5432
+```
+
+3. Starting servers for backend and frontend
+```bash
 npm run dev
 ```
 
