@@ -4,6 +4,7 @@
     The following environmnent variables:
     - AR_PATHFINDER_CAS_ID
     - AR_PATHFINDER_CAS_SECRET
+    - AR_PATHFINDER_CAS_URL
  */
 
 require! {
