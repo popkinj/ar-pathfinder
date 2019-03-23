@@ -9,15 +9,16 @@
 # Get the credentials
 id = process.env.AR_PATHFINDER_CAS_ID
 secret = process.env.AR_PATHFINDER_CAS_SECRET
-
-url = "https://heineken.cas.gov.bc.ca:7019/ords/cas/oauth/token"
+url = process.env.AR_PATHFINDER_CAS_URL
 
 # Make sure we have the credentials
 unless id and secret
   throw console.error 'Environmnent variables not set'
 
+payload = 'grant_type': 'client_credentials'
+
 request
   .auth 'user': id, 'pass': secret
-  .post url, (err, res, body) ->
+  .post url, payload , (err, res, body) ->
     console.error err if err
     console.log res
