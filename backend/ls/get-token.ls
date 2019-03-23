@@ -20,9 +20,10 @@ url = cas.replace /\/\//, "//#id:#secret@" # Insert credentials into url
 unless id and secret
   throw console.error 'Environmnent variables not set'
 
-payload = 'grant_type': 'client_credentials'
+payload = form: grant_type: 'client_credentials'
 
 request
   .post url, payload , (err, res, body) ->
-    console.error err if err
-    console.log res
+    throw console.error err if err
+    console.log body
+    console.log body.access_token
