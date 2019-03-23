@@ -34,7 +34,7 @@ git push
 ```
 
 ## Testing
-### Connecting to a Openshift Pod
+### Connecting to an Openshift Pod
 Log into a shell
 ```bash
 oc get pods

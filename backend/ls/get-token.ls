@@ -6,10 +6,15 @@
     - AR_PATHFINDER_CAS_SECRET
  */
 
+require! {
+  request
+}
+
 # Get the credentials
 id = process.env.AR_PATHFINDER_CAS_ID
 secret = process.env.AR_PATHFINDER_CAS_SECRET
-url = process.env.AR_PATHFINDER_CAS_URL
+cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
+url = cas.replace /\/\//, "//#id:#secret@" # Insert credentials into url
 
 # Make sure we have the credentials
 unless id and secret
@@ -18,7 +23,6 @@ unless id and secret
 payload = 'grant_type': 'client_credentials'
 
 request
-  .auth 'user': id, 'pass': secret
   .post url, payload , (err, res, body) ->
     console.error err if err
     console.log res
