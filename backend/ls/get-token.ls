@@ -26,5 +26,4 @@ payload = form: grant_type: 'client_credentials'
 request
   .post url, payload , (err, res, body) ->
     throw console.error err if err
-    console.log body
-    console.log body.access_token
+    console.log JSON.parse(body).access_token
