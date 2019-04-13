@@ -8,6 +8,8 @@ import VueResource from 'vue-resource';
 import 'vuesax/dist/vuesax.css';
 import 'material-icons/iconfont/material-icons.css';
 
+Vue.ls = require('livescript');
+
 Vue.use(Vuesax);
 Vue.use(VueResource);
 

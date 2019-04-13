@@ -22,6 +22,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.13.0",
     "eslint-plugin-vue": "^5.1.0",
+    "livescript-plugin-loader": "^2.0.0",
     "material-icons": "^0.3.0",
     "object-assign": "^4.1.1",
     "pug-plain-loader": "^1.0.0",
@@ -95,11 +96,15 @@
         "rules": [
           {
             "test": "/.vue$/",
-            "loader": "vue-livescript-loader"
+            "use": [{
+              "loader": "livescript-plugin-loader"
+            }]
           },
           {
             "test": "/.ls$/",
-            "loader": "vue-livescript-loader"
+            "use": [{
+              "loader": "livescript-plugin-loader"
+            }]
           }
         ]
       }
