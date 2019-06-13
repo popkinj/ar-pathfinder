@@ -24,6 +24,7 @@ Make sure the following Environment Variables are set:
 > - AR_PATHFINDER_CAS_SECRET
 > - AR_PATHFINDER_CAS_URL
 
+Forward the port `5432` from the postgres pod to your local workstation.
 ```bash
 oc get pods # Find the pod name
 oc port-forward pod-name 5432:5432
