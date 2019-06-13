@@ -16,6 +16,14 @@ npm run dev
 ```
 
 2. Connect to database
+Make sure the following Environment Variables are set:
+> - AR_PATHFINDER_DATABASE
+> - AR_PATHFINDER_USERNAME
+> - AR_PATHFINDER_PASSWORD
+> - AR_PATHFINDER_CAS_ID
+> - AR_PATHFINDER_CAS_SECRET
+> - AR_PATHFINDER_CAS_URL
+
 ```bash
 oc get pods # Find the pod name
 oc port-forward pod-name 5432:5432
