@@ -1,36 +1,34 @@
 <template lang="pug">
   div.proponents
     h2 Proponents
-    table
-      tr
-        th Fetch all Proponents
-        th
-          vs-button(
-            id="button-with-loading"
-            class="vs-con-loading__container"
-            @click="openLoadingContained"
-            type="filled"
-            ref="loadableButton"
-            vslor="primary")
-              | Load
-        th
-      tr
-        th Search Proponents
-        th
-          vs-input(
-            class="inputx"
-            label-placeholder="Enter a Name"
-            v-model="value1"
-          )
-        th
-          vs-button(
-            id="button-with-loading2"
-            class="vs-con-loading__container"
-            @click="openLoadingContained2"
-            type="filled"
-            ref="loadableButton2"
-            vslor="primary")
-              | Search
+    .tester
+      .name Fetch all Proponents
+      .action
+        vs-button(
+          id="button-with-loading"
+          class="vs-con-loading__container"
+          @click="openLoadingContained"
+          type="filled"
+          ref="loadableButton"
+          vslor="primary")
+            | Load
+    .tester
+      .name Search Proponents
+      .action
+        vs-input(
+          class="inputx"
+          label-placeholder="Enter a Name"
+          v-model="value1"
+        )
+      .action
+        vs-button(
+          id="button-with-loading2"
+          class="vs-con-loading__container"
+          @click="openLoadingContained2"
+          type="filled"
+          ref="loadableButton2"
+          vslor="primary")
+            | Search
 </template>
 
 <script>
@@ -70,8 +68,6 @@
 </script>
 
 <style lang="stylus">
-  th
-    padding-top 2rem
   .vs-con-input-label
     margin-top 0.25rem !important
   .default-input
