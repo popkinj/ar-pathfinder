@@ -130,6 +130,35 @@ testing = (req,res) !->
     if err then return res.send that # Exit and replay on error
     res.send body # Return response from distination
 
+/* ## getToken
+  Get a CAS access token
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+  @return {object} The token object
+ */
+getToken = (req,res) !->
+  id = process.env.AR_PATHFINDER_CAS_ID
+  secret = process.env.AR_PATHFINDER_CAS_SECRET
+  cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
+  dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+
+  unless id and secret and cas
+    return res.send 'Environmnent variables not set'
+
+  url = if prod
+    cas.replace /\/\//, "//#id:#secret@" # Insert credentials into url
+  else
+    "#dev/get-token"
+
+  payload = form: grant_type: 'client_credentials'
+
+  request.post url, payload , (err, res, body) !->
+    if err
+      res.json token: false
+    else
+      res.json token: JSON.parse(body).access_token
+
+
 
 # Configure and start server
 app = express!
@@ -146,6 +175,7 @@ app = express!
   .get '/test-html', testHtml
   .get '/test-data', testData
   # .post '/testing', govOnly, testing
+  .get '/get-token', govOnly, getToken
   .post '/testing', testing
   .get '*', lost
   .listen 8080

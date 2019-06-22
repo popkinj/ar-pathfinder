@@ -5,6 +5,11 @@
     - AR_PATHFINDER_CAS_ID
     - AR_PATHFINDER_CAS_SECRET
     - AR_PATHFINDER_CAS_URL
+
+  Can be executed like this:
+  ```bash
+  npm run get-token
+  ```
  */
 
 require! {
