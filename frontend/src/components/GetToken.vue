@@ -15,19 +15,19 @@ export default {
   name: 'GetToken',
   methods: {
     getToken () {
+      const vs = this.$vs;
       // Activate the spinner
-      this.$vs.loading({
+      vs.loading({
         background: this.backgroundLoading,
         color: this.colorLoading,
         container: '#get-token-btn',
         scale: 0.45
       });
       const url = `${this.$store.state.serverUrl}/get-token`;
-      console.log(`url:${url}`)
       request.get(url, function (err,res,body) {
         console.log("err: ",err);
         console.log("body: ",body);
-        this.$vs.loading.close('#get-token-btn');
+        vs.loading.close('#get-token-btn .con-vs-loading');
       })
     }
   }

@@ -81,8 +81,6 @@ notToday = (req,res) !-> res.send 'Sorry Not Today'
  */
 govOnly = (req,res,next) ->
   address = req.connection.remoteAddress?replace /^.*:/, ''
-  console.log "Not getting past here for some reason"
-  console.log "address: #address"
   ips =
     /^1$/ # Localhost
     /^142\..*/ # All gov't users
@@ -183,7 +181,7 @@ app = express!
   .get '/test-html', testHtml
   .get '/test-data', testData
   # .post '/testing', govOnly, testing
-  .get '/get-token', govOnly, getToken
+  .get '/get-token', getToken
   .post '/testing', testing
   .get '*', lost
   .listen 8080
