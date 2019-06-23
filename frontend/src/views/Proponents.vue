@@ -1,6 +1,7 @@
 <template lang="pug">
   div.proponents
     h2 Proponents
+    GetToken
     .tester
       .name Fetch all Proponents
       .action
@@ -32,12 +33,17 @@
 </template>
 
 <script>
+  import GetToken from '@/components/GetToken.vue';
+
   export default {
     data() {
       return {
         value1:'',
         value2:''
       }
+    },
+    components: {
+      GetToken
     },
     methods: {
       openLoadingContained(){

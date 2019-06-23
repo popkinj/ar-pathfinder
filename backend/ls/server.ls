@@ -156,6 +156,7 @@ getToken = (req,res) !->
     if err
       res.json token: false
     else
+      console.log(url)
       res.json token: JSON.parse(body).access_token
 
 
