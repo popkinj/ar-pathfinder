@@ -23,8 +23,7 @@ export default {
         scale: 0.45
       });
       const url = `${this.$store.state.serverUrl}/get-token`;
-      console.log(url);
-      console.log(request);
+      console.log(`url:${url}`)
       request.get(url, function (err,res,body) {
         console.log("err: ",err);
         console.log("body: ",body);

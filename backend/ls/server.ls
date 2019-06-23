@@ -81,6 +81,8 @@ notToday = (req,res) !-> res.send 'Sorry Not Today'
  */
 govOnly = (req,res,next) ->
   address = req.connection.remoteAddress?replace /^.*:/, ''
+  console.log "Not getting past here for some reason"
+  console.log "address: #address"
   ips =
     /^1$/ # Localhost
     /^142\..*/ # All gov't users
@@ -150,13 +152,18 @@ getToken = (req,res) !->
   else
     "#dev/get-token"
 
+  fetcher = if prod then request.post else request.get
+
   payload = form: grant_type: 'client_credentials'
 
-  request.post url, payload , (err, res, body) !->
+  console.log("url: ",url)
+
+  fetcher url, payload , (err, res, body) !->
+    console.log("err: ",err);
+    console.log("body: ",body);
     if err
       res.json token: false
     else
-      console.log(url)
       res.json token: JSON.parse(body).access_token
 
 
