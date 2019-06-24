@@ -6,6 +6,7 @@
       .name Fetch all Proponents
       .action
         vs-button(
+          :disabled="$store.getters.token ? false : true"
           id="button-with-loading"
           class="vs-con-loading__container"
           @click="openLoadingContained"
@@ -17,12 +18,14 @@
       .name Search Proponents
       .action
         vs-input(
+          :disabled="$store.getters.token ? false : true"
           class="inputx"
           label-placeholder="Enter a Name"
           v-model="value1"
         )
       .action
         vs-button(
+          :disabled="$store.getters.token ? false : true"
           id="button-with-loading2"
           class="vs-con-loading__container"
           @click="openLoadingContained2"

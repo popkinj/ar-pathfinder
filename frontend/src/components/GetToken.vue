@@ -1,4 +1,5 @@
 <template lang="pug">
+  // The first button shows if we already have a token
   vs-button(
     v-if="$store.getters.token"
     id="get-token-btn"
@@ -7,6 +8,7 @@
     type="filled"
     @click="getToken"
     ) Verified
+  // This button shows if there's no token
   vs-button(
     v-else
     id="get-token-btn"
@@ -33,6 +35,8 @@ export default {
         container: '#get-token-btn',
         scale: 0.45
       });
+
+      // Request the token
       const url = `${this.$store.state.serverUrl}/get-token`;
       request.get(url, function (err,res,body) {
         if (err) {
@@ -44,8 +48,10 @@ export default {
         if (!json.access_token) {
           return console.error('Empty token');
         }
+        // Update the token in the store
         v.$store.commit('loadToken', json.access_token)
 
+        // Close the spinner
         vs.loading.close('#get-token-btn .con-vs-loading');
       })
     }
