@@ -13,6 +13,8 @@ require! {
   compression
 }
 
+/* eslint-disable */
+
 # Are we in prod or dev
 prod = if process.env.NODE_ENV is \production then yes else no
 
@@ -153,16 +155,21 @@ getToken = (req,res) !->
   fetcher = if prod then request.post else request.get
 
   payload = form: grant_type: 'client_credentials'
+  res.json 'yo':true
+  
+  console.log "url: ",url
+  console.log "here goes"
 
-  console.log("url: ",url)
+  fetch url, payload, (err,res,body) !-> console.log(body)
 
-  fetcher url, payload , (err, res, body) !->
-    console.log("err: ",err);
-    console.log("body: ",body);
-    if err
-      res.json token: false
-    else
-      res.json token: JSON.parse(body).access_token
+
+  # fetcher url, payload , (err, res, body) !->
+  #   console.log("err: ",err);
+  #   console.log("body: ",body);
+  #   if err
+  #     res.json token: false
+  #   else
+  #     res.json token: JSON.parse(body).access_token
 
 
 
