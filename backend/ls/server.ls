@@ -159,7 +159,7 @@ getToken = (req,res) !->
   console.log "url: ",url
   console.log "here goes"
 
-  request.post url, payload, (err,res,body) !->
+  request.post url, payload, (err,code,body) !->
     console.log("body: ",body)
     json = JSON.parse body
     console.log("json: ",json)
