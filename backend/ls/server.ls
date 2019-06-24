@@ -159,9 +159,12 @@ getToken = (req,res) !->
   # request.post url, payload, (err,code,body) !->
   #   json = JSON.parse body
   #   res.json token: json.access_token
+  console.log("url: ",url)
 
 
   fetcher url, payload , (err, code, body) !->
+    console.log("body: ",body)
+    console.log("err: ",err)
     if err
       res.json token: false
     else
