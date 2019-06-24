@@ -155,7 +155,6 @@ getToken = (req,res) !->
   fetcher = if prod then request.post else request.get
 
   payload = form: grant_type: 'client_credentials'
-  res.json 'yo':true
   
   console.log "url: ",url
   console.log "here goes"
@@ -165,7 +164,8 @@ getToken = (req,res) !->
     json = JSON.parse body
     console.log("json: ",json)
     
-    token = json.access_token
+    token = token: json.access_token
+    res.json 'token': token
 
     console.log("token: ",token)
 
