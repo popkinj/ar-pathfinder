@@ -29,7 +29,7 @@ export default {
       // Activate the spinner
       vs.loading({
         background: this.backgroundLoading,
-        color: this.colorLoading,
+        color: 'danger',
         container: '#get-token-btn',
         scale: 0.45
       });
