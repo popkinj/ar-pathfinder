@@ -166,12 +166,12 @@ getToken = (req,res) !->
     console.log("body: ",body)
     console.log("err: ",err)
     if err
-      res.json token: false
+      res.json access_token: false
     else
       json = JSON.parse body
       console.log("json: ",json)
-      console.log("json.access: ",json.access)
-      res.json token: json.access_token
+      console.log("json.access_token: ",json.access_token)
+      res.json access_token: json.access_token
 
 
 
