@@ -160,7 +160,14 @@ getToken = (req,res) !->
   console.log "url: ",url
   console.log "here goes"
 
-  request.post url, payload, (err,res,body) !-> console.log(body)
+  request.post url, payload, (err,res,body) !->
+    console.log("body: ",body)
+    json = JSON.parse body
+    console.log("json: ",json)
+    
+    token = json.access_token
+
+    console.log("token: ",token)
 
 
   # fetcher url, payload , (err, res, body) !->
