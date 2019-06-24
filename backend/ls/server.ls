@@ -160,7 +160,7 @@ getToken = (req,res) !->
   console.log "url: ",url
   console.log "here goes"
 
-  fetch url, payload, (err,res,body) !-> console.log(body)
+  request.post url, payload, (err,res,body) !-> console.log(body)
 
 
   # fetcher url, payload , (err, res, body) !->
