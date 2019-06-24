@@ -133,7 +133,7 @@ testing = (req,res) !->
     res.send body # Return response from distination
 
 /* ## getToken
-  Get a CAS access token
+  Get a CAS access token. 
   @param req {object} Node/Express request object
   @param res {object} Node/Express response object
   @return {object} The token object
@@ -156,27 +156,17 @@ getToken = (req,res) !->
 
   payload = form: grant_type: 'client_credentials'
   
-  console.log "url: ",url
-  console.log "here goes"
-
-  request.post url, payload, (err,code,body) !->
-    console.log("body: ",body)
-    json = JSON.parse body
-    console.log("json: ",json)
-    
-    token = token: json.access_token
-    res.json 'token': token
-
-    console.log("token: ",token)
+  # request.post url, payload, (err,code,body) !->
+  #   json = JSON.parse body
+  #   res.json token: json.access_token
 
 
-  # fetcher url, payload , (err, res, body) !->
-  #   console.log("err: ",err);
-  #   console.log("body: ",body);
-  #   if err
-  #     res.json token: false
-  #   else
-  #     res.json token: JSON.parse(body).access_token
+  fetcher url, payload , (err, code, body) !->
+    if err
+      res.json token: false
+    else
+      json = JSON.parse body
+      res.json token: json.access_token
 
 
 
