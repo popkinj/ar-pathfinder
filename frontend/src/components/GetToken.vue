@@ -1,11 +1,20 @@
 <template lang="pug">
   vs-button(
+    v-if="$store.getters.token"
+    id="get-token-btn"
+    class="vs-con-loading__container"
+    color="success"
+    type="filled"
+    @click="getToken"
+    ) Verified
+  vs-button(
+    v-else
     id="get-token-btn"
     class="vs-con-loading__container"
     color="danger"
     type="filled"
     @click="getToken"
-    ) Not Validated
+    ) Not Verified
 </template>
 
 <script>
@@ -15,6 +24,7 @@ export default {
   name: 'GetToken',
   methods: {
     getToken () {
+      const v = this;
       const vs = this.$vs;
       // Activate the spinner
       vs.loading({
@@ -25,8 +35,17 @@ export default {
       });
       const url = `${this.$store.state.serverUrl}/get-token`;
       request.get(url, function (err,res,body) {
-        console.log("err: ",err);
-        console.log("body: ",body);
+        if (err) {
+          return console.error(err);
+        }
+
+        const json = JSON.parse(body);
+
+        if (!json.access_token) {
+          return console.error('Empty token');
+        }
+        v.$store.commit('loadToken', json.access_token)
+
         vs.loading.close('#get-token-btn .con-vs-loading');
       })
     }
@@ -34,3 +53,7 @@ export default {
 }
 </script>
 
+<style lang="stylus" scoped>
+  button
+    width 100px
+</style>

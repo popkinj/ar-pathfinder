@@ -79,4 +79,9 @@
   .default-input
     .inputx
       margin 10px
+
+  #get-token-btn
+    position absolute
+    right 2rem
+    top 2rem
 </style>

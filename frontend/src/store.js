@@ -10,13 +10,13 @@ export default new Vuex.Store({
     serverUrl: location.port == 8081 ? 'http://localhost:8080' : ''
   },
   mutations: {
-    loadToken (token, newToken) {
-      token = newToken;
+    loadToken (state, newToken) {
+      state.token = newToken;
     }
   },
   getters: {
-    token: token => {
-      return token;
+    token: state => {
+      return state.token;
     }
   },
   actions: {
