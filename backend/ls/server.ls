@@ -30,7 +30,7 @@ pgPool = new pg.Pool do
   database: process.env.AR_PATHFINDER_DATABASE
   password: process.env.AR_PATHFINDER_PASSWORD
   host: if prod then 'postgresql' else 'localhost'
-  port: 5432
+  port: 5433 # XXX: Temporary, should be 5432
   max: 10
   idleTimeoutMillis: 30000
 
@@ -117,17 +117,6 @@ testing = (req,res) !->
   # Must have a url... Bare minimum
   unless req.body?url then return res.send 'need a url'
 
-  # try
-  #   json = JSON.parse req.body.data
-  # catch
-  #   return res.send 'Invalid JSON data'
-
-  # Use the handy request tool
-  # TODO: handle POST/GET
-  # request.post req.body.url, json, (err,_,body) ->
-  #   if err then return res.send that # Exit and replay on error
-  #   res.send body # Return response from distination
-
   request req.body.url, (err,_,body) ->
     if err then return res.send that # Exit and replay on error
     res.send body # Return response from distination
@@ -156,21 +145,12 @@ getToken = (req,res) !->
 
   payload = form: grant_type: 'client_credentials'
   
-  # request.post url, payload, (err,code,body) !->
-  #   json = JSON.parse body
-  #   res.json token: json.access_token
-  console.log("url: ",url)
-
-
   fetcher url, payload , (err, code, body) !->
-    console.log("body: ",body)
-    console.log("err: ",err)
     if err
       res.json access_token: false
     else
       json = JSON.parse body
-      console.log("json: ",json)
-      console.log("json.access_token: ",json.access_token)
+      console.log json
       res.json access_token: json.access_token
 
 
