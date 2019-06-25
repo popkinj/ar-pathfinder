@@ -30,7 +30,7 @@ pgPool = new pg.Pool do
   database: process.env.AR_PATHFINDER_DATABASE
   password: process.env.AR_PATHFINDER_PASSWORD
   host: if prod then 'postgresql' else 'localhost'
-  port: 5433 # XXX: Temporary, should be 5432
+  port: 5432 # XXX: Temporary, should be 5432
   max: 10
   idleTimeoutMillis: 30000
 
@@ -150,8 +150,9 @@ getToken = (req,res) !->
       res.json access_token: false
     else
       json = JSON.parse body
-      console.log json
-      res.json access_token: json.access_token
+      res.json do
+        access_token: json.access_token
+        expires_in: json.expires_in
 
 
 
