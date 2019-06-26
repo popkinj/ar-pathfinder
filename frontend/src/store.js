@@ -12,6 +12,9 @@ export default new Vuex.Store({
   mutations: {
     loadToken (state, newToken) {
       state.token = newToken;
+    },
+    clearToken (state) {
+      state.token = false;
     }
   },
   getters: {

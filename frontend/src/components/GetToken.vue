@@ -51,6 +51,11 @@ export default {
         // Update the token in the store
         v.$store.commit('loadToken', json.access_token)
 
+        // Set the expiration time for the token
+        setTimeout(function () {
+          v.$store.commit('clearToken');
+        },json.expires_in);
+
         // Close the spinner
         vs.loading.close('#get-token-btn .con-vs-loading');
       })
