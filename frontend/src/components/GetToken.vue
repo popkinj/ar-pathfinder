@@ -52,9 +52,10 @@ export default {
         v.$store.commit('loadToken', json.access_token)
 
         // Set the expiration time for the token
+        // The time is provided in seconds
         setTimeout(function () {
           v.$store.commit('clearToken');
-        },json.expires_in);
+        },(json.expires_in * 1000)); // Convert to milliseconds
 
         // Close the spinner
         vs.loading.close('#get-token-btn .con-vs-loading');
