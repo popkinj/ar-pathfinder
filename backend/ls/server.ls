@@ -77,6 +77,8 @@ notToday = (req,res) !-> res.send 'Sorry Not Today'
   BC Government uses the 142 IP domain exclusively.
   Aside from localhost redirect all non-gov traffic
   to an error page.
+  XXX: Currently not used because Openshift routes
+    through dynamic IPs
   @param req {object} Node/Express request object
   @param res {object} Node/Express response object
   @param next {function} Express callback
@@ -147,6 +149,7 @@ getToken = (req,res) !->
   
   fetcher url, payload , (err, code, body) !->
     if err
+      console.error "Could not fetch token: ",err
       res.json access_token: false
     else
       json = JSON.parse body
@@ -170,8 +173,7 @@ app = express!
   .get '/login', login
   .get '/test-html', testHtml
   .get '/test-data', testData
-  # .post '/testing', govOnly, testing
-  .get '/get-token', getToken
   .post '/testing', testing
+  .get '/get-token', getToken
   .get '*', lost
   .listen 8080

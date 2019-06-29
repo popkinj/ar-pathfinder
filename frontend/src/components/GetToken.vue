@@ -44,6 +44,7 @@ export default {
         }
 
         const json = JSON.parse(body);
+        console.log(json);
 
         if (!json.access_token) {
           return console.error('Empty token');
