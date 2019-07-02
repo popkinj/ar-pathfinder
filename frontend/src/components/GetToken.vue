@@ -37,14 +37,13 @@ export default {
       });
 
       // Request the token
-      const url = `${this.$store.state.serverUrl}/get-token`;
+      const url = `${this.$store.state.serverUrl}/api/get-token`;
       request.get(url, function (err,res,body) {
         if (err) {
           return console.error(err);
         }
 
         const json = JSON.parse(body);
-        console.log(json);
 
         if (!json.access_token) {
           return console.error('Empty token');

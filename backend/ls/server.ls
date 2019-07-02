@@ -157,6 +157,25 @@ getToken = (req,res) !->
         access_token: json.access_token
         expires_in: json.expires_in
 
+/* ## proxyApi
+  Proxy the CAS api to the dev server in the Openshift cluster.
+  Must be called with the route and token like this
+  `/api/dev/{endpoint here}?token={token here}`
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+proxyApi = (req,res) !->
+  dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+  endpoint = req.params.endpoint 
+  token = req.query.token
+
+  unless endpoint and token
+    return res.send "Need a token and endpoint"
+
+  res.send endpoint
+
+getProponents = (req,res) !-> console.log req
+
 
 
 # Configure and start server
@@ -170,10 +189,12 @@ app = express!
   .use express.static 'frontend/dist' # Only used in Prod
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
-  .get '/login', login
-  .get '/test-html', testHtml
-  .get '/test-data', testData
-  .post '/testing', testing
-  .get '/get-token', getToken
+  .get '/login', login # Not used yet
+  # .get '/test-html', testHtml # Not used yet
+  # .get '/test-data', testData # Not used yet
+  # .post '/testing', testing # Not used yet
+  .get '/api/get-token', getToken
+  .get '/api/dev/:endpoint', proxyApi
+  .get '/api/proponets', getProponents
   .get '*', lost
   .listen 8080
