@@ -141,7 +141,7 @@ getToken = (req,res) !->
   url = if prod
     cas.replace /\/\//, "//#id:#secret@" # Insert credentials into url
   else
-    "#dev/get-token"
+    "#dev/api/get-token"
 
   fetcher = if prod then request.post else request.get
 
