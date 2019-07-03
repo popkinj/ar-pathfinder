@@ -37,7 +37,7 @@ export default {
       });
 
       // Request the token
-      const url = `${this.$store.state.serverUrl}/api/get-token`;
+      const url = `${this.$store.getters.serverUrl}/api/get-token`;
       request.get(url, function (err,res,body) {
         if (err) {
           return console.error(err);

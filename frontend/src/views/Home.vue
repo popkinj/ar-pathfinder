@@ -57,9 +57,9 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      var s = this.$store.state; // global state object
+      var s = this.$store; // global state object
       var query = {url: this.url,data: this.data,headers: this.headers,type: this.type};
-      this.$http.post(`${s.serverUrl}/testing`,query).then((res) => {
+      this.$http.post(`${s.getters.serverUrl}/testing`,query).then((res) => {
         console.log(res.body);
       });
     }
