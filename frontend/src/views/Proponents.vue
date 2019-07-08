@@ -9,7 +9,7 @@
           :disabled="$store.getters.token ? false : true"
           id="button-with-loading"
           class="vs-con-loading__container"
-          @click="openLoadingContained"
+          @click="getAllProponents"
           type="filled"
           ref="loadableButton"
           vslor="primary")
@@ -37,6 +37,7 @@
 
 <script>
   import GetToken from '@/components/GetToken.vue';
+  import request from 'request';
 
   export default {
     data() {
@@ -49,13 +50,24 @@
       GetToken
     },
     methods: {
-      openLoadingContained(){
+      getAllProponents(){
         this.$vs.loading({
           background: this.backgroundLoading,
           color: this.colorLoading,
           container: '#button-with-loading',
           scale: 0.45
         });
+        // Formalate the url for the api call
+        const apiUrl = this.$store.getters.apiUrl;
+        const token = this.$store.getters.token;
+        const serverUrl = this.$store.getters.serverUrl;
+        const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
+
+        console.log(url);
+        request(url, function (err,res,body) {
+          console.log(body);
+        });
+
         setTimeout( () => {
           this.$vs.loading.close('#button-with-loading .con-vs-loading');
         },2000);

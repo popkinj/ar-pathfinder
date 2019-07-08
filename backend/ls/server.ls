@@ -172,9 +172,15 @@ proxyApi = (req,res) !->
   unless endpoint and token
     return res.send "Need a token and endpoint"
 
-  res.send endpoint
+  url = "#dev/api/#endpoint?token=#token"
+  request.get url, (err,code,body) !->
+    if err
+      console.error "Could not fetch token: ",err
+      res.json access_token: false
+    else
+      res.json body
 
-getProponents = (req,res) !-> console.log req
+getProponents = (req,res) !-> res.json stuff:true
 
 
 

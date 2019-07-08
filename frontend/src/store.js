@@ -26,7 +26,7 @@ export default new Vuex.Store({
     serverUrl: state => {
       return state.env === 'production' ?
         location.origin :
-        'http://localhost:8080'
+        'http://localhost:8080' // Different port in dev
     }
   },
   actions: {
