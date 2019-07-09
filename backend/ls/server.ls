@@ -190,9 +190,9 @@ getProponents = (req,res) !->
 
   request do # run request
     url: cas
-    headers: [
+    headers:
+      Content-Type: 'application/json'
       Authorization: "Bearer #token"
-    ]
     , (err, code, body) ->
       if err
         console.error 'Dang error from CAS'
