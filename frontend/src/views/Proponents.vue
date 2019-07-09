@@ -51,7 +51,8 @@
     },
     methods: {
       getAllProponents(){
-        this.$vs.loading({
+        const vs = this.$vs
+        vs.loading({
           background: this.backgroundLoading,
           color: this.colorLoading,
           container: '#button-with-loading',
@@ -63,14 +64,10 @@
         const serverUrl = this.$store.getters.serverUrl;
         const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
 
-        console.log(url);
         request(url, function (err,res,body) {
           console.log(body);
+          vs.loading.close('#button-with-loading .con-vs-loading');
         });
-
-        setTimeout( () => {
-          this.$vs.loading.close('#button-with-loading .con-vs-loading');
-        },2000);
       },
       openLoadingContained2(){
         this.$vs.loading({
