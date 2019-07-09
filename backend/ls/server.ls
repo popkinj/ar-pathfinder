@@ -198,7 +198,9 @@ getProponents = (req,res) !->
         console.error 'Dang error from CAS'
         return console.error that
       else
-        res.json JSON.parse body
+        console.log typeof body
+        console.log typeof body
+        res.json body
 
 
 
