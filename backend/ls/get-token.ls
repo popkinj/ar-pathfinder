@@ -20,7 +20,10 @@ require! {
 id = process.env.AR_PATHFINDER_CAS_ID
 secret = process.env.AR_PATHFINDER_CAS_SECRET
 cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
-url = cas.replace /\/\//, "//#id:#secret@" # Insert credentials into url
+url = cas
+  .replace /\/\//, "//#id:#secret@" # Insert credentials into url
+  .replace /$/, '/oauth/token' # Add token path
+console.log(url)
 
 # Make sure we have the credentials
 unless id and secret
