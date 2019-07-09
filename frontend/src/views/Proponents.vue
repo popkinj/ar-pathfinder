@@ -65,7 +65,7 @@
         const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
 
         request(url, function (err,res,body) {
-          console.log(JSON.parse(JSON.parse(body)));
+          console.log(JSON.parse(body));
           // console.log(JSON.parse(JSON.parse(body)));
           vs.loading.close('#button-with-loading .con-vs-loading');
         });

@@ -200,7 +200,10 @@ getProponents = (req,res) !->
       else
         console.log typeof body
         console.log body
-        res.json body
+        stuff = JSON.parse body
+        console.log typeof stuff
+        console.log stuff
+        res.json stuff
 
 
 
