@@ -66,6 +66,7 @@
 
         request(url, function (err,res,body) {
           console.log(body);
+          // console.log(JSON.parse(JSON.parse(body)));
           vs.loading.close('#button-with-loading .con-vs-loading');
         });
       },
