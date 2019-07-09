@@ -180,7 +180,8 @@ proxyApi = (req,res) !->
     else
       res.json body
 
-getProponents = (req,res) !-> res.json stuff:true
+getProponents = (req,res) !->
+  res.json stuff:true
 
 
 
@@ -201,6 +202,6 @@ app = express!
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
   .get '/api/dev/:endpoint', proxyApi
-  .get '/api/proponets', getProponents
+  .get '/api/proponents', getProponents
   .get '*', lost
   .listen 8080
