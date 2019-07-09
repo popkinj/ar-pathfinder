@@ -199,7 +199,7 @@ getProponents = (req,res) !->
         return console.error that
       else
         console.log typeof body
-        console.log typeof body
+        console.log body
         res.json body
 
 
