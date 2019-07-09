@@ -139,7 +139,9 @@ getToken = (req,res) !->
     return res.send 'Environmnent variables not set'
 
   url = if prod
-    cas.replace /\/\//, "//#id:#secret@" # Insert credentials into url
+    cas
+      .replace /\/\//, "//#id:#secret@" # Insert credentials into url
+      .replace /$/, '/oauth/token' # Add token path
   else
     "#dev/api/get-token"
 
@@ -181,7 +183,20 @@ proxyApi = (req,res) !->
       res.json body
 
 getProponents = (req,res) !->
-  res.json stuff:true
+  cas = process.env.AR_PATHFINDER_CAS_URL + '/cfs/parties' # url
+  token = req.query.token # token
+
+  request do # run request
+    url: cas
+    headers: [
+      Content-Type: 'application/json'
+      Authorization: "Bearer #token"
+    ]
+    , (err, code, body) ->
+      if err
+        return console.error that
+      else
+        res.json body
 
 
 
