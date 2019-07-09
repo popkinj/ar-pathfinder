@@ -191,7 +191,6 @@ getProponents = (req,res) !->
   request do # run request
     url: cas
     headers: [
-      Content-Type: 'application/json'
       Authorization: "Bearer #token"
     ]
     , (err, code, body) ->
