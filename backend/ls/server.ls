@@ -186,6 +186,8 @@ getProponents = (req,res) !->
   cas = process.env.AR_PATHFINDER_CAS_URL + '/cfs/parties' # url
   token = req.query.token # token
 
+  console.log "CAS url: ",cas
+
   request do # run request
     url: cas
     headers: [
