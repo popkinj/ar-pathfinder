@@ -22,6 +22,7 @@
           class="inputx"
           label-placeholder="Enter a Name"
           @input="updateSearch"
+          v-model="value1"
         )
       .action
         vs-button(
