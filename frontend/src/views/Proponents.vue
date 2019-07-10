@@ -70,8 +70,8 @@
         const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
 
         request(url, {json: true}, function (err,res,body) {
+          console.log("body: ",body);
           if (err) {
-            console.log("body: ",body);
             return console.error("Could not get data",err);
           }
           const proponents = JSON.parse(body);
