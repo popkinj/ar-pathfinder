@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: false,
     env: location.port == 8081 ? "development" : "production",
+    search: '',
     proponents: {}
   },
   mutations: {
@@ -18,11 +19,17 @@ export default new Vuex.Store({
     },
     clearToken (state) {
       state.token = false;
+    },
+    updateSearch (state,search) {
+      state.search = search;
     }
   },
   getters: {
     token: state => {
       return state.token;
+    },
+    search: state => {
+      return state.search
     },
     proponents: state => {
       return state.proponents;

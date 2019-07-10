@@ -21,7 +21,7 @@
           :disabled="$store.getters.token ? false : true"
           class="inputx"
           label-placeholder="Enter a Name"
-          v-model="value1"
+          @input="updateSearch"
         )
       .action
         vs-button(
@@ -52,6 +52,9 @@
       GetToken
     },
     methods: {
+      updateSearch(search){
+        this.$store.commit('updateSearch',search)
+      },
       getAllProponents(){
         const v = this
         v.$vs.loading({
@@ -67,6 +70,10 @@
         const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
 
         request(url, {json: true}, function (err,res,body) {
+          if (err) {
+            console.log("body: ",body);
+            return console.error("Could not get data",err);
+          }
           const proponents = JSON.parse(body);
           console.log(proponents);
           v.$store.commit('loadProponents', proponents)
@@ -80,6 +87,7 @@
           container: '#button-with-loading2',
           scale: 0.45
         });
+        console.log(this.$store.getters.search);
         setTimeout( () => {
           this.$vs.loading.close('#button-with-loading2 .con-vs-loading');
         },2000);
