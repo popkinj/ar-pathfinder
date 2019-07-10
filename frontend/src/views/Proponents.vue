@@ -33,6 +33,8 @@
           ref="loadableButton2"
           vslor="primary")
             | Search
+    #proponents
+      div(v-for="item in $store.getters.proponents.items") {{item.customer_name}}
 </template>
 
 <script>
@@ -51,8 +53,8 @@
     },
     methods: {
       getAllProponents(){
-        const vs = this.$vs
-        vs.loading({
+        const v = this
+        v.$vs.loading({
           background: this.backgroundLoading,
           color: this.colorLoading,
           container: '#button-with-loading',
@@ -65,10 +67,10 @@
         const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
 
         request(url, {json: true}, function (err,res,body) {
-          console.log(body);
-          console.log(JSON.parse(body));
-          // console.log(JSON.parse(JSON.parse(body)));
-          vs.loading.close('#button-with-loading .con-vs-loading');
+          const proponents = JSON.parse(body);
+          console.log(proponents);
+          v.$store.commit('loadProponents', proponents)
+          v.$vs.loading.close('#button-with-loading .con-vs-loading');
         });
       },
       openLoadingContained2(){

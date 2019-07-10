@@ -6,9 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: false,
-    env: location.port == 8081 ? "development" : "production"
+    env: location.port == 8081 ? "development" : "production",
+    proponents: {}
   },
   mutations: {
+    loadProponents (state,proponents) {
+      state.proponents = proponents;
+    },
     loadToken (state, newToken) {
       state.token = newToken;
     },
@@ -19,6 +23,9 @@ export default new Vuex.Store({
   getters: {
     token: state => {
       return state.token;
+    },
+    proponents: state => {
+      return state.proponents;
     },
     apiUrl: state => {
       return state.env === 'production' ? '/api' : '/api/dev'
