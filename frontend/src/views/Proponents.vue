@@ -70,13 +70,11 @@
         const serverUrl = this.$store.getters.serverUrl;
         const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
 
-        request(url, {json: true}, function (err,res,body) {
-          console.log("body: ",body);
+        request(url, {json: true}, function (err,res,proponents) {
+          console.log("body: ",proponents);
           if (err) {
             return console.error("Could not get data",err);
           }
-          const proponents = JSON.parse(body);
-          console.log(proponents);
           v.$store.commit('loadProponents', proponents)
           v.$vs.loading.close('#button-with-loading .con-vs-loading');
         });

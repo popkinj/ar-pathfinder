@@ -180,7 +180,7 @@ proxyApi = (req,res) !->
       console.error "Could not fetch token: ",err
       res.json access_token: false
     else
-      res.json body
+      res.json JSON.parse body
 
 getProponents = (req,res) !->
   cas = process.env.AR_PATHFINDER_CAS_URL + '/cfs/parties' # url
