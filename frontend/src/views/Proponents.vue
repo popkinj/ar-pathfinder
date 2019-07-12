@@ -35,7 +35,7 @@
           )
         td.name Search Proponents
     #proponents
-      vs-table
+      vs-table(stripe)
         template(slot="thead")
           vs-th Name
           vs-th Proponent Number
