@@ -33,5 +33,7 @@ payload = form: grant_type: 'client_credentials'
 
 request
   .post url, payload , (err, res, body) ->
-    throw console.error err if err
+    if err
+      console.error 'body: ',body
+      throw console.error err
     console.log JSON.parse(body).access_token
