@@ -5,36 +5,6 @@ div
 
   vs-divider
 
-  form(
-    v-on:submit="handleSubmit"
-  )
-    vs-textarea(
-      v-model="url"
-      label="Request URL"
-    )
-    vs-textarea(
-      v-model="data"
-      label="Request Data"
-    )
-    vs-textarea(
-      v-model="headers"
-      label="Request Headers"
-    )
-    ul.leftx
-      li
-        vs-radio(
-          v-model="type"
-          vs-value="get"
-          color="success"
-        ) GET&nbsp;&nbsp;
-      li
-        vs-radio(
-          v-model="type"
-          vs-value="post"
-          color="orange"
-        ) POST
-
-    vs-button(color="primary" type="filled") Send
 </template>
 
 <script>

@@ -8,7 +8,12 @@ export default new Vuex.Store({
     token: false,
     env: location.port == 8081 ? "development" : "production",
     search: '',
-    proponents: {}
+    proponents: {},
+    activeProponent: {
+      name: '',
+      number: '',
+      businessNumber: ''
+    }
   },
   mutations: {
     loadProponents (state,proponents) {

@@ -15,25 +15,6 @@
             vslor="primary")
               | Load
         td.name Fetch all Proponents
-      tr.tester
-        td.action
-          vs-button(
-            :disabled="$store.getters.token ? false : true"
-            id="button-with-loading2"
-            class="vs-con-loading__container"
-            @click="openLoadingContained2"
-            type="filled"
-            ref="loadableButton2"
-            vslor="primary")
-              | Search
-        td.action
-          vs-input(
-            :disabled="$store.getters.token ? false : true"
-            class="inputx"
-            label-placeholder="Enter a Name"
-            @input="updateSearch"
-          )
-        td.name Search Proponents
     #proponents
       vs-table(stripe)
         template(slot="thead")
