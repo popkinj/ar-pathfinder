@@ -68,20 +68,7 @@
           v.$store.commit('loadProponents', proponents)
           v.$vs.loading.close('#button-with-loading .con-vs-loading');
         });
-      },
-      openLoadingContained2(){
-        this.$vs.loading({
-          background: this.backgroundLoading,
-          color: this.colorLoading,
-          container: '#button-with-loading2',
-          scale: 0.45
-        });
-        console.log(this.$store.getters.search);
-        setTimeout( () => {
-          this.$vs.loading.close('#button-with-loading2 .con-vs-loading');
-        },2000);
       }
-
     }
   }
 </script>

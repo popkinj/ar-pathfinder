@@ -30,7 +30,7 @@ pgPool = new pg.Pool do
   database: process.env.AR_PATHFINDER_DATABASE
   password: process.env.AR_PATHFINDER_PASSWORD
   host: if prod then 'postgresql' else 'localhost'
-  port: 5432 # XXX: Temporary, should be 5432
+  port: 5432 
   max: 10
   idleTimeoutMillis: 30000
 
@@ -182,7 +182,12 @@ proxyApi = (req,res) !->
     else
       res.json JSON.parse body
 
-getProponents = (req,res) !->
+/* ## getProponentsLive
+  Get proponents directly from CAS
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+getProponentsLive = (req,res) !->
   cas = process.env.AR_PATHFINDER_CAS_URL + '/cfs/parties' # url
   token = req.query.token # token
 
@@ -198,6 +203,14 @@ getProponents = (req,res) !->
       else
         res.json JSON.parse body
 
+/* ## getProponents
+  Get proponents from the local cache
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+getProponents = (req,res) !->
+  pgPool.query 'select * from proponents', (err,data) ->
+    res.json data
 
 
 # Configure and start server
@@ -212,11 +225,12 @@ app = express!
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
   .get '/login', login # Not used yet
+  .get '/proponents', getProponents
   # .get '/test-html', testHtml # Not used yet
   # .get '/test-data', testData # Not used yet
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
   .get '/api/dev/:endpoint', proxyApi
-  .get '/api/proponents', getProponents
+  .get '/api/proponents', getProponentsLive
   .get '*', lost
   .listen 8080

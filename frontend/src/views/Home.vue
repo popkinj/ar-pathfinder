@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   .home
-    HelloWorld(msg="API Testing Playground for Iterative Development")
+    HelloWorld(msg="Testing CAS")
 
   vs-divider
 
