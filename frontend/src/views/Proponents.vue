@@ -14,7 +14,7 @@
             ref="loadableButton"
             vslor="primary")
               | Load
-        td.name Fetch all Proponents
+        td.name Fetch Proponents directly from the CAS API
     #proponents
       vs-table(stripe)
         template(slot="thead")

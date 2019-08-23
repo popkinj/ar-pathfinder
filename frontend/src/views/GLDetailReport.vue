@@ -1,6 +1,6 @@
 <template lang="pug">
-  div.credit-memos
-    h2 Credit Memos
+  div.gl-detail-report
+    h2 General Ledger Detailed Report
 </template>
 
 <script>

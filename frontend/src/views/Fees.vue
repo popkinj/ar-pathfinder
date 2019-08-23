@@ -1,6 +1,6 @@
 <template lang="pug">
-  div.receipts
-    h2 Receipts
+  div.fees
+    h2 Fees
 </template>
 
 <script>

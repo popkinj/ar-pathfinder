@@ -27,10 +27,10 @@ var router = new Router({
       meta: {title: 'AR Proponents'}
     },
     {
-      path: '/accounts-receivable',
-      name: 'accounts-receivable',
-      component: () => import('./views/AccountsReceivable.vue'),
-      meta: {title: 'AR Accounts Receivable'}
+      path: '/fees',
+      name: 'fees',
+      component: () => import('./views/Fees.vue'),
+      meta: {title: 'Fees'}
     },
     {
       path: '/invoices',
@@ -39,48 +39,18 @@ var router = new Router({
       meta: {title: 'AR Invoices'}
     },
     {
-      path: '/customer-accounts',
-      name: 'customer-accounts',
-      component: () => import('./views/CustomerAccounts.vue'),
-      meta: {title: 'AR Customer Accounts'}
+      path: '/revenue-report',
+      name: 'revenue-report',
+      component: () => import('./views/RevenueReport.vue'),
+      meta: {title: 'Revenue Report'}
     },
     {
-      path: '/account-sites',
-      name: 'account-sites',
-      component: () => import('./views/AccountSites.vue'),
-      meta: {title: 'AR Account Sites'}
-    },
-    {
-      path: '/site-contacts',
-      name: 'site-contacts',
-      component: () => import('./views/SiteContacts.vue'),
-      meta: {title: 'AR Site Contacts'}
-    },
-    {
-      path: '/deposits',
-      name: 'deposits',
-      component: () => import('./views/Deposits.vue'),
-      meta: {title: 'AR Deposits'}
-    },
-    {
-      path: '/credit-memos',
-      name: 'credit-memos',
-      component: () => import('./views/CreditMemos.vue'),
-      meta: {title: 'AR Credit Memos'}
-    },
-    {
-      path: '/receipts',
-      name: 'receipts',
-      component: () => import('./views/Receipts.vue'),
-      meta: {title: 'AR Receipts'}
-    },
-    {
-      path: '/adjustments',
-      name: 'adjustments',
-      component: () => import('./views/Adjustments.vue'),
-      meta: {title: 'AR Adjustments'}
+      path: '/gl-detail-report',
+      name: 'gl-detail-report',
+      component: () => import('./views/GLDetailReport.vue'),
+      meta: {title: 'GL Detail Report'}
     }
- ]
+  ]
 })
 
 var historyCount = 0;

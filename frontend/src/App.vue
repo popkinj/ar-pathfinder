@@ -14,38 +14,27 @@
             hr
             h5 Accounts Recievable Explorer
 
-          vs-sidebar-item(index="1" icon="build" class="page-home")
+          .search
+            ProponentSearch
+
+
+          vs-sidebar-item(index="1" icon="home" class="page-home")
             router-link(to="/") Home
 
-          vs-sidebar-item(index="2" icon="get_app" class="page-proponents")
-            router-link(to="/proponents") Proponents
+          vs-sidebar-item(index="2" icon="people_outline" class="page-proponents")
+            router-link(to="/proponents") All Proponents - Testing
 
-          vs-sidebar-item(index="3" icon="get_app" class="page-accounts-receivable")
-            router-link(to="accounts-receivable") Accounts Receivable
+          vs-sidebar-item(index="3" icon="attach_money" class="page-fees")
+            router-link(to="/fees") Fees
 
-          vs-sidebar-item(index="4" icon="get_app" class="page-invoices")
-            router-link(to="invoices") Invoices
+          vs-sidebar-item(index="4" icon="library_books" class="page-invoices")
+            router-link(to="/invoices") Invoices
 
-          vs-sidebar-item(index="5" icon="get_app" class="page-customer-accounts")
-            router-link(to="customer-accounts") Customer Accounts
+          vs-sidebar-item(index="5" icon="trending_up" class="page-revenue-report")
+            router-link(to="/revenue-report") Revenue Report
 
-          vs-sidebar-item(index="6" icon="get_app" class="page-account-sites")
-            router-link(to="account-sites") Account Sites
-
-          vs-sidebar-item(index="7" icon="get_app" class="page-site-contacts")
-            router-link(to="site-contacts") Site Contacts
-
-          vs-sidebar-item(index="8" icon="get_app" class="page-deposits")
-            router-link(to="deposits") Deposits
-
-          vs-sidebar-item(index="9" icon="get_app" class="page-credit-memos")
-            router-link(to="credit-memos") Credit Memos
-            
-          vs-sidebar-item(index="10" icon="get_app" class="page-receipts")
-            router-link(to="receipts") Receipts
-
-          vs-sidebar-item(index="11" icon="get_app" class="page-adjustments")
-            router-link(to="adjustments") Adjustments 
+          vs-sidebar-item(index="6" icon="vertical_split" class="page-gl-detail-report")
+            router-link(to="/gl-detail-report") GL Detail Report
     .page
       keep-alive
         transition(name="fade", mode="out-in")
@@ -54,7 +43,12 @@
 </template>
 
 <script>
+import ProponentSearch from "@/components/ProponentsSearch.vue";
+
 export default {
+  components: {
+    ProponentSearch
+  },
   data:()=>({
     active:true
   })
@@ -81,6 +75,7 @@ export default {
       /* font-size 12px */
       margin-left 4rem
   .vs-sidebar
+    max-width 240px
     transition: margin-left 0.3s linear
     -o-transition: margin-left 0.3s linear
     -moz-transition: margin-left 0.3s linear
@@ -90,6 +85,9 @@ export default {
       border-top-style solid 
       border-color orange
       border-width 4px
+
+  .search
+    margin 0.75rem
 
 
   .parentx-static

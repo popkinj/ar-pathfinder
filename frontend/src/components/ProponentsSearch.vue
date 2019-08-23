@@ -2,23 +2,35 @@
 .input
   vs-input#proponent-input(
     icon-no-boarder
-    icon='airport_shuttle'
-    label-placehoder='Enter a Proponent'
+    icon="perm_identity"
+    label-placeholder="Search for Proponent"
     v-model='value1'
   )
+  .close-btn(@click='clearSearch')
+    vs-icon(icon='close')
 </template>
 
 <script>
+const clearSearch = function () {
+  this.value1 = '';
+  console.log(this);
+}
+
 export default {
   name: 'SearchProponent',
   data:() => ({
     value1: ''
-  })
+  }),
+  methods: {
+    clearSearch
+  }
 }
 </script>
 
 <style lang='stylus'>
 .input
+  i
+    font-size 1rem
 
   .vs-input
     margin 0  

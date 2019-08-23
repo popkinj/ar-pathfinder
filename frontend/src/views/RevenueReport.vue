@@ -1,6 +1,6 @@
 <template lang="pug">
-  div.site-contacts
-    h2 Site Contacts 
+  div.revenue-report
+    h2 Revenue Report
 </template>
 
 <script>
