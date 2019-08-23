@@ -8,7 +8,7 @@ export default new Vuex.Store({
     token: false,
     env: location.port == 8081 ? "development" : "production",
     search: '',
-    proponents: {},
+    proponentsCas: {},
     activeProponent: {
       name: '',
       number: '',
@@ -16,8 +16,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    loadProponents (state,proponents) {
-      state.proponents = proponents;
+    loadProponentsCas (state,proponentsCas) {
+      state.proponentsCas = proponentsCas;
     },
     loadToken (state, newToken) {
       state.token = newToken;
@@ -36,8 +36,8 @@ export default new Vuex.Store({
     search: state => {
       return state.search
     },
-    proponents: state => {
-      return state.proponents;
+    proponentsCas: state => {
+      return state.proponentsCas;
     },
     apiUrl: state => {
       return state.env === 'production' ? '/api' : '/api/dev'

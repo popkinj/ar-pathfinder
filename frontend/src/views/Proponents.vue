@@ -22,7 +22,7 @@
           vs-th Proponent Number
           vs-th Business Number
         template
-          vs-tr(:key="indextr" v-for="(tr,indextr) in $store.getters.proponents.items")
+          vs-tr(:key="indextr" v-for="(tr,indextr) in $store.getters.proponentsCas.items")
             vs-td {{tr.customer_name}}
             vs-td {{tr.party_number}}
             vs-td {{tr.business_number}}
@@ -65,7 +65,7 @@
           if (err) {
             return console.error("Could not get data",err);
           }
-          v.$store.commit('loadProponents', proponents)
+          v.$store.commit('loadProponentsCas', proponents)
           v.$vs.loading.close('#button-with-loading .con-vs-loading');
         });
       }
