@@ -14,6 +14,7 @@
             hr
             h5 Accounts Recievable Explorer
 
+          // - TODO: Add the active proponent header. Maybe make it wiggle when it is first added
           .search
             ProponentSearch
             ProponentList

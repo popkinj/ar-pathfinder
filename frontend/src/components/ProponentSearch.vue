@@ -3,7 +3,7 @@
   vs-input#proponent-input(
     icon-no-boarder
     icon="perm_identity"
-    label-placeholder="Search for Proponent"
+    label-placeholder="Search for a Proponent"
     v-model='value1'
     v-on:input='proponentChange'
   )

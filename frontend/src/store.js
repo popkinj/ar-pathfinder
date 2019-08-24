@@ -11,11 +11,7 @@ export default new Vuex.Store({
     proponentsCas: {},
     proponents: [],
     focusProponents: [],
-    activeProponent: {
-      name: '',
-      number: '',
-      businessNumber: ''
-    }
+    activeProponent: null
   },
   mutations: {
     loadProponents (state,proponents) { // Load all propnents
@@ -33,6 +29,13 @@ export default new Vuex.Store({
           return findRegex.test(d.name); // Else check match
         }
       });
+    },
+    activeProponent (state,proponent) {
+      state.activeProponent = proponent;
+    },
+    clearActiveProponent (state) {
+      state.activeProponent = null;
+
     },
     loadProponentsCas (state,proponentsCas) {
       state.proponentsCas = proponentsCas;
