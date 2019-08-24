@@ -9,6 +9,8 @@ export default new Vuex.Store({
     env: location.port == 8081 ? "development" : "production",
     search: '',
     proponentsCas: {},
+    proponents: [],
+    focusProponents: [],
     activeProponent: {
       name: '',
       number: '',
@@ -16,6 +18,19 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    loadProponents (state,proponents) {
+      state.proponents = proponents;
+    },
+    focusProponents (state,text) {
+      const findRegex = new RegExp(text,'i'); // Ignore case
+      state.focusProponents = state.proponents.map((d) => {
+        if (text.length < 1) { // If no text
+          return false
+        } else {
+          return findRegex.test(d.route); // Else check match
+        }
+      });
+    },
     loadProponentsCas (state,proponentsCas) {
       state.proponentsCas = proponentsCas;
     },
@@ -35,6 +50,9 @@ export default new Vuex.Store({
     },
     search: state => {
       return state.search
+    },
+    focusProponents: state => {
+      return state.focusProponents;
     },
     proponentsCas: state => {
       return state.proponentsCas;

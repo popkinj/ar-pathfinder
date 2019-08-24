@@ -5,6 +5,7 @@
     icon="perm_identity"
     label-placeholder="Search for Proponent"
     v-model='value1'
+    v-on:input='proponentChange'
   )
   .close-btn(@click='clearSearch')
     vs-icon(icon='close')
@@ -16,13 +17,18 @@ const clearSearch = function () {
   console.log(this);
 }
 
+const proponentChange = function (txt) {
+  this.$store.commit('focusProponents',txt);
+}
+
 export default {
   name: 'SearchProponent',
   data:() => ({
     value1: ''
   }),
   methods: {
-    clearSearch
+    clearSearch,
+    proponentChange
   }
 }
 </script>

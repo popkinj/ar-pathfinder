@@ -17,7 +17,6 @@
           .search
             ProponentSearch
 
-
           vs-sidebar-item(index="1" icon="home" class="page-home")
             router-link(to="/") Home
 
@@ -85,6 +84,9 @@ export default {
       border-top-style solid 
       border-color orange
       border-width 4px
+
+    .vs-sidebar--item:hover
+      background #fafafa
 
   .search
     margin 0.75rem
