@@ -21,6 +21,9 @@ export default new Vuex.Store({
     loadProponents (state,proponents) { // Load all propnents
       state.proponents = proponents;
     },
+    clearFocusProponents (state) {
+      state.focusProponents = [];
+    },
     focusProponents (state,text) { // Filter proponents by match
       const findRegex = new RegExp(text,'i'); // Ignore case
       state.focusProponents = state.proponents.filter((d) => {

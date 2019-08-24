@@ -13,8 +13,8 @@
 
 <script>
 const clearSearch = function () {
-  this.value1 = '';
-  console.log(this);
+  this.value1 = ''; // Clear the form
+  this.$store.commit('clearFocusProponents'); // Clear store
 }
 
 const proponentChange = function (txt) {
