@@ -18,10 +18,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    loadProponents (state,proponents) {
+    loadProponents (state,proponents) { // Load all propnents
       state.proponents = proponents;
     },
-    focusProponents (state,text) {
+    focusProponents (state,text) { // Filter proponents by match
       const findRegex = new RegExp(text,'i'); // Ignore case
       state.focusProponents = state.proponents.filter((d) => {
         if (text.length < 1) { // If no text
@@ -30,7 +30,6 @@ export default new Vuex.Store({
           return findRegex.test(d.name); // Else check match
         }
       });
-      console.log(state.focusProponents);
     },
     loadProponentsCas (state,proponentsCas) {
       state.proponentsCas = proponentsCas;

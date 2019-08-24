@@ -1,7 +1,6 @@
 <template lang="pug">
 div
-  .home
-    HelloWorld(msg="Testing CAS")
+  h2 Testing CAS
 
   vs-divider
 
@@ -9,7 +8,6 @@ div
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
@@ -22,7 +20,6 @@ export default {
     }
   },
   components: {
-    HelloWorld
   },
   methods: {
     handleSubmit(e) {

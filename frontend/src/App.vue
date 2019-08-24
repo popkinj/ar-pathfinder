@@ -44,7 +44,6 @@
 <script>
 import ProponentSearch from "@/components/ProponentsSearch.vue";
 import request from 'request';
-import Noty from 'noty';
 
 const load = function () {
   let v = this;
