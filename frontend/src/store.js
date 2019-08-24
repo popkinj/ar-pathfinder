@@ -23,13 +23,14 @@ export default new Vuex.Store({
     },
     focusProponents (state,text) {
       const findRegex = new RegExp(text,'i'); // Ignore case
-      state.focusProponents = state.proponents.map((d) => {
+      state.focusProponents = state.proponents.filter((d) => {
         if (text.length < 1) { // If no text
           return false
         } else {
-          return findRegex.test(d.route); // Else check match
+          return findRegex.test(d.name); // Else check match
         }
       });
+      console.log(state.focusProponents);
     },
     loadProponentsCas (state,proponentsCas) {
       state.proponentsCas = proponentsCas;
