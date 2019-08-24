@@ -16,6 +16,7 @@
 
           .search
             ProponentSearch
+            ProponentList
 
           vs-sidebar-item(index="1" icon="home" class="page-home")
             router-link(to="/") Home
@@ -42,7 +43,8 @@
 </template>
 
 <script>
-import ProponentSearch from "@/components/ProponentsSearch.vue";
+import ProponentSearch from "@/components/ProponentSearch.vue";
+import ProponentList from "@/components/ProponentList.vue"
 import request from 'request';
 
 const load = function () {
@@ -60,7 +62,8 @@ const load = function () {
 
 export default {
   components: {
-    ProponentSearch
+    ProponentSearch,
+    ProponentList
   },
   data:()=>({
     active:true

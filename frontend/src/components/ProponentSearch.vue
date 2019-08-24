@@ -22,7 +22,7 @@ const proponentChange = function (txt) {
 }
 
 export default {
-  name: 'SearchProponent',
+  name: 'ProponentSearch',
   data:() => ({
     value1: ''
   }),
