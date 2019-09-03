@@ -60,6 +60,9 @@ export default new Vuex.Store({
     focusProponents: state => {
       return state.focusProponents;
     },
+    activeProponent: state => {
+      return state.activeProponent;
+    },
     proponentsCas: state => {
       return state.proponentsCas;
     },

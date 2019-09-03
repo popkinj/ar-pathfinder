@@ -14,6 +14,9 @@
             hr
             h5 Accounts Recievable Explorer
 
+          .active-proponent(v-if='$store.getters.activeProponent')
+            | {{$store.getters.activeProponent.name}}
+
           // - TODO: Add the active proponent header. Maybe make it wiggle when it is first added
           .search
             ProponentSearch
@@ -100,12 +103,25 @@ export default {
     -webkit-transition: margin-left 0.3s linear
 
     .vs-sidebar--items
+      padding-top 0
       border-top-style solid 
       border-color orange
       border-width 4px
 
     .vs-sidebar--item:hover
       background #fafafa
+
+  .active-proponent
+    color white
+    background #71d468
+    text-align center
+    overflow hidden
+    white-space nowrap 
+    text-overflow ellipsis
+    font-weight bolder
+    font-size 20px
+    padding 0.5rem 0.5rem 0.5rem 0.5rem
+    
 
   .search
     margin 0.75rem
