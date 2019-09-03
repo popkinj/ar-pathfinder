@@ -3,6 +3,7 @@ vs-list
   vs-list-item(
     v-for="proponent in $store.getters.focusProponents"
     v-on:click.native="selectProponent(proponent)"
+    :key="proponent.proponent_number"
     :subtitle="proponent.name"
   )
 </template>
@@ -12,7 +13,7 @@ vs-list
 const selectProponent = function (proponent) {
   this.$store.commit('clearFocusProponents');
   this.$store.commit('activeProponent',proponent);
-  // TODO: Clear the search input component. May require making the search text a store variable. Check what I did in the intercity application.
+  this.$root.$emit('clearSearch');
 }
 
 export default {

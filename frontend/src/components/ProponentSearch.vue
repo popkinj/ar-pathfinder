@@ -21,8 +21,17 @@ const proponentChange = function (txt) {
   this.$store.commit('focusProponents',txt);
 }
 
+const connect = function () {
+  const V = this;
+  this.$root.$on('clearSearch',function () {
+    V.value1 = ''; // Clear the form
+    V.$store.commit('clearFocusProponents'); // Clear store
+  });
+}
+
 export default {
   name: 'ProponentSearch',
+  mounted: connect,
   data:() => ({
     value1: ''
   }),
