@@ -159,6 +159,17 @@ getToken = (req,res) !->
         access_token: json.access_token
         expires_in: json.expires_in
 
+/* ## toQueryString
+  Flatten an object into an URL query style string
+  @param params {object} Key/value object of parameters
+  @return {string} String of parameters separated by "&"'s
+ */
+toQueryString = (params) ->
+  Object
+    .keys params
+    .map -> "#{encodeURIComponent(it)}=#{encodeURIComponent(params[it])}"
+    .join '&'
+
 /* ## proxyApi
   Proxy the CAS api to the dev server in the Openshift cluster.
   Must be called with the route and token like this
@@ -169,12 +180,16 @@ getToken = (req,res) !->
 proxyApi = (req,res) !->
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
   endpoint = req.params.endpoint 
-  token = req.query.token
+  params = toQueryString req.query
 
-  unless endpoint and token
+  console.log 'endpoint: ', endpoint
+
+  unless endpoint and req.query.token
     return res.send "Need a token and endpoint"
 
-  url = "#dev/api/#endpoint?token=#token"
+  url = "#dev/api/#endpoint?#params"
+  console.log "url: ", url
+
   request.get url, (err,code,body) !->
     if err
       console.error "Could not fetch token: ",err
