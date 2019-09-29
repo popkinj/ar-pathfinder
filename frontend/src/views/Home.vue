@@ -2,25 +2,29 @@
 div
   .header
     h2 Invoicing Pathfinder
+    h3(v-if='$store.getters.activeProponent')
+      | Accounts for <i>{{$store.getters.activeProponent.name}}</i>
+    GetToken
 
   vs-divider
 
 
   .content
-    .contacts.card
-      h4 Contact Information
-
     .invoices.card
-      h4 Invoices
+      h4 Accounts
 
     .fees.card
-      h4 Fees
+      h4 Contacts
+
+    .contacts.card
+      h4 Invoices
 
 
 </template>
 
 <script>
 // @ is an alias to /src
+import GetToken from '@/components/GetToken.vue';
 
 export default {
   name: 'home',
@@ -33,6 +37,7 @@ export default {
     }
   },
   components: {
+    GetToken
   },
   methods: {
     handleSubmit(e) {
@@ -48,6 +53,14 @@ export default {
 </script>
 
 <style lang="stylus">
+.header h3
+  margin-top 0.5rem
+
+#get-token-btn
+  position absolute
+  right 2rem
+  top 2rem
+
 .content
   display grid
   justify-content center
@@ -63,7 +76,6 @@ export default {
     padding 1rem
     margin 1rem
     box-shadow 3px 3px 3px #cfcfcf
-    // box-shadow 3px 3px 5px #888
     border-radius 5px
     border-style solid
     border-width 1px

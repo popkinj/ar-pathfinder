@@ -13,6 +13,7 @@ vs-list
 const selectProponent = function (proponent) {
   this.$store.commit('clearFocusProponents');
   this.$store.commit('activeProponent',proponent);
+  this.$store.commit('loadAccounts',proponent);
   this.$root.$emit('clearSearch');
 }
 

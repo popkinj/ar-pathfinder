@@ -48,7 +48,13 @@ setTimeout testingDB, 1000
   @param res {object} Node/Express response object
  */
 lost = (req,res) ->
-  res.status 404 .send '<p>Sorry... You must be lost &#x2639;.</p>'
+  console.log req.params
+  console.log req.query
+  if req.params['0'] is /\/api\/dev\// and not prod
+    req.params.endpoint = req.params['0'].replace '/api/dev/', ''
+    proxyApi ...
+  else
+    res.status 404 .send '<p>Sorry... You must be lost &#x2639;.</p>'
 
 /* ## testHtml
   Serving html file ala pug now
@@ -178,6 +184,7 @@ toQueryString = (params) ->
   @param res {object} Node/Express response object
  */
 proxyApi = (req,res) !->
+  console.log 'proxy'
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
   endpoint = req.params.endpoint 
   params = toQueryString req.query
@@ -227,6 +234,12 @@ getProponents = (req,res) !->
   pgPool.query 'select * from proponents', (err,data) ->
     res.json data
 
+/* ## api
+  TODO: Broker all CAS API requests.
+ */
+api = (req,res) !->
+
+
 
 # Configure and start server
 app = express!
@@ -240,12 +253,13 @@ app = express!
   .set 'view engine', 'pug'
   .set 'views', 'backend/pug'
   .get '/login', login # Not used yet
-  .get '/proponents', getProponents
+  .get '/proponents', getProponents # Get proponents from our local cache
   # .get '/test-html', testHtml # Not used yet
   # .get '/test-data', testData # Not used yet
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
-  .get '/api/dev/:endpoint', proxyApi
-  .get '/api/proponents', getProponentsLive
+  .get '/api/dev/:endpoint', proxyApi # All CAS call from development
+  .get '/api/proponents', getProponentsLive # TBD: Will deprecate
+  .get '/api/:endpoint', api # TBD: All CAS calls
   .get '*', lost
   .listen 8080

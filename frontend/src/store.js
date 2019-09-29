@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import request from 'request';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -9,9 +10,11 @@ export default new Vuex.Store({
     env: location.port == 8081 ? "development" : "production",
     search: '',
     proponentsCas: {},
-    proponents: [],
-    focusProponents: [],
-    activeProponent: null
+    proponents: [], // All proponents
+    focusProponents: [], // The list of proponents matching the search
+    activeProponent: null, // The currently selected proponent
+    accounts: [],
+    activeAccount: {} 
   },
   mutations: {
     loadProponents (state,proponents) { // Load all propnents
@@ -48,6 +51,30 @@ export default new Vuex.Store({
     },
     updateSearch (state,search) {
       state.search = search;
+    },
+    loadAccounts (state,proponent) {
+      // const url = this.getters.apiUrl;
+      // Formalate the url for the api call
+      const id = proponent.proponent_number;
+      const apiUrl = this.getters.apiUrl;
+      const token = this.getters.token;
+      const serverUrl = this.getters.serverUrl;
+      const url = `${serverUrl}${apiUrl}/parties/${id}/accs/?token=${token}`;
+      console.log(url);
+      request(url, {json:true}, (err,res) => {
+        if (err) {return console.error("Could not load accounts!")}
+        try {
+          const data = JSON.parse(res.body)
+          console.log(data);
+          state.accounts = data;
+        } catch (error) {
+          return console.error("Did not receive valid json for Proponents");
+        }
+
+      });
+    },
+    activeAccount (state,account) {
+      state.activeAccount = account;
     }
   },
   getters: {
