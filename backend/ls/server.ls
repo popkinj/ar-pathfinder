@@ -204,13 +204,16 @@ proxyApi = (req,res) !->
     dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
     "#dev/api/#endpoint?#params"
 
-  headers = do
-    Content-Type: 'application/json'
-    Authorization: "Bearer #token"
+  options = do
+    headers:
+      Content-Type: 'application/json'
+      Authorization: "Bearer #token"
+    url: url
 
   console.log "url: ", url
+  console.log "options: ", options
 
-  request.get url, headers, (err,code,body) !->
+  request.get options, (err,code,body) !->
     if err
       console.error "code: ",code
       console.error "body: ",body
