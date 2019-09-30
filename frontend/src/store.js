@@ -64,6 +64,8 @@ export default new Vuex.Store({
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
         try {
+          console.log("res: ",res)
+          console.log("res.body:", res.body)
           const data = JSON.parse(res.body)
           console.log(data);
           state.accounts = data;
