@@ -53,6 +53,9 @@ lost = (req,res) ->
   if req.params['0'] is /\/api\/dev\// and not prod
     req.params.endpoint = req.params['0'].replace '/api/dev/', ''
     proxyApi ...
+  else if req.params['0'] is /\/api\// and prod
+    req.params.endpoint = req.params['0'].replace '/api/', ''
+    proxyApi ...
   else
     res.status 404 .send '<p>Sorry... You must be lost &#x2639;.</p>'
 
@@ -234,12 +237,6 @@ getProponents = (req,res) !->
   pgPool.query 'select * from proponents', (err,data) ->
     res.json data
 
-/* ## api
-  TODO: Broker all CAS API requests.
- */
-api = (req,res) !->
-
-
 
 # Configure and start server
 app = express!
@@ -258,8 +255,8 @@ app = express!
   # .get '/test-data', testData # Not used yet
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
-  .get '/api/dev/:endpoint', proxyApi # All CAS call from development
+  .get '/api/dev/:endpoint', proxyApi # All CAS call from Development
   .get '/api/proponents', getProponentsLive # TBD: Will deprecate
-  .get '/api/:endpoint', api # TBD: All CAS calls
+  .get '/api/:endpoint', proxyApi # All CAS calls in Production
   .get '*', lost
   .listen 8080
