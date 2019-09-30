@@ -56,7 +56,10 @@ export default new Vuex.Store({
       // const url = this.getters.apiUrl;
       // Formalate the url for the api call
       const id = proponent.proponent_number;
+
+      // TODO: Deprecate and just use /api
       const apiUrl = this.getters.apiUrl;
+
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
       const url = `${serverUrl}${apiUrl}/parties/${id}/accs/?token=${token}`;
@@ -91,6 +94,7 @@ export default new Vuex.Store({
       return state.proponentsCas;
     },
     apiUrl: state => {
+      // TODO: Deprecate and just use /api
       return state.env === 'production' ? '/api' : '/api/dev'
     },
     serverUrl: state => {

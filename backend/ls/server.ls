@@ -210,13 +210,8 @@ proxyApi = (req,res) !->
       Authorization: "Bearer #token"
     url: url
 
-  console.log "url: ", url
-  console.log "options: ", options
-
   request.get options, (err,code,body) !->
     if err
-      console.error "code: ",code
-      console.error "body: ",body
       console.error "Could not fetch data: ",err
       res.json access_token: false
     else
@@ -270,6 +265,7 @@ app = express!
   # .get '/test-data', testData # Not used yet
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
+  # TODO: Deprecate and just use /api
   .get '/api/dev/:endpoint', proxyApi # All CAS call from Development
   .get '/api/proponents', getProponentsLive # TBD: Will deprecate
   .get '/api/:endpoint', proxyApi # All CAS calls in Production
