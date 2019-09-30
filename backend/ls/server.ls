@@ -189,11 +189,12 @@ toQueryString = (params) ->
 proxyApi = (req,res) !->
 
   endpoint = req.params.endpoint 
+  token = req.query.token
   params = toQueryString req.query
 
   console.log 'endpoint: ', endpoint
 
-  unless endpoint and req.query.token
+  unless endpoint and token
     return res.send "Need a token and endpoint"
 
   url = if prod
@@ -203,9 +204,13 @@ proxyApi = (req,res) !->
     dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
     "#dev/api/#endpoint?#params"
 
+  headers = do
+    Content-Type: 'application/json'
+    Authorization: "Bearer #token"
+
   console.log "url: ", url
 
-  request.get url, (err,code,body) !->
+  request.get url, headers, (err,code,body) !->
     if err
       console.error "Could not fetch token: ",err
       res.json access_token: false
