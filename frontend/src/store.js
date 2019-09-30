@@ -60,17 +60,12 @@ export default new Vuex.Store({
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
       const url = `${serverUrl}${apiUrl}/parties/${id}/accs/?token=${token}`;
-      console.log(url);
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
         try {
-          console.log("res: ",res)
-          console.log("res.body:", res.body)
-          const data = JSON.parse(res.body)
-          console.log(data);
-          state.accounts = data;
+          state.accounts = res.body.items;
         } catch (error) {
-          return console.error("Did not receive valid json for Proponents");
+          return console.error("Did not receive valid json for Accounts");
         }
 
       });
