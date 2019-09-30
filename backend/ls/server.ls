@@ -187,8 +187,7 @@ toQueryString = (params) ->
   @param res {object} Node/Express response object
  */
 proxyApi = (req,res) !->
-  console.log 'proxy'
-  dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+
   endpoint = req.params.endpoint 
   params = toQueryString req.query
 
@@ -197,7 +196,13 @@ proxyApi = (req,res) !->
   unless endpoint and req.query.token
     return res.send "Need a token and endpoint"
 
-  url = "#dev/api/#endpoint?#params"
+  url = if prod
+    cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
+    "#cas/cfs/#endpoint?#params"
+  else
+    dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+    "#dev/api/#endpoint?#params"
+
   console.log "url: ", url
 
   request.get url, (err,code,body) !->
