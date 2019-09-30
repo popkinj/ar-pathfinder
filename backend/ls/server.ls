@@ -212,7 +212,9 @@ proxyApi = (req,res) !->
 
   request.get url, headers, (err,code,body) !->
     if err
-      console.error "Could not fetch token: ",err
+      console.error "code: ",code
+      console.error "body: ",body
+      console.error "Could not fetch data: ",err
       res.json access_token: false
     else
       res.json JSON.parse body
