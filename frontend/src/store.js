@@ -53,19 +53,17 @@ export default new Vuex.Store({
       state.search = search;
     },
     loadAccounts (state,proponent) {
-      // const url = this.getters.apiUrl;
       // Formalate the url for the api call
       const id = proponent.proponent_number;
 
       // TODO: Deprecate and just use /api
-      const apiUrl = this.getters.apiUrl;
-
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
-      const url = `${serverUrl}${apiUrl}/parties/${id}/accs/?token=${token}`;
+      const url = `${serverUrl}/api/parties/${id}/accs/?token=${token}`;
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
         try {
+          console.log(res.body.items);
           state.accounts = res.body.items;
         } catch (error) {
           return console.error("Did not receive valid json for Accounts");
@@ -92,10 +90,6 @@ export default new Vuex.Store({
     },
     proponentsCas: state => {
       return state.proponentsCas;
-    },
-    apiUrl: state => {
-      // TODO: Deprecate and just use /api
-      return state.env === 'production' ? '/api' : '/api/dev'
     },
     serverUrl: state => {
       return state.env === 'production' ?

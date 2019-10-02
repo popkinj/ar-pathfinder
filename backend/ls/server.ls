@@ -48,12 +48,7 @@ setTimeout testingDB, 1000
   @param res {object} Node/Express response object
  */
 lost = (req,res) ->
-  console.log req.params
-  console.log req.query
-  if req.params['0'] is /\/api\/dev\// and not prod
-    req.params.endpoint = req.params['0'].replace '/api/dev/', ''
-    proxyApi ...
-  else if req.params['0'] is /\/api\// and prod
+  if req.params['0'] is /\/api\//
     req.params.endpoint = req.params['0'].replace '/api/', ''
     proxyApi ...
   else
@@ -266,7 +261,7 @@ app = express!
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
   # TODO: Deprecate and just use /api
-  .get '/api/dev/:endpoint', proxyApi # All CAS call from Development
+  # .get '/api/dev/:endpoint', proxyApi # All CAS call from Development
   .get '/api/proponents', getProponentsLive # TBD: Will deprecate
   .get '/api/:endpoint', proxyApi # All CAS calls in Production
   .get '*', lost
