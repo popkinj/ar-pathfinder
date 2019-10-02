@@ -55,10 +55,10 @@
           scale: 0.45
         });
         // Formalate the url for the api call
-        const apiUrl = this.$store.getters.apiUrl;
         const token = this.$store.getters.token;
         const serverUrl = this.$store.getters.serverUrl;
-        const url = `${serverUrl}${apiUrl}/proponents?token=${token}`;
+        const url = `${serverUrl}/api/proponents?token=${token}`;
+        console.log(url);
 
         request(url, {json: true}, function (err,res,proponents) {
           console.log("body: ",proponents);
