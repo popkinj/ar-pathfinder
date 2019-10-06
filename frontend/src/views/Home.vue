@@ -11,7 +11,10 @@ div
 
   .content
     .invoices.card
-      h4 Accounts
+      .header
+        span.pre Account: 
+        span.name(v-if='$store.getters.activeAccount')
+          | {{$store.getters.activeAccount.account_description}}
 
     .fees.card
       h4 Contacts
@@ -40,14 +43,6 @@ export default {
     GetToken
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault();
-      var s = this.$store; // global state object
-      var query = {url: this.url,data: this.data,headers: this.headers,type: this.type};
-      this.$http.post(`${s.getters.serverUrl}/testing`,query).then((res) => {
-        console.log(res.body);
-      });
-    }
   }
 }
 </script>

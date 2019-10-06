@@ -56,7 +56,6 @@ export default new Vuex.Store({
       // Formalate the url for the api call
       const id = proponent.proponent_number;
 
-      // TODO: Deprecate and just use /api
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
       const url = `${serverUrl}/api/parties/${id}/accs/?token=${token}`;
@@ -65,6 +64,7 @@ export default new Vuex.Store({
         try {
           console.log(res.body.items);
           state.accounts = res.body.items;
+          state.activeAccount = res.body.items[0];
         } catch (error) {
           return console.error("Did not receive valid json for Accounts");
         }
@@ -87,6 +87,12 @@ export default new Vuex.Store({
     },
     activeProponent: state => {
       return state.activeProponent;
+    },
+    accounts: state => {
+      return state.accounts;
+    },
+    activeAccount: state => {
+      return state.activeAccount;
     },
     proponentsCas: state => {
       return state.proponentsCas;
