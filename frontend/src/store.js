@@ -62,16 +62,17 @@ export default new Vuex.Store({
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
         try {
-          console.log(res.body.items);
           state.accounts = res.body.items;
           state.activeAccount = res.body.items[0];
         } catch (error) {
-          return console.error("Did not receive valid json for Accounts");
+          const msg = `Could not obtain accounts for ${proponent.name}`;
+          this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
+          return console.error(msg);
         }
 
       });
     },
-    activeAccount (state,account) {
+    activeAccount (state,account) { // Not used yet
       state.activeAccount = account;
     }
   },

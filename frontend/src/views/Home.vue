@@ -29,8 +29,16 @@ div
 // @ is an alias to /src
 import GetToken from '@/components/GetToken.vue';
 
+const connect = function () {
+  this.$store.subscribe((mutation,state) => {
+    console.log(mutation);
+    console.log(state);
+  });
+};
+
 export default {
   name: 'home',
+  mounted: connect,
   data() {
     return {
       url:"",
