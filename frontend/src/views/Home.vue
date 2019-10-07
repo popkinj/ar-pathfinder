@@ -10,7 +10,7 @@ div
 
 
   .content
-    .invoices.card
+    .account.card
       .header
         span.pre Account: 
         span.name(v-if='$store.getters.activeAccount')
@@ -26,10 +26,10 @@ div
         span.site-province {{$store.getters.activeSite.province}}
         .site-postal-code {{$store.getters.activeSite.postal_code}}
 
-    .fees.card
+    .contacts.card
       h4 Contacts
 
-    .contacts.card
+    .invoices.card
       h4 Invoices
 
 
@@ -85,7 +85,7 @@ export default {
   justify-content center
   grid-template-columns 50% 50%
 
-  .contacts
+  .invoices
     grid-column-start 1
     grid-column-end 3
 
