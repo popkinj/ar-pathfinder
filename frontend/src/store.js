@@ -13,8 +13,10 @@ export default new Vuex.Store({
     proponents: [], // All proponents
     focusProponents: [], // The list of proponents matching the search
     activeProponent: null, // The currently selected proponent
-    accounts: [],
-    activeAccount: {} 
+    accounts: [], // All accounts
+    activeAccount: {}, // Currently selected account
+    sites: [], // The list of proponent sites
+    activeSite: {} // The currently selected site
   },
   mutations: {
     loadProponents (state,proponents) { // Load all propnents
@@ -61,10 +63,12 @@ export default new Vuex.Store({
       const url = `${serverUrl}/api/parties/${id}/accs/?token=${token}`;
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
-        try {
+        try { // If this is a valid items array
           state.accounts = res.body.items;
-          state.activeAccount = res.body.items[0];
-        } catch (error) {
+
+          // Default behaviour is to activate the first account
+          this.commit('activeAccount', res.body.items[0]);
+        } catch (error) { // If no items array we got an error
           const msg = `Could not obtain accounts for ${proponent.name}`;
           this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
           return console.error(msg);
@@ -72,8 +76,34 @@ export default new Vuex.Store({
 
       });
     },
-    activeAccount (state,account) { // Not used yet
+    activeAccount (state,account) {
       state.activeAccount = account;
+    },
+    loadSites (state,proponent) {
+      // Formalate the url for the api call
+      const party = proponent.party_number;
+      const token = this.getters.token;
+      const serverUrl = this.getters.serverUrl;
+      const account = this.getters.activeAccount.account_number;
+      const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/?token=${token}`;
+
+      request(url, {json:true}, (err,res) => {
+        if (err) {return console.error("Could not load accounts!")}
+        try { // If this is a valid items array
+          state.sites = res.body.items;
+
+          // Default behaviour is to activate the first account
+          this.commit('activeSite', res.body.items[0]);
+        } catch (error) { // If no items array we got an error
+          const msg = `Could not obtain sites for account ${account}`;
+          this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
+          return console.error(msg);
+        }
+
+      });
+    },
+    activeSite (state,site) {
+      state.activeSite = site;
     }
   },
   getters: {
@@ -94,6 +124,12 @@ export default new Vuex.Store({
     },
     activeAccount: state => {
       return state.activeAccount;
+    },
+    sites: state => {
+      return state.sites;
+    },
+    activeSite: state => {
+      return state.activeSite;
     },
     proponentsCas: state => {
       return state.proponentsCas;

@@ -15,6 +15,16 @@ div
         span.pre Account: 
         span.name(v-if='$store.getters.activeAccount')
           | {{$store.getters.activeAccount.account_description}}
+      vs-divider
+      .site(v-if='$store.getters.activeSite')
+        .site-header Site:
+        .site-name {{$store.getters.activeSite.site_name}}
+        .site-address1 {{$store.getters.activeSite.address_line_1}}
+        .site-address2 {{$store.getters.activeSite.address_line_2}}
+        .site-address3 {{$store.getters.activeSite.address_line_3}}
+        span.site-city {{$store.getters.activeSite.city}}, 
+        span.site-province {{$store.getters.activeSite.province}}
+        .site-postal-code {{$store.getters.activeSite.postal_code}}
 
     .fees.card
       h4 Contacts
@@ -30,9 +40,15 @@ div
 import GetToken from '@/components/GetToken.vue';
 
 const connect = function () {
-  this.$store.subscribe((mutation,state) => {
-    console.log(mutation);
-    console.log(state);
+  this.$store.subscribe((mutation) => {
+    switch (mutation.type) {
+      case 'activeProponent':
+        this.$store.commit('loadAccounts',mutation.payload);
+        break;
+      case 'activeAccount':
+        this.$store.commit('loadSites',mutation.payload)
+        break
+    }
   });
 };
 
