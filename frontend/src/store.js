@@ -12,11 +12,11 @@ export default new Vuex.Store({
     proponentsCas: {},
     proponents: [], // All proponents
     focusProponents: [], // The list of proponents matching the search
-    activeProponent: null, // The currently selected proponent
+    activeProponent: {}, // The currently selected proponent
     accounts: [], // All accounts
-    activeAccount: null, // Currently selected account
+    activeAccount: {}, // Currently selected account
     sites: [], // The list of proponent sites
-    activeSite: null, // The currently selected site
+    activeSite: {}, // The currently selected site
     contacts: []
   },
   mutations: {
@@ -62,7 +62,6 @@ export default new Vuex.Store({
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
       const url = `${serverUrl}/api/parties/${id}/accs/?token=${token}`;
-      console.log("load accounts")
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
         try { // If this is a valid items array
