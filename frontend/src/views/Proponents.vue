@@ -57,11 +57,9 @@
         // Formalate the url for the api call
         const token = this.$store.getters.token;
         const serverUrl = this.$store.getters.serverUrl;
-        const url = `${serverUrl}/api/proponents?token=${token}`;
-        console.log(url);
+        const url = `${serverUrl}/api/parties?token=${token}`;
 
         request(url, {json: true}, function (err,res,proponents) {
-          console.log("body: ",proponents);
           if (err) {
             return console.error("Could not get data",err);
           }
