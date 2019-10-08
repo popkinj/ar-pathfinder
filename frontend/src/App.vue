@@ -14,7 +14,7 @@
             hr
             h5 Accounts Recievable Explorer
 
-          .active-proponent(v-if='$store.getters.activeProponent')
+          .active-proponent(v-if='$store.getters.activeProponent.name')
             | {{$store.getters.activeProponent.name}}
 
           // - TODO: Add the active proponent header. Maybe make it wiggle when it is first added
@@ -28,17 +28,9 @@
           vs-sidebar-item(index="2" icon="people_outline" class="page-proponents")
             router-link(to="/proponents") All Proponents - Testing
 
-          vs-sidebar-item(index="3" icon="attach_money" class="page-fees")
-            router-link(to="/fees") Fees
-
-          vs-sidebar-item(index="4" icon="library_books" class="page-invoices")
+          vs-sidebar-item(index="3" icon="library_books" class="page-invoices")
             router-link(to="/invoices") Invoices
 
-          vs-sidebar-item(index="5" icon="trending_up" class="page-revenue-report")
-            router-link(to="/revenue-report") Revenue Report
-
-          vs-sidebar-item(index="6" icon="vertical_split" class="page-gl-detail-report")
-            router-link(to="/gl-detail-report") GL Detail Report
     .page
       keep-alive
         transition(name="fade", mode="out-in")

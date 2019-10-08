@@ -27,28 +27,10 @@ var router = new Router({
       meta: {title: 'AR Proponents'}
     },
     {
-      path: '/fees',
-      name: 'fees',
-      component: () => import('./views/Fees.vue'),
-      meta: {title: 'Fees'}
-    },
-    {
       path: '/invoices',
       name: 'invoices',
       component: () => import('./views/Invoices.vue'),
       meta: {title: 'AR Invoices'}
-    },
-    {
-      path: '/revenue-report',
-      name: 'revenue-report',
-      component: () => import('./views/RevenueReport.vue'),
-      meta: {title: 'Revenue Report'}
-    },
-    {
-      path: '/gl-detail-report',
-      name: 'gl-detail-report',
-      component: () => import('./views/GLDetailReport.vue'),
-      meta: {title: 'GL Detail Report'}
     }
   ]
 })
