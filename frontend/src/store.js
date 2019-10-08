@@ -14,9 +14,10 @@ export default new Vuex.Store({
     focusProponents: [], // The list of proponents matching the search
     activeProponent: null, // The currently selected proponent
     accounts: [], // All accounts
-    activeAccount: {}, // Currently selected account
+    activeAccount: null, // Currently selected account
     sites: [], // The list of proponent sites
-    activeSite: {} // The currently selected site
+    activeSite: null, // The currently selected site
+    contacts: []
   },
   mutations: {
     loadProponents (state,proponents) { // Load all propnents
@@ -61,6 +62,7 @@ export default new Vuex.Store({
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
       const url = `${serverUrl}/api/parties/${id}/accs/?token=${token}`;
+      console.log("load accounts")
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
         try { // If this is a valid items array
@@ -104,6 +106,28 @@ export default new Vuex.Store({
     },
     activeSite (state,site) {
       state.activeSite = site;
+    },
+    loadContacts (state,place) {
+      // Formalate the url for the api call
+      const site = place.site_number;
+      const token = this.getters.token;
+      const serverUrl = this.getters.serverUrl;
+
+      const party = this.getters.activeProponent.proponent_number;
+
+      const account = this.getters.activeAccount.account_number;
+      const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/${site}/conts/?token=${token}`;
+
+      request(url, {json:true}, (err,res) => {
+        if (err) {return console.error("Could not load accounts!")}
+        try { // If this is a valid items array
+          state.contacts = res.body.items;
+        } catch (error) { // If no items array we got an error
+          const msg = `Could not obtain sites contacts for account ${account}`;
+          this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
+          return console.error(msg);
+        }
+      });
     }
   },
   getters: {
@@ -130,6 +154,9 @@ export default new Vuex.Store({
     },
     activeSite: state => {
       return state.activeSite;
+    },
+    contacts: state => {
+      return state.contacts;
     },
     proponentsCas: state => {
       return state.proponentsCas;

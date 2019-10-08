@@ -12,12 +12,10 @@ div
   .content
     .account.card
       .header
-        span.pre Account: 
         span.name(v-if='$store.getters.activeAccount')
           | {{$store.getters.activeAccount.account_description}}
       vs-divider
       .site(v-if='$store.getters.activeSite')
-        .site-header Site:
         .site-name {{$store.getters.activeSite.site_name}}
         .site-address1 {{$store.getters.activeSite.address_line_1}}
         .site-address2 {{$store.getters.activeSite.address_line_2}}
@@ -27,10 +25,23 @@ div
         .site-postal-code {{$store.getters.activeSite.postal_code}}
 
     .contacts.card
-      h4 Contacts
+      vs-table(stripe :data="$store.getters.contacts")
+        template(slot='thead')
+          vs-th First Name
+          vs-th Middle Name
+          vs-th Last Name
+          vs-th Phone
+          vs-th Email
+        template
+          vs-tr(:key="indextr" v-for="(tr,indextr) in $store.getters.contacts")
+            vs-td {{tr.first_name}}
+            vs-td {{tr.middle_name}}
+            vs-td {{tr.last_name}}
+            vs-td {{tr.phone_number}}
+            vs-td {{tr.email_address}}
 
     .invoices.card
-      h4 Invoices
+      .header Invoices
 
 
 </template>
@@ -47,7 +58,10 @@ const connect = function () {
         break;
       case 'activeAccount':
         this.$store.commit('loadSites',mutation.payload)
-        break
+        break;
+      case 'activeSite':
+        this.$store.commit('loadContacts',mutation.payload)
+        break;
     }
   });
 };
@@ -72,6 +86,7 @@ export default {
 </script>
 
 <style lang="stylus">
+
 .header h3
   margin-top 0.5rem
 
@@ -83,7 +98,7 @@ export default {
 .content
   display grid
   justify-content center
-  grid-template-columns 50% 50%
+  grid-template-columns 30% 70%
 
   .invoices
     grid-column-start 1
@@ -94,11 +109,15 @@ export default {
     height 20rem
     padding 1rem
     margin 1rem
+    font-size 14px
     box-shadow 3px 3px 3px #cfcfcf
     border-radius 5px
     border-style solid
     border-width 1px
     border-color #d9d9d9
+
+    .header
+      font-size 20px
 
 form
   margin-top 3rem

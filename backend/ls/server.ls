@@ -262,7 +262,7 @@ app = express!
   .get '/api/get-token', getToken
   # TODO: Deprecate and just use /api
   # .get '/api/dev/:endpoint', proxyApi # All CAS call from Development
-  .get '/api/proponents', getProponentsLive # TBD: Will deprecate
+  # .get '/api/proponents', getProponentsLive # TBD: Will deprecate
   .get '/api/:endpoint', proxyApi # All CAS calls in Production
   .get '*', lost
   .listen 8080
