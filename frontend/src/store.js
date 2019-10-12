@@ -111,9 +111,7 @@ export default new Vuex.Store({
       const site = place.site_number;
       const token = this.getters.token;
       const serverUrl = this.getters.serverUrl;
-
       const party = this.getters.activeProponent.proponent_number;
-
       const account = this.getters.activeAccount.account_number;
       const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/${site}/conts/?token=${token}`;
 

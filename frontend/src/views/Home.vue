@@ -2,8 +2,10 @@
 div
   .header
     h2 Invoicing Pathfinder
-    h3(v-if='$store.getters.activeProponent')
+    h3(v-if='$store.getters.activeProponent.name')
       | Accounts for <i>{{$store.getters.activeProponent.name}}</i>
+    MoreOptions(options='accounts')
+
     GetToken
 
   vs-divider
@@ -27,16 +29,12 @@ div
     .contacts.card
       vs-table(stripe :data="$store.getters.contacts")
         template(slot='thead')
-          vs-th First Name
-          vs-th Middle Name
-          vs-th Last Name
+          vs-th Name
           vs-th Phone
           vs-th Email
         template
           vs-tr(:key="indextr" v-for="(tr,indextr) in $store.getters.contacts")
-            vs-td {{tr.first_name}}
-            vs-td {{tr.middle_name}}
-            vs-td {{tr.last_name}}
+            vs-td {{tr.full_name}}
             vs-td {{tr.phone_number}}
             vs-td {{tr.email_address}}
 
@@ -49,6 +47,7 @@ div
 <script>
 // @ is an alias to /src
 import GetToken from '@/components/GetToken.vue';
+import MoreOptions from '@/components/MoreOptions.vue';
 
 const connect = function () {
   this.$store.subscribe((mutation) => {
@@ -78,7 +77,8 @@ export default {
     }
   },
   components: {
-    GetToken
+    GetToken,
+    MoreOptions
   },
   methods: {
   }
