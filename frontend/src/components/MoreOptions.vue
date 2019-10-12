@@ -1,8 +1,10 @@
 <template lang="pug">
-  .more-options
-    .option(
-      v-for='option in options'
-    ) {{option}}
+  vs-icon(
+    icon='mood'
+  )
+    //- .option(
+    //-   v-for='option in options'
+    //- ) {{option.account_description}}
 </template>
 
 <script>

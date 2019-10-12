@@ -4,7 +4,6 @@ div
     h2 Invoicing Pathfinder
     h3(v-if='$store.getters.activeProponent.name')
       | Accounts for <i>{{$store.getters.activeProponent.name}}</i>
-    MoreOptions(options='accounts')
 
     GetToken
 
@@ -14,8 +13,12 @@ div
   .content
     .account.card
       .header
-        span.name(v-if='$store.getters.activeAccount')
+        span.name(v-if='$store.getters.activeAccount.account_description')
           | {{$store.getters.activeAccount.account_description}}
+        MoreOptions(
+          :options='$store.getters.accounts'
+          v-if='$store.getters.activeProponent.name'
+        )
       vs-divider
       .site(v-if='$store.getters.activeSite')
         .site-name {{$store.getters.activeSite.site_name}}
