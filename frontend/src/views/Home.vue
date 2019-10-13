@@ -16,8 +16,9 @@ div
         span.name(v-if='$store.getters.activeAccount.account_description')
           | {{$store.getters.activeAccount.account_description}}
         MoreOptions(
-          :options='$store.getters.accounts'
           v-if='$store.getters.activeProponent.name'
+          :options='$store.getters.accounts'
+          type='account'
         )
       vs-divider
       .site(v-if='$store.getters.activeSite')
