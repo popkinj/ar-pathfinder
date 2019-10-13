@@ -1,11 +1,17 @@
 <template lang="pug">
-  span.options
-    vs-icon(
-      :icon='icon'
-    )
-    //- .option(
-    //-   v-for='option in options'
-    //- ) {{option.account_description}}
+  .options
+    vs-dropdown
+      vs-button.indicator(
+        class='option-btn'
+        :icon='icon'
+        color='primary'
+        type='flat'
+      )
+      vs-dropdown-menu(vs-trigger-click=true)
+        vs-dropdown-item(
+          v-for='option in options'
+          :key='option.account_number'
+        ) {{option.account_description}}
 </template>
 
 <script>
@@ -43,7 +49,7 @@ const chooseToolTip = function (options,type) {
   switch (options.length) {
     case 0: return `Create a new ${type}`;
     case 1: return `Create a new ${type}`;
-    case 2: return `There are ${more} more ${type}s`;
+    case 2: return `There is ${more} more ${type}`;
     case 3: return `There are ${more} more ${type}s`;
     case 4: return `There are ${more} more ${type}s`;
     case 5: return `There are ${more} more ${type}s`;
@@ -57,15 +63,24 @@ const chooseToolTip = function (options,type) {
 
 export default {
   name: 'MoreOptions',
+  props:['options','type'],
   data: function () {
     return {
       icon: chooseIcon(this.options),
-      type: chooseToolTip(this.options,this.type)
+      toolTip: chooseToolTip(this.options,this.type),
     }
   }
 }
 </script>
 
 <style lang="stylus">
+.options button button
+  margin-left 0.3rem
+  width 25px !important
+  height 25px !important
+  padding 2px
+
+  i
+    font-size 1.2rem
 
 </style>

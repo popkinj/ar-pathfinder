@@ -15,6 +15,7 @@ div
       .header
         span.name(v-if='$store.getters.activeAccount.account_description')
           | {{$store.getters.activeAccount.account_description}}
+
         MoreOptions(
           v-if='$store.getters.activeProponent.name'
           :options='$store.getters.accounts'
@@ -121,6 +122,8 @@ export default {
     border-color #d9d9d9
 
     .header
+      display flex
+      align-items center
       font-size 20px
 
 form
