@@ -61,6 +61,9 @@ const chooseToolTip = function (options,type) {
   }
 }
 
+// TODO: Apparently you can't pass a function below
+// I think I'll pass the functions through methods and
+// have the icon calculation happen within the template
 export default {
   name: 'MoreOptions',
   props:['options','type'],
