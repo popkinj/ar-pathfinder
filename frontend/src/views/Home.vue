@@ -55,6 +55,7 @@ import GetToken from '@/components/GetToken.vue';
 import MoreOptions from '@/components/MoreOptions.vue';
 
 const connect = function () {
+
   this.$store.subscribe((mutation) => {
     switch (mutation.type) {
       case 'activeProponent':

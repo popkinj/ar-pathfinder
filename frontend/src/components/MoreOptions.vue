@@ -1,17 +1,16 @@
 <template lang="pug">
   .options
-    vs-dropdown
-      vs-button.indicator(
-        class='option-btn'
-        :icon='chooseIcon(options)'
-        color='primary'
-        type='flat'
-      )
-      vs-dropdown-menu(vs-trigger-click=true)
-        vs-dropdown-item(
-          v-for='option in options'
-          :key='option.account_number'
-        ) {{option.account_description}}
+    vs-tooltip(
+      :text='chooseToolTip(options,type)'
+      position='right'
+    )
+      .testing
+        vs-button.indicator(
+          class='option-btn'
+          :icon='chooseIcon(options)'
+          color='primary'
+          type='flat'
+        ) text
 </template>
 
 <script>
@@ -77,13 +76,17 @@ export default {
 </script>
 
 <style lang="stylus">
-.options button button
-  margin-left 0.3rem
-  width 25px !important
-  height 25px !important
-  padding 2px
+.options
+  z-index 200000
 
-  i
-    font-size 1.2rem
+
+// .options button button
+//   margin-left 0.3rem
+//   width 25px !important
+//   height 25px !important
+//   padding 2px
+
+//   i
+//     font-size 1.2rem
 
 </style>
