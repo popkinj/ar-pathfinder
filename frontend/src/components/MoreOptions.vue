@@ -1,16 +1,12 @@
 <template lang="pug">
   .options
-    vs-tooltip(
-      :text='chooseToolTip(options,type)'
-      position='right'
+    vs-button.indicator(
+      v-tooltip='chooseToolTip(options,type)'
+      class='option-btn'
+      :icon='chooseIcon(options)'
+      color='primary'
+      type='flat'
     )
-      .testing
-        vs-button.indicator(
-          class='option-btn'
-          :icon='chooseIcon(options)'
-          color='primary'
-          type='flat'
-        ) text
 </template>
 
 <script>
@@ -70,23 +66,25 @@ export default {
   },
   data: function () {
     return {
+      msg: 'testing'
     }
   }
 }
 </script>
 
 <style lang="stylus">
-.options
-  z-index 200000
 
+.options button
+  margin-left 0.3rem
+  width 25px !important
+  height 25px !important
+  opacity 0.5
+  padding 2px
 
-// .options button button
-//   margin-left 0.3rem
-//   width 25px !important
-//   height 25px !important
-//   padding 2px
+  i
+    font-size 1.2rem
 
-//   i
-//     font-size 1.2rem
+.options button:hover
+  opacity 1
 
 </style>

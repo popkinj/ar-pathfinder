@@ -73,9 +73,12 @@ export default {
 </script>
 
 <style lang=stylus>
+// Colours
+background = #036
+
 .sidebar
   header
-    background #036
+    background background
     color white
     background-image url("/bcgov-header-vert-MD.png")
     background-repeat no-repeat
@@ -139,12 +142,46 @@ export default {
   -moz-osx-font-smoothing grayscale
   /* text-align center */
   color #2c3e50
-/* 
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983 */
+
+
+/*
+ * Custom tooltip styling
+ * Styling copied from [here](https://github.com/Akryum/v-tooltip#style-examples).
+ */
+.tooltip .tooltip-inner {
+  background: background;
+  color: white;
+  border-radius: 16px;
+  padding: 5px 10px 4px;
+}
+
+.tooltip .tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 5px;
+  border-color: background;
+  z-index: 1;
+}
+
+.tooltip[x-placement^="top"] {
+  margin-bottom: 5px;
+}
+
+.tooltip[x-placement^="top"] .tooltip-arrow {
+  border-width: 5px 5px 0 5px;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  bottom: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tooltip[x-placement^="bottom"] {
+  margin-top: 5px;
+}
+
 </style>

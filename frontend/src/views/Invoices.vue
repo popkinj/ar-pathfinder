@@ -1,7 +1,8 @@
 <template lang="pug">
   div.invoices
     h2 Invoices
-    .testing blah
+    vs-tooltip(text='testing')
+      vs-button testing
     MoreOptions(
       :options='$store.getters.accounts'
       type='testing'

@@ -30,13 +30,14 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "supervisor": "^0.12.0",
+    "v-tooltip": "^2.0.2",
     "vue": "^2.6.8",
     "vue-cli-plugin-source-dir": "^0.1.0",
     "vue-livescript-loader": "0.0.1",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.6.8",
-    "vuesax": "^3.8.18",
+    "vuesax": "^3.10.5",
     "vuex": "^3.1.0"
   },
   "engine": {
