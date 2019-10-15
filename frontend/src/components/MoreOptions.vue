@@ -3,7 +3,7 @@
     vs-dropdown
       vs-button.indicator(
         class='option-btn'
-        :icon='icon'
+        :icon='chooseIcon(options)'
         color='primary'
         type='flat'
       )
@@ -61,16 +61,16 @@ const chooseToolTip = function (options,type) {
   }
 }
 
-// TODO: Apparently you can't pass a function below
-// I think I'll pass the functions through methods and
-// have the icon calculation happen within the template
+
 export default {
   name: 'MoreOptions',
   props:['options','type'],
+  methods: {
+    chooseIcon,
+    chooseToolTip
+  },
   data: function () {
     return {
-      icon: chooseIcon(this.options),
-      toolTip: chooseToolTip(this.options,this.type),
     }
   }
 }
