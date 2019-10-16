@@ -19,6 +19,9 @@ div
         MoreOptions(
           v-if='$store.getters.activeProponent.name'
           :options='$store.getters.accounts'
+          :currentOption='$store.getters.activeAccount'
+          optionName='account_description'
+          optionKey='account_number'
           type='account'
         )
       vs-divider

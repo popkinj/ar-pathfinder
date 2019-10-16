@@ -1,12 +1,17 @@
 <template lang="pug">
   .options
-    vs-button.indicator(
+    vs-dropdown(
+      'vs-custom-content vs-trigger-click'
       v-tooltip='chooseToolTip(options,type)'
-      class='option-btn'
-      :icon='chooseIcon(options)'
-      color='primary'
-      type='flat'
     )
+      a(href.prevent)
+        vs-icon(:icon='chooseIcon(options)')
+
+      vs-dropdown-menu
+        vs-dropdown-item(
+          v-for='option in otherOptions'
+          :key='option[optionName]'
+        ) {{option[optionName]}}
 </template>
 
 <script>
@@ -54,19 +59,36 @@ const chooseToolTip = function (options,type) {
     case 9: return `There are ${more} more ${type}s`;
     default: return `There are 10 or more ${type}s`;
   }
-}
+};
 
+const filterOthers = function (options,currentOption,optionName) {
+  return options.filter(option => {
+    return (option[optionName] != currentOption[optionName]);
+  });
+};
+
+const optionClicked = function (type) {
+  this.$root.$emit('optionButtonClicked',type);
+};
 
 export default {
   name: 'MoreOptions',
-  props:['options','type'],
+  props:[
+    'options',
+    'currentOption',
+    'optionName',
+    'type'
+  ],
   methods: {
     chooseIcon,
-    chooseToolTip
+    chooseToolTip,
+    optionClicked
   },
   data: function () {
+    // Remove the active option from option list.
+    const others = filterOthers(this.options,this.currentOption,this.optionName);
     return {
-      msg: 'testing'
+      otherOptions: others
     }
   }
 }
