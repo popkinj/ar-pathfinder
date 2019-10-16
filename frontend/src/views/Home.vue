@@ -59,6 +59,7 @@ import MoreOptions from '@/components/MoreOptions.vue';
 
 const connect = function () {
 
+  // Listen to state changes
   this.$store.subscribe((mutation) => {
     switch (mutation.type) {
       case 'activeProponent':
@@ -70,6 +71,20 @@ const connect = function () {
         break;
       case 'activeSite':
         this.$store.commit('loadContacts',mutation.payload)
+        break;
+    }
+  });
+
+  /* Listen to events
+   * The 'MoreOptions' component emits 'option-selected' when an option
+   * is selected. Commit the appropriate mutation depending on the
+   * option type
+   */
+  this.$root.$on('option-selected', function (option,type) {
+    switch (type) {
+      case 'account':
+        console.log(this);
+        console.log('option', option);
         break;
     }
   });
