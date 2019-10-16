@@ -62,6 +62,7 @@ const connect = function () {
   this.$store.subscribe((mutation) => {
     switch (mutation.type) {
       case 'activeProponent':
+        this.$store.commit('clearAccounts');
         this.$store.commit('loadAccounts',mutation.payload);
         break;
       case 'activeAccount':

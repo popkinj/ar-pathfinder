@@ -80,6 +80,13 @@ export default new Vuex.Store({
     activeAccount (state,account) {
       state.activeAccount = account;
     },
+    clearAccounts (state) {
+      state.accounts = [];
+      state.activeAccount = {};
+      state.sites = [];
+      state.activeSite = {};
+      state.contacts = [];
+    },
     loadSites (state,proponent) {
       // Formalate the url for the api call
       const party = proponent.party_number;
