@@ -7,7 +7,8 @@
       a(href.prevent)
         vs-icon(:icon='chooseIcon(options)')
 
-      vs-dropdown-menu
+      vs-dropdown-menu.dropdown-accounts
+        h4 Switch Accounts
         vs-dropdown-item(
           v-for='(option,index) in filterOthers(options,currentOption,optionName)'
           :key='index'
@@ -108,16 +109,28 @@ export default {
 </script>
 
 <style lang="stylus">
+background = #036
 
-.options button
-  margin-left 0.3rem
-  width 25px !important
-  height 25px !important
-  opacity 0.5
-  padding 2px
+.options
+  button
+    margin-left 0.3rem
+    width 25px !important
+    height 25px !important
+    opacity 0.5
+    padding 2px
 
   i
     font-size 1.2rem
+
+.dropdown-accounts
+  h4 
+    text-align center
+    color background
+    opacity 0.6
+    border-bottom 1px solid rgba(0, 0, 0, 0.1)
+    padding 0px 5px 5px 5px
+    font-family 'Avenir', 'Helvetica', 'Arial', 'sans-serif'
+    font-weight 400
 
 .options button:hover
   opacity 1

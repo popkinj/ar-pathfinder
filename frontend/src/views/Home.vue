@@ -154,6 +154,10 @@ export default {
       align-items center
       font-size 20px
 
+  .site .site-name
+    font-size 1.1rem
+    margin-bottom 0.2rem
+
 form
   margin-top 3rem
 li
