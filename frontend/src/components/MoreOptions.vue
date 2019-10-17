@@ -9,7 +9,7 @@
 
       vs-dropdown-menu
         vs-dropdown-item(
-          v-for='(option,index) in otherOptions'
+          v-for='(option,index) in filterOthers(options,currentOption,optionName)'
           :key='index'
           @click='optionClicked(option,type)'
         ) {{option[optionName]}}
@@ -62,14 +62,11 @@ const chooseToolTip = function (options,type) {
   }
 };
 
-// const filterOthers = function (options,currentOption,optionName) {
-//   return options.filter(option => {
-//     console.log('currentOption',currentOption);
-//     console.log('cycledOption',option);
-
-//     return (option[optionName] != currentOption[optionName]);
-//   });
-// };
+const filterOthers = function (options,currentOption,optionName) {
+  return options.filter(option => {
+    return (option[optionName] != currentOption[optionName]);
+  });
+};
 
 const optionClicked = function (option,type) {
   this.$root.$emit('option-selected',option, type);
@@ -83,16 +80,11 @@ export default {
     'optionName',
     'type'
   ],
-  // updated: function () {
-  //   this.otherOptions = filterOthers(this.options,this.currentOption,this.optionName);
-  //   console.log('this.options',this.options);
-  //   console.log('this.otherOptions',this.otherOptions);
-  //   console.log(this);
-  // },
   methods: {
     chooseIcon,
     chooseToolTip,
-    optionClicked
+    optionClicked,
+    filterOthers
   },
   data: function () {
     // Remove the active option from option list.

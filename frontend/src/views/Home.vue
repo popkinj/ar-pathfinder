@@ -15,6 +15,7 @@ div
       .header
         span.name(v-if='$store.getters.activeAccount.account_description')
           | {{$store.getters.activeAccount.account_description}}
+        .header(v-else) Accounts
 
         MoreOptions(
           v-if='$store.getters.activeProponent.name'
@@ -24,8 +25,8 @@ div
           optionKey='account_number'
           type='account'
         )
-      vs-divider
-      .site(v-if='$store.getters.activeSite')
+      .site(v-if='$store.getters.activeSite.site_name')
+        vs-divider
         .site-name {{$store.getters.activeSite.site_name}}
         .site-address1 {{$store.getters.activeSite.address_line_1}}
         .site-address2 {{$store.getters.activeSite.address_line_2}}
@@ -35,7 +36,10 @@ div
         .site-postal-code {{$store.getters.activeSite.postal_code}}
 
     .contacts.card
-      vs-table(stripe :data="$store.getters.contacts")
+      vs-table(
+        stripe
+        :data="$store.getters.contacts"
+      )
         template(slot='thead')
           vs-th Name
           vs-th Phone
@@ -83,8 +87,7 @@ const connect = function () {
   this.$root.$on('option-selected', function (option,type) {
     switch (type) {
       case 'account':
-        console.log(this);
-        console.log('option', option);
+        console.log('account change', option);
         break;
     }
   });
