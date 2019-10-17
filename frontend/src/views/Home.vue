@@ -38,6 +38,7 @@ div
     .contacts.card
       vs-table(
         stripe
+        v-if='$store.getters.contacts.length > 0'
         :data="$store.getters.contacts"
       )
         template(slot='thead')
@@ -49,6 +50,7 @@ div
             vs-td {{tr.full_name}}
             vs-td {{tr.phone_number}}
             vs-td {{tr.email_address}}
+      .header(v-else) Contacts
 
     .invoices.card
       .header Invoices

@@ -62,12 +62,24 @@ const chooseToolTip = function (options,type) {
   }
 };
 
+/* ## filterOthers
+  Create an array of every option aside from the active one.
+  @param options {object} Array of all options
+  @param currentOption {object} The active option
+  @param optionName {string} The parameter name to filter on.
+  @return {object} Array of options, excluding the active one.
+ */
 const filterOthers = function (options,currentOption,optionName) {
   return options.filter(option => {
     return (option[optionName] != currentOption[optionName]);
   });
 };
 
+/* ## optionClicked
+  Signal an event that one of the options has been selected.
+  @param option {object} The selected option object
+  @param type {string} The type of option
+ */
 const optionClicked = function (option,type) {
   this.$root.$emit('option-selected',option, type);
 };
