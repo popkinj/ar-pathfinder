@@ -73,6 +73,7 @@ const connect = function () {
         this.$store.commit('loadAccounts',mutation.payload);
         break;
       case 'activeAccount':
+        this.$store.commit('clearSites');
         this.$store.commit('loadSites',mutation.payload)
         break;
       case 'activeSite':
@@ -89,6 +90,8 @@ const connect = function () {
   this.$root.$on('option-selected', function (option,type) {
     switch (type) {
       case 'account':
+        this.$store.commit('activeAccount',option);
+        console.log(this);
         console.log('account change', option);
         break;
     }

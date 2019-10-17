@@ -94,6 +94,7 @@ export default new Vuex.Store({
       const serverUrl = this.getters.serverUrl;
       const account = this.getters.activeAccount.account_number;
       const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/?token=${token}`;
+      console.log("url: ",url);
 
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}
@@ -101,7 +102,9 @@ export default new Vuex.Store({
           state.sites = res.body.items;
 
           // Default behaviour is to activate the first account
-          this.commit('activeSite', res.body.items[0]);
+          if (res.body.items.length > 0) { // Only if there is one.
+            this.commit('activeSite', res.body.items[0]);
+          }
         } catch (error) { // If no items array we got an error
           const msg = `Could not obtain sites for account ${account}`;
           this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
@@ -112,6 +115,11 @@ export default new Vuex.Store({
     },
     activeSite (state,site) {
       state.activeSite = site;
+    },
+    clearSites (state) {
+      state.sites = [];
+      state.activeSite = {};
+      state.contacts = [];
     },
     loadContacts (state,place) {
       // Formalate the url for the api call
