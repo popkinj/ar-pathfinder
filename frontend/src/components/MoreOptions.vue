@@ -14,6 +14,10 @@
           :key='index'
           @click='optionClicked(option,type)'
         ) {{option[optionName]}}
+        .footer
+          vs-button(type='line' line-position='bottom')
+            vs-icon(icon='add_box')
+            | New
 </template>
 
 <script>
@@ -25,16 +29,17 @@
 const chooseIcon = function (options) {
   // This is verbose but the fastest.
   switch (options.length) {
-    case 0: return 'library-add';
-    case 1: return 'library-add';
-    case 2: return 'filter_2';
-    case 3: return 'filter_3';
-    case 4: return 'filter_4';
-    case 5: return 'filter_5';
-    case 6: return 'filter_6';
-    case 7: return 'filter_7';
-    case 8: return 'filter_8';
-    case 9: return 'filter_9';
+    case 0: return 'library_add';
+    case 1: return 'library_add';
+    case 2: return 'filter_1';
+    case 3: return 'filter_2';
+    case 4: return 'filter_3';
+    case 5: return 'filter_4';
+    case 6: return 'filter_5';
+    case 7: return 'filter_6';
+    case 8: return 'filter_7';
+    case 9: return 'filter_8';
+    case 10: return 'filter_9';
     default: return 'filter_9_plus';
   }
 };
@@ -51,15 +56,15 @@ const chooseToolTip = function (options,type) {
   switch (options.length) {
     case 0: return `Create a new ${type}`;
     case 1: return `Create a new ${type}`;
-    case 2: return `There is ${more} more ${type}`;
-    case 3: return `There are ${more} more ${type}s`;
-    case 4: return `There are ${more} more ${type}s`;
-    case 5: return `There are ${more} more ${type}s`;
-    case 6: return `There are ${more} more ${type}s`;
-    case 7: return `There are ${more} more ${type}s`;
-    case 8: return `There are ${more} more ${type}s`;
-    case 9: return `There are ${more} more ${type}s`;
-    default: return `There are 10 or more ${type}s`;
+    case 2: return `There is ${more} more ${type} available`;
+    case 3: return `There are ${more} more ${type}s available`;
+    case 4: return `There are ${more} more ${type}s available`;
+    case 5: return `There are ${more} more ${type}s available`;
+    case 6: return `There are ${more} more ${type}s available`;
+    case 7: return `There are ${more} more ${type}s available`;
+    case 8: return `There are ${more} more ${type}s available`;
+    case 9: return `There are ${more} more ${type}s available`;
+    default: return `There are 10 or more ${type}s available`;
   }
 };
 
@@ -125,12 +130,32 @@ background = #036
 .dropdown-accounts
   h4 
     text-align center
-    color background
-    opacity 0.6
+    opacity 0.4
     border-bottom 1px solid rgba(0, 0, 0, 0.1)
     padding 0px 5px 5px 5px
     font-family 'Avenir', 'Helvetica', 'Arial', 'sans-serif'
-    font-weight 400
+    font-weight 200
+    font-size 14px
+  .footer
+    font-size 14px
+    border-top 1px solid rgba(0, 0, 0, 0.1)
+    padding 0.4rem 0.1rem 0.1rem 0
+    text-align right
+  button
+    font-size 14px !important
+    padding 0.2rem
+
+    i
+      font-size 16px !important
+     
+    .vs-button-text
+      display flex
+      align-items center
+      opacity 0.5
+    .vs-button-text:hover
+      opacity 1
+
+
 
 .options button:hover
   opacity 1
