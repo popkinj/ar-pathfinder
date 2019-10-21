@@ -15,9 +15,38 @@
           @click='optionClicked(option,type)'
         ) {{option[optionName]}}
         .footer
-          vs-button(type='line' line-position='bottom')
+          vs-input(
+            v-if='addingNew'
+            :placeholder="'Enter '+type+' name'"
+            v-model='value'
+          )
+          vs-button(
+            type='line'
+            v-if='!addingNew'
+            @click='addingNew = !addingNew'
+            line-position='bottom'
+          )
             vs-icon(icon='add_box')
             | New
+           
+          vs-button(
+            type='line'
+            color='danger'
+            v-if='addingNew'
+            @click='addingNew = !addingNew'
+            line-position='bottom'
+          )
+            vs-icon(icon='cancel')
+            | Cancel
+
+          vs-button(
+            type='line'
+            v-if='addingNew'
+            @click='addingNew = !addingNew'
+            line-position='bottom'
+          )
+            vs-icon(icon='check')
+            | Save
 </template>
 
 <script>
@@ -107,7 +136,8 @@ export default {
   data: function () {
     // Remove the active option from option list.
     return {
-      otherOptions: []
+      addingNew: false,
+      value: ''
     }
   }
 }
@@ -128,6 +158,8 @@ background = #036
     font-size 1.2rem
 
 .dropdown-accounts
+  transition width 0.5s, height 0.5s
+
   h4 
     text-align center
     opacity 0.4
@@ -141,6 +173,7 @@ background = #036
     border-top 1px solid rgba(0, 0, 0, 0.1)
     padding 0.4rem 0.1rem 0.1rem 0
     text-align right
+
   button
     font-size 14px !important
     padding 0.2rem
@@ -151,9 +184,16 @@ background = #036
     .vs-button-text
       display flex
       align-items center
-      opacity 0.5
+      opacity 0.7
     .vs-button-text:hover
       opacity 1
+
+  .vs-input
+    max-width 10rem
+    margin 0.3rem
+
+    .input-span-placeholder
+      text-align left
 
 
 
