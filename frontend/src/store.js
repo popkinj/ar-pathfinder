@@ -94,7 +94,6 @@ export default new Vuex.Store({
       const serverUrl = this.getters.serverUrl;
       const account = this.getters.activeAccount.account_number;
       const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/?token=${token}`;
-      console.log("url: ",url);
 
       request(url, {json:true}, (err,res) => {
         if (err) {return console.error("Could not load accounts!")}

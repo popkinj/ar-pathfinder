@@ -42,7 +42,7 @@
           vs-button(
             type='line'
             v-if='addingNew'
-            @click='addingNew = !addingNew'
+            @click='saveNewOption(value)'
             line-position='bottom'
           )
             vs-icon(icon='check')
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 /* ## chooseIcon
   Based on the number of options choose the icon.
   @param options {object} Array of optional choices
@@ -125,6 +126,7 @@ export default {
     'options',
     'currentOption',
     'optionName',
+    'saveNewOption',
     'type'
   ],
   methods: {

@@ -21,6 +21,7 @@ div
           v-if='$store.getters.activeProponent.name'
           :options='$store.getters.accounts'
           :currentOption='$store.getters.activeAccount'
+          :saveNewOption='saveNewAccount',
           optionName='account_description'
           optionKey='account_number'
           type='account'
@@ -59,9 +60,12 @@ div
 </template>
 
 <script>
-// @ is an alias to /src
+// Components..  @ is an alias to /src
 import GetToken from '@/components/GetToken.vue';
 import MoreOptions from '@/components/MoreOptions.vue';
+
+// Dependencies
+import request from 'request';
 
 const connect = function () {
 
@@ -98,6 +102,19 @@ const connect = function () {
   });
 };
 
+/* ## saveNewAccount
+  Save a new account to CAS
+  @param value {string} The new account
+ */
+const saveNewAccount = function (value) {
+  const token = this.getters.token;
+  const proponent = this.getters.activeProponent;
+  const server = this.$store.getters.serverUrl;
+  const url = `${server}/api/partiesi/${proponent}/accs/${value}/?token=${token}`;
+
+  console.log(url);
+}
+
 export default {
   name: 'home',
   mounted: connect,
@@ -114,6 +131,7 @@ export default {
     MoreOptions
   },
   methods: {
+    saveNewAccount
   }
 }
 </script>
