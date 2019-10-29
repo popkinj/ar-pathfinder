@@ -104,15 +104,21 @@ const connect = function () {
 
 /* ## saveNewAccount
   Save a new account to CAS
-  @param value {string} The new account
+  @param value {string} The new account name
  */
 const saveNewAccount = function (value) {
-  const token = this.getters.token;
-  const proponent = this.getters.activeProponent;
+  const token = this.$store.getters.token;
+  const proponent = this.$store.getters.activeProponent.proponent_number;
   const server = this.$store.getters.serverUrl;
-  const url = `${server}/api/partiesi/${proponent}/accs/${value}/?token=${token}`;
+  const url = `${server}/api/parties/${proponent}/accs/?token=${token}`;
+  const data = {json: {"account_description": value}};
 
-  console.log(url);
+  request.post(url,data,function(err,res,body) {
+    console.log('err',err);
+    console.log('res',res);
+    console.log('body',body);
+
+  });
 }
 
 export default {

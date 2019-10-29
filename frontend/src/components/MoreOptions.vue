@@ -186,7 +186,7 @@ background = #036
     .vs-button-text
       display flex
       align-items center
-      opacity 0.7
+      opacity 0.8
     .vs-button-text:hover
       opacity 1
 

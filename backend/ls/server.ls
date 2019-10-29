@@ -44,15 +44,30 @@ setTimeout testingDB, 1000
 
 /* ## lost
   Router for anything we don't have an end point for.
+  If heading to the API... Forward on. Otherwise Decline.
   @param req {object} Node/Express request object
   @param res {object} Node/Express response object
  */
 lost = (req,res) ->
   if req.params['0'] is /\/api\//
     req.params.endpoint = req.params['0'].replace '/api/', ''
-    proxyApi ...
+    readCas ...
   else
     res.status 404 .send '<p>Sorry... You must be lost &#x2639;.</p>'
+
+/* ## lostWrite
+  Router for all POST and PUT requests.
+  If heading to the API... Forward on. Otherwise Decline.
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+lostWrite = (req,res) ->
+  if req.params['0'] is /\/api\//
+    req.params.endpoint = req.params['0'].replace '/api/', ''
+    writeCas ...
+  else
+    res.status 404 .send '<p>Sorry... You must be lost &#x2639;.</p>'
+
 
 /* ## testHtml
   Serving html file ala pug now
@@ -174,14 +189,18 @@ toQueryString = (params) ->
     .map -> "#{encodeURIComponent(it)}=#{encodeURIComponent(params[it])}"
     .join '&'
 
-/* ## proxyApi
+
+/* ## readCas
   Proxy the CAS api to the dev server in the Openshift cluster.
-  Must be called with the route and token like this
-  `/api/dev/{endpoint here}?token={token here}`
+  All Get requests are passed through with appropriate url and parameters.
+  If on a development computer the request goes to the Dev server within
+  the Openshift cluster. If in Dev the request gets sent to CAS.
+  Must be called with the route and token like this.
+  `/api/{endpoint here}?token={token here}`
   @param req {object} Node/Express request object
   @param res {object} Node/Express response object
  */
-proxyApi = (req,res) !->
+readCas = (req,res) !->
 
   endpoint = req.params.endpoint 
   token = req.query.token
@@ -211,6 +230,52 @@ proxyApi = (req,res) !->
       res.json access_token: false
     else
       res.json JSON.parse body
+
+
+/* ## writeCas
+  Proxy the CAS api to the dev server in the Openshift cluster.
+  All PUT and POST requests are passed through with appropriate url and parameters.
+  If on a development computer the request goes to the Dev server within
+  the Openshift cluster. If in Dev the request gets sent to CAS.
+  Must be called with the route and token like this.
+  `/api/{endpoint here}?token={token here}`
+  @param req {object} Node/Express request object
+  @param res {object} Node/Express response object
+ */
+writeCas = (req,res) !->
+  method = if req.route.methods.post then 'post' else 'put'
+  console.log(method);
+
+  endpoint = req.params.endpoint 
+  token = req.query.token
+  params = toQueryString req.query
+
+  console.log 'endpoint: ', endpoint
+
+  unless endpoint and token
+    return res.send "Need a token and endpoint"
+
+  url = if prod
+    cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
+    "#cas/cfs/#endpoint?#params"
+  else
+    dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+    "#dev/api/#endpoint?#params"
+
+  options = do
+    headers:
+      Content-Type: 'application/json'
+      Authorization: "Bearer #token"
+    url: url
+
+  # request.get options, (err,code,body) !->
+  #   if err
+  #     console.error "Could not fetch data: ",err
+  #     res.json access_token: false
+  #   else
+  #     res.json JSON.parse body
+
+
 
 /* ## getProponentsLive
   Get proponents directly from CAS
@@ -260,6 +325,8 @@ app = express!
   # .get '/test-data', testData # Not used yet
   # .post '/testing', testing # Not used yet
   .get '/api/get-token', getToken
-  .get '/api/:endpoint', proxyApi # All CAS api calls
+  .get '/api/:endpoint', readCas # All CAS read api calls
+  .post '/api/:endpoint', writeCas # All CAS write api calls
   .get '*', lost
+  .post '*', lostWrite
   .listen 8080
