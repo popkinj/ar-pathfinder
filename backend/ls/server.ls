@@ -245,7 +245,8 @@ readCas = (req,res) !->
 writeCas = (req,res) !->
   method = if req.route.methods.post then 'post' else 'put'
   console.log(method);
-  console.log(req.body);
+  console.log(typeof req.body);
+
 
   endpoint = req.params.endpoint 
   token = req.query.token
@@ -268,7 +269,7 @@ writeCas = (req,res) !->
       Content-Type: 'application/json'
       Authorization: "Bearer #token"
     url: url
-    body: req.body
+    body: JSON.stringify req.body
 
   request[method] options, (err,code,body) !->
     if err
