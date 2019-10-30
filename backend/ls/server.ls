@@ -271,6 +271,8 @@ writeCas = (req,res) !->
     url: url
     body: JSON.stringify req.body
 
+  console.log options
+
   request[method] options, (err,code,body) !->
     if err
       console.error 'Could not save data: ',err

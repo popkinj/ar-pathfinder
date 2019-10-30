@@ -150,11 +150,15 @@ background = #036
 
 .options
   button
+    cursor pointer
     margin-left 0.3rem
     width 25px !important
     height 25px !important
     opacity 0.5
     padding 2px
+
+  button:hover
+    opacity 1
 
   i
     font-size 1.2rem
@@ -198,8 +202,5 @@ background = #036
       text-align left
 
 
-
-.options button:hover
-  opacity 1
 
 </style>
