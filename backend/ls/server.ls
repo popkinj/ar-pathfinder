@@ -270,7 +270,7 @@ writeCas = (req,res) !->
       Content-Type: 'application/json'
       Authorization: "Bearer #token"
     url: url
-    body: JSON.stringify req.body
+    json: req.body
 
   console.log options
 
