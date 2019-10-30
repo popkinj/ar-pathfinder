@@ -227,7 +227,7 @@ readCas = (req,res) !->
   request.get options, (err,code,body) !->
     if err
       console.error "Could not fetch data: ",err
-      res.json access_token: false
+      res.json msg: 'Could not fetch data', err: err
     else
       res.json JSON.parse body
 
@@ -245,6 +245,7 @@ readCas = (req,res) !->
 writeCas = (req,res) !->
   method = if req.route.methods.post then 'post' else 'put'
   console.log(method);
+  console.log(req.body);
 
   endpoint = req.params.endpoint 
   token = req.query.token
@@ -267,13 +268,14 @@ writeCas = (req,res) !->
       Content-Type: 'application/json'
       Authorization: "Bearer #token"
     url: url
+    body: req.body
 
-  # request.get options, (err,code,body) !->
-  #   if err
-  #     console.error "Could not fetch data: ",err
-  #     res.json access_token: false
-  #   else
-  #     res.json JSON.parse body
+  request[method] options, (err,code,body) !->
+    if err
+      console.error 'Could not save data: ',err
+      res.json msg: 'Could not save data', err: err
+    else
+      res.json JSON.parse body
 
 
 

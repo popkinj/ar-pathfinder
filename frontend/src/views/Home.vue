@@ -111,7 +111,7 @@ const saveNewAccount = function (value) {
   const proponent = this.$store.getters.activeProponent.proponent_number;
   const server = this.$store.getters.serverUrl;
   const url = `${server}/api/parties/${proponent}/accs/?token=${token}`;
-  const data = {json: {"account_description": value}};
+  const data = {json: {"account_description": value, "proponent": proponent}};
 
   request.post(url,data,function(err,res,body) {
     console.log('err',err);
