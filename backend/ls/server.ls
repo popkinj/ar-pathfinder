@@ -281,7 +281,8 @@ writeCas = (req,res) !->
     else
       console.log "This is what we got", body
       console.log "Typeof ", typeof body
-      res.send "We created an account"
+      res.json body
+      # res.send "We created an account"
       # res.json JSON.parse body
 
 
