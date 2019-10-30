@@ -280,7 +280,8 @@ writeCas = (req,res) !->
       res.json msg: 'Could not save data', err: err
     else
       console.log "This is what we got", body
-      res.json JSON.parse body
+      res.send "We created an account"
+      # res.json JSON.parse body
 
 
 
