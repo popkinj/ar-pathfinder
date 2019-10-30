@@ -246,6 +246,7 @@ writeCas = (req,res) !->
   method = if req.route.methods.post then 'post' else 'put'
   console.log(method);
   console.log(typeof req.body);
+  console.log('req.body: ',req.body);
 
 
   endpoint = req.params.endpoint 
