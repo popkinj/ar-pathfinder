@@ -280,6 +280,7 @@ writeCas = (req,res) !->
       res.json msg: 'Could not save data', err: err
     else
       console.log "This is what we got", body
+      console.log "Typeof ", typeof body
       res.send "We created an account"
       # res.json JSON.parse body
 
