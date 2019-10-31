@@ -33,7 +33,7 @@
             type='line'
             color='danger'
             v-if='addingNew'
-            @click='addingNew = !addingNew'
+            @click='addingNew = !addingNew; value = ""'
             line-position='bottom'
           )
             vs-icon(icon='cancel')
@@ -42,7 +42,7 @@
           vs-button(
             type='line'
             v-if='addingNew'
-            @click='saveNewOption(value)'
+            @click='addingNew = !addingNew; saveClicked(value,saveNewOption);value = ""'
             line-position='bottom'
           )
             vs-icon(icon='check')
@@ -120,6 +120,17 @@ const optionClicked = function (option,type) {
   this.$root.$emit('option-selected',option, type);
 };
 
+const saveClicked = function (value,saveNewOption) {
+  saveNewOption(value);
+}
+
+const connect = function () {
+  console.log('current type: ',this.type);
+  this.$on('new-option-saved',function (type) {
+    console.log('type given to event: ',type);
+  });
+}
+
 export default {
   name: 'MoreOptions',
   props:[
@@ -133,7 +144,8 @@ export default {
     chooseIcon,
     chooseToolTip,
     optionClicked,
-    filterOthers
+    filterOthers,
+    saveClicked
   },
   data: function () {
     // Remove the active option from option list.
@@ -141,7 +153,8 @@ export default {
       addingNew: false,
       value: ''
     }
-  }
+  },
+  mounted: connect
 }
 </script>
 

@@ -60,6 +60,7 @@ div
 </template>
 
 <script>
+/* eslint-disable */
 // Components..  @ is an alias to /src
 import GetToken from '@/components/GetToken.vue';
 import MoreOptions from '@/components/MoreOptions.vue';
@@ -113,12 +114,14 @@ const saveNewAccount = function (value) {
   const url = `${server}/api/parties/${proponent}/accs/?token=${token}`;
   const data = {json: {"account_description": value, "proponent": proponent}};
 
-  request.post(url,data,function(err,res,body) {
-    console.log('err',err);
-    console.log('res',res);
-    console.log('body',body);
+  console.log(value);
+  // this.addingNew = true;
+  // request.post(url,data,function(err,res,body) {
+  //   console.log('err',err);
+  //   console.log('res',res);
+  //   console.log('body',body);
 
-  });
+  // });
 }
 
 export default {
