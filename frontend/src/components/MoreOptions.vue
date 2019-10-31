@@ -125,9 +125,14 @@ const saveClicked = function (value,saveNewOption) {
 }
 
 const connect = function () {
-  console.log('current type: ',this.type);
-  this.$on('new-option-saved',function (type) {
-    console.log('type given to event: ',type);
+  const v = this;
+  this.$root.$on('new-option-saved',function (type) {
+    if (v.type === type) {
+      /* TODO: If the options saved is from this component flag
+        the appropriate state variables.
+      */
+      console.log('type given to event: ',type);
+    }
   });
 }
 

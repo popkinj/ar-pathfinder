@@ -114,7 +114,11 @@ const saveNewAccount = function (value) {
   const url = `${server}/api/parties/${proponent}/accs/?token=${token}`;
   const data = {json: {"account_description": value, "proponent": proponent}};
 
-  console.log(value);
+  const v = this;
+  this.$root.$emit('new-option-saved','account');
+  // setTimeout(function () {
+  //   v.$emit('new-option-saved','account');
+  // },2000);
   // this.addingNew = true;
   // request.post(url,data,function(err,res,body) {
   //   console.log('err',err);
