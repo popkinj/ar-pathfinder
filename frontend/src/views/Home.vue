@@ -31,14 +31,13 @@ div
         .site-name(
           contenteditable='true'
           @input='saveSiteChange'
-        )
-          | {{$store.getters.activeSite.site_name}}
-        .site-address1 {{$store.getters.activeSite.address_line_1}}
-        .site-address2 {{$store.getters.activeSite.address_line_2}}
-        .site-address3 {{$store.getters.activeSite.address_line_3}}
-        span.site-city {{$store.getters.activeSite.city}}, 
-        span.site-province {{$store.getters.activeSite.province}}
-        .site-postal-code {{$store.getters.activeSite.postal_code}}
+        ) {{$store.getters.activeSite.site_name}}
+        .address-line-1 {{$store.getters.activeSite.address_line_1}}
+        .address-line-2 {{$store.getters.activeSite.address_line_2}}
+        .address-line-3 {{$store.getters.activeSite.address_line_3}}
+        span.city {{$store.getters.activeSite.city}}, 
+        span.province {{$store.getters.activeSite.province}}
+        .postal-code {{$store.getters.activeSite.postal_code}}
 
     .contacts.card
       vs-table(
@@ -120,16 +119,6 @@ const saveNewAccount = function (value) {
 
   const v = this;
   this.$root.$emit('new-option-saved','account');
-  // setTimeout(function () {
-  //   v.$emit('new-option-saved','account');
-  // },2000);
-  // this.addingNew = true;
-  // request.post(url,data,function(err,res,body) {
-  //   console.log('err',err);
-  //   console.log('res',res);
-  //   console.log('body',body);
-
-  // });
 }
 
 const saveSiteChange = function (value) {
