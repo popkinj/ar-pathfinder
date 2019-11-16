@@ -28,16 +28,16 @@ div
         )
       .site(v-if='$store.getters.activeSite.site_name')
         vs-divider
-        .site-name(
+        .site_name(
           contenteditable='true'
           @input='saveSiteChange'
         ) {{$store.getters.activeSite.site_name}}
-        .address-line-1 {{$store.getters.activeSite.address_line_1}}
-        .address-line-2 {{$store.getters.activeSite.address_line_2}}
-        .address-line-3 {{$store.getters.activeSite.address_line_3}}
+        .address_line_1 {{$store.getters.activeSite.address_line_1}}
+        .address_line_2 {{$store.getters.activeSite.address_line_2}}
+        .address_line_3 {{$store.getters.activeSite.address_line_3}}
         span.city {{$store.getters.activeSite.city}}, 
         span.province {{$store.getters.activeSite.province}}
-        .postal-code {{$store.getters.activeSite.postal_code}}
+        .postal_code {{$store.getters.activeSite.postal_code}}
 
     .contacts.card
       vs-table(
@@ -99,8 +99,6 @@ const connect = function () {
     switch (type) {
       case 'account':
         this.$store.commit('activeAccount',option);
-        console.log(this);
-        console.log('account change', option);
         break;
     }
   });
@@ -115,14 +113,26 @@ const saveNewAccount = function (value) {
   const proponent = this.$store.getters.activeProponent.proponent_number;
   const server = this.$store.getters.serverUrl;
   const url = `${server}/api/parties/${proponent}/accs/?token=${token}`;
-  const data = {json: {"account_description": value, "proponent": proponent}};
+  const data = {"account_description": value, "proponent": proponent};
 
-  const v = this;
-  this.$root.$emit('new-option-saved','account');
+  const v = this; // Save 
+  request.post({
+    url: url,
+    json: true,
+    body: data,
+  }, function (err,res,body) {
+    if (err) {
+      v.$root.$emit('new-option-failed','account'); // Emit this when Failed
+    } else {
+      v.$store.commit('addAccount', body);
+      v.$root.$emit('new-option-saved','account'); // Emit this when saved
+    }
+  });
 }
 
 const saveSiteChange = function (value) {
-  console.log(value.target.innerText);
+  console.log('text: ',value.target.innerText);
+  console.log('class: ',value.target.className);
 }
 
 export default {
@@ -183,7 +193,7 @@ export default {
       align-items center
       font-size 20px
 
-  .site .site-name
+  .site .site_name
     font-size 1.1rem
     margin-bottom 0.2rem
 

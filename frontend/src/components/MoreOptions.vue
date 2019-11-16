@@ -126,12 +126,25 @@ const saveClicked = function (value,saveNewOption) {
 
 const connect = function () {
   const v = this;
+
+  // Make sure the correct instance of this component
+  // responds to the appropriate event
   this.$root.$on('new-option-saved',function (type) {
     if (v.type === type) {
-      /* TODO: If the options saved is from this component flag
-        the appropriate state variables.
-      */
-      console.log('type given to event: ',type);
+      this.$vs.notify({
+        color: 'success',
+        title: 'Success',
+        text:`Saved ${type}.`
+      });
+    }
+  });
+  this.$root.$on('new-option-failed',function (type) {
+    if (v.type === type) {
+      this.$vs.notify({
+        color: 'danger',
+        title: 'Error',
+        text:`Failed to save ${type}.`
+      });
     }
   });
 }

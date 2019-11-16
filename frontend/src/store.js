@@ -77,6 +77,9 @@ export default new Vuex.Store({
 
       });
     },
+    addAccount (state,account) {
+      state.accounts.push(account);
+    },
     activeAccount (state,account) {
       state.activeAccount = account;
     },
