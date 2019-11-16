@@ -28,7 +28,11 @@ div
         )
       .site(v-if='$store.getters.activeSite.site_name')
         vs-divider
-        .site-name {{$store.getters.activeSite.site_name}}
+        .site-name(
+          contenteditable='true'
+          @input='saveSiteChange'
+        )
+          | {{$store.getters.activeSite.site_name}}
         .site-address1 {{$store.getters.activeSite.address_line_1}}
         .site-address2 {{$store.getters.activeSite.address_line_2}}
         .site-address3 {{$store.getters.activeSite.address_line_3}}
@@ -128,6 +132,10 @@ const saveNewAccount = function (value) {
   // });
 }
 
+const saveSiteChange = function (value) {
+  console.log(value.target.innerText);
+}
+
 export default {
   name: 'home',
   mounted: connect,
@@ -144,7 +152,8 @@ export default {
     MoreOptions
   },
   methods: {
-    saveNewAccount
+    saveNewAccount,
+    saveSiteChange
   }
 }
 </script>
