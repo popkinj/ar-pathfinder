@@ -26,12 +26,25 @@ div
           optionKey='account_number'
           type='account'
         )
+
       .site(v-if='$store.getters.activeSite.site_name')
         vs-divider
-        .site_name(
-          contenteditable='true'
-          @input='saveSiteChange'
-        ) {{$store.getters.activeSite.site_name}}
+        .header
+          span.site_name(
+            contenteditable='true'
+            @input='saveSiteChange'
+          ) {{$store.getters.activeSite.site_name}}
+
+          MoreOptions(
+            v-if='$store.getters.activeSite.site_name'
+            :options='$store.getters.sites'
+            :currentOption='$store.getters.activeSite'
+            :saveNewOption='saveNewSite',
+            optionName='site_name'
+            optionKey='site_number'
+            type='site'
+          )
+        
         .address_line_1 {{$store.getters.activeSite.address_line_1}}
         .address_line_2 {{$store.getters.activeSite.address_line_2}}
         .address_line_3 {{$store.getters.activeSite.address_line_3}}
@@ -100,6 +113,9 @@ const connect = function () {
       case 'account':
         this.$store.commit('activeAccount',option);
         break;
+      case 'site':
+        this.$store.commit('activeSite',option);
+        break;
     }
   });
 };
@@ -114,6 +130,33 @@ const saveNewAccount = function (value) {
   const server = this.$store.getters.serverUrl;
   const url = `${server}/api/parties/${proponent}/accs/?token=${token}`;
   const data = {"account_description": value, "proponent": proponent};
+
+  const v = this; // Save 
+  request.post({
+    url: url,
+    json: true,
+    body: data,
+  }, function (err,res,body) {
+    if (err) {
+      v.$root.$emit('new-option-failed','account'); // Emit this when Failed
+    } else {
+      v.$store.commit('addAccount', body);
+      v.$root.$emit('new-option-saved','account'); // Emit this when saved
+    }
+  });
+}
+
+/* ## saveNewSite
+  Save a new site to CAS
+  @param value {string} The new site name
+ */
+const saveNewSite = function (value) {
+  const token = this.$store.getters.token;
+  const proponent = this.$store.getters.activeProponent.proponent_number;
+  const account = this.$store.getters.activeAccount.account_number;
+  const server = this.$store.getters.serverUrl;
+  const url = `${server}/api/parties/${proponent}/accs/${account}/?token=${token}`;
+  const data = {"site_name": value};
 
   const v = this; // Save 
   request.post({
@@ -152,6 +195,7 @@ export default {
   },
   methods: {
     saveNewAccount,
+    saveNewSite,
     saveSiteChange
   }
 }
