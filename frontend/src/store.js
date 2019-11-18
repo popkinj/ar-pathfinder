@@ -115,6 +115,9 @@ export default new Vuex.Store({
 
       });
     },
+    addSite (state,site) {
+      state.sites.push(site);
+    },
     activeSite (state,site) {
       state.activeSite = site;
     },

@@ -156,6 +156,8 @@ const saveNewSite = function (value) {
   const account = this.$store.getters.activeAccount.account_number;
   const server = this.$store.getters.serverUrl;
   const url = `${server}/api/parties/${proponent}/accs/${account}/?token=${token}`;
+
+  // TODO: May need to enter placeholders for required data
   const data = {"site_name": value};
 
   const v = this; // Save 
@@ -167,7 +169,7 @@ const saveNewSite = function (value) {
     if (err) {
       v.$root.$emit('new-option-failed','account'); // Emit this when Failed
     } else {
-      v.$store.commit('addAccount', body);
+      v.$store.commit('addSite', body);
       v.$root.$emit('new-option-saved','account'); // Emit this when saved
     }
   });
