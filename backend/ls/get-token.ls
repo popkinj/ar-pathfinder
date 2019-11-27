@@ -23,7 +23,6 @@ cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
 url = cas
   .replace /\/\//, "//#id:#secret@" # Insert credentials into url
   .replace /$/, '/oauth/token' # Add token path
-console.log(url)
 
 # Make sure we have the credentials
 unless id and secret
@@ -37,3 +36,12 @@ request
       console.error 'body: ',body
       throw console.error err
     console.log JSON.parse(body).access_token
+
+/*
+  To make this modular
+ */
+ask = (callback) ->
+  request
+    .post url, payload , (err, res, body) -> callback err, body
+
+module.exports = {ask}
