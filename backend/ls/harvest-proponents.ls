@@ -1,3 +1,5 @@
 require! {
-  './get-token' # Maps to getToken
+  \request
 }
+
+console.log getToken

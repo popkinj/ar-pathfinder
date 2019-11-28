@@ -36,12 +36,3 @@ request
       console.error 'body: ',body
       throw console.error err
     console.log JSON.parse(body).access_token
-
-/*
-  To make this modular
- */
-ask = (callback) ->
-  request
-    .post url, payload , (err, res, body) -> callback err, body
-
-module.exports = {ask}
