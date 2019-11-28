@@ -48,6 +48,7 @@
     "dev": "node_modules/supervisor/lib/cli-wrapper.js -x node_modules/livescript/bin/lsc -w backend/ls/server.ls -e ls backend/ls/server.ls & vue-cli-service serve",
     "pack": "vue-cli-service serve",
     "get-token": "node_modules/livescript/bin/lsc backend/ls/get-token.ls",
+    "harvest-proponents": "node_modules/livescript/bin/lsc backend/ls/harvest-proponents.ls",
     "start": "node index.js",
     "build": "vue-cli-service build"
   },

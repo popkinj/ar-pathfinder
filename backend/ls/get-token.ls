@@ -1,5 +1,5 @@
 /* get-token.ls
-  Fetch a fresh CAS token
+  Fetch a fresh CAS token. This currently only works within Openshift... And can only be run via command line. It is very handy for testing CAS with CURL commands.
   Dependencies: 
     The following environmnent variables:
     - AR_PATHFINDER_CAS_ID
@@ -30,6 +30,7 @@ unless id and secret
 
 payload = form: grant_type: 'client_credentials'
 
+console.log url
 request
   .post url, payload , (err, res, body) ->
     if err
