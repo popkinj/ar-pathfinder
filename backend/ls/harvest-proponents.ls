@@ -15,9 +15,16 @@
 
 require! {
   request
+  async
 }
 
-getToken = (callback) ->
+/* ## getToken
+  Request a CAS oAuth token.
+  If in dev/local the request gets proxied through 
+  dev/openshift.
+  @param callback {function} Function to be called after a token has been granted or denied. The function will be passed 1. An error message if present.. null if not. 2. A token string.
+ */
+getToken = (callback) !->
 
   # Get the credentials
   id = process.env.AR_PATHFINDER_CAS_ID
@@ -57,3 +64,5 @@ getToken = (callback) ->
 
 # This is how to consume the getToken
 getToken (e,token) -> console.log token
+
+# TODO: Use the [async.doWhilst](https://caolan.github.io/async/v3/docs.html#doWhilst)
