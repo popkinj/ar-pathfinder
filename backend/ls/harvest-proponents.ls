@@ -14,9 +14,32 @@
  */
 
 require! {
+  pg
   request
-  async
 }
+
+/* Connect to the database
+  The database server varies in prod
+*/
+pgPool = new pg.Pool do
+  user: process.env.AR_PATHFINDER_USERNAME
+  database: process.env.AR_PATHFINDER_DATABASE
+  password: process.env.AR_PATHFINDER_PASSWORD
+  host: if prod then 'postgresql' else 'localhost'
+  port: 5432 
+  max: 10
+  idleTimeoutMillis: 30000
+
+
+/*
+  The oAuth token should be global because
+  it has to be renewed at regular intervals
+ */
+token = ''
+
+
+# Are we in prod or dev
+prod = if process.env.NODE_ENV is \production then yes else no
 
 /* ## getToken
   Request a CAS oAuth token.
@@ -32,8 +55,6 @@ getToken = (callback) !->
   cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
 
-  # Are we in prod or dev
-  prod = if process.env.NODE_ENV is \production then yes else no
 
   # Make sure we have the credentials
   unless id and secret and cas
@@ -62,7 +83,34 @@ getToken = (callback) !->
       catch
         callback e.message
 
-# This is how to consume the getToken
-getToken (e,token) -> console.log token
 
-# TODO: Use the [async.doWhilst](https://caolan.github.io/async/v3/docs.html#doWhilst)
+/* ## harvest
+  Request proponents from CAS.
+  The CAS API only dispenses 25 records at time.
+  Keep requesting propnents until all have been transfered.
+  This is an Async function
+  @param e {string} Error message if any. Null if no error
+  @param t {string} oAuth token
+ */
+harvest = (e,t) !->>
+  throw new Error e if  e
+  token := t # This will get refreshed on interval
+
+  /*
+    The offset value is the index used for requesting 
+    Proponents from CAS. Only 25 records can be downloaded
+    at a time... So the first request would be zero. The next
+    request would be 25... and so on.
+  */
+  res = await pgPool.query 'select count(*) from proponents_loading'
+  offset = res.rows.0.count
+
+
+
+# Get token then kickoff harvest
+getToken <| harvest
+
+
+
+
+# TODO: Renew token every 30 minutes
