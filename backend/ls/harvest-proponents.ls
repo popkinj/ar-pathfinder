@@ -15,6 +15,7 @@
 
 require! {
   pg
+  async
   request
 }
 
@@ -54,6 +55,8 @@ getToken = (callback) !->
   secret = process.env.AR_PATHFINDER_CAS_SECRET
   cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+  console.log "cas: #cas"
+  console.log "dev: #dev"
 
 
   # Make sure we have the credentials
@@ -104,6 +107,13 @@ harvest = (e,t) !->>
   */
   res = await pgPool.query 'select count(*) from proponents_loading'
   offset = res.rows.0.count
+
+  dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
+  url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
+
+  request url, (err,res,body) ->
+    if err then console.error err
+    console.log body
 
 
 
