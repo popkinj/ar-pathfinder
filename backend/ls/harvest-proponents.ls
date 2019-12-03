@@ -110,11 +110,34 @@ harvest = (e,t) !->>
 
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
   url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
+  hasMore = yes # This determines the end of the harvest
+  sql = '''
+    insert into proponents_loading
+    (name, proponent_number, business_number)
+    values 
+  '''
+
+  # TODO: Cycle until 'hasMore' is false
 
   request url, (err,res,body) ->
     if err then console.error err
-    console.log body
+    json = JSON.parse body # Fail here if not valid.. On purpose.
 
+    # Cycle through rows and form sql insert statement
+    for row in json.items
+      sql += """
+        (
+          '#{row.customer_name}',
+          '#{row.party_number}',
+          '#{row.business_number}'
+        ),
+      """
+    sql := sql.slice 0,-1
+    hasMore := json.hasMore
+
+    # TODO: Insert sql
+
+    console.log sql
 
 
 # Get token then kickoff harvest
