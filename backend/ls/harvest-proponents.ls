@@ -55,9 +55,6 @@ getToken = (callback) !->
   secret = process.env.AR_PATHFINDER_CAS_SECRET
   cas = process.env.AR_PATHFINDER_CAS_URL # The CAS API url
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
-  console.log "cas: #cas"
-  console.log "dev: #dev"
-
 
   # Make sure we have the credentials
   unless id and secret and cas
@@ -104,40 +101,71 @@ harvest = (e,t) !->>
     Proponents from CAS. Only 25 records can be downloaded
     at a time... So the first request would be zero. The next
     request would be 25... and so on.
+
+    Querying the database allows us to start and stop the
+    process midway.
   */
-  res = await pgPool.query 'select count(*) from proponents_loading'
-  offset = res.rows.0.count
+  try
+    res = await pgPool.query 'select count(*) from proponents_loading'
+    offset = parseInt res.rows.0.count
+  catch
+    console.error 'Failed to count downloaded Proponents', e
 
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
   url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
   hasMore = yes # This determines the end of the harvest
-  sql = '''
-    insert into proponents_loading
-    (name, proponent_number, business_number)
-    values 
-  '''
 
-  # TODO: Cycle until 'hasMore' is false
+  test = (callback) ->
+    console.log "testing hasMore", hasMore
+    callback !hasMore # XXX: Or this isn't firing
 
-  request url, (err,res,body) ->
-    if err then console.error err
-    json = JSON.parse body # Fail here if not valid.. On purpose.
+  iterator = (callback) ->
+    console.log "iterator: #offset"
+    request url, (err,res,body) ->>
+      if err then callback err # If request failed
 
-    # Cycle through rows and form sql insert statement
-    for row in json.items
-      sql += """
-        (
-          '#{row.customer_name}',
-          '#{row.party_number}',
-          '#{row.business_number}'
-        ),
-      """
-    sql := sql.slice 0,-1
-    hasMore := json.hasMore
+      try
+        json = JSON.parse body
+      catch # Throw error if not valid json
+        callback e
 
-    # TODO: Insert sql
+      # Set up the insert sql command
+      sql = '''
+        insert into proponents_loading
+        (name, proponent_number, business_number)
+        values 
+      '''
 
-    console.log sql
+      # Cycle through rows and form sql insert statement
+      for row in json.items
+        {customer_name,party_number,business_number} = row
+        customer_name = customer_name.replace /'/, "''"
+
+        sql += """
+          (
+            '#{customer_name}',
+            '#{party_number}',
+            '#{business_number}'
+          ),
+        """
+      sql = sql.slice 0,-1
+      hasMore := json.hasMore # global
+
+      try
+        await pgPool.query sql
+        console.log "inserted some rows"
+        offset := offset + 25
+        callback null #XXX: This isn't executing
+      catch
+        callback e
+
+
+  done = (err) ->
+    if err then console.error "Error: ", err
+    console.log 'Done'
+    pgPool.end!
+
+  async.doWhilst iterator, test, done
 
 
 # Get token then kickoff harvest
