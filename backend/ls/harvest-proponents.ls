@@ -33,10 +33,19 @@ pgPool = new pg.Pool do
 
 
 /*
-  The oAuth token should be global because
-  it has to be renewed at regular intervals
+  The oAuth token should be global because it has to
+  be renewed at regular intervals within different scopes.
  */
 token = ''
+
+/* ## refreshToken
+  This function handles the mutation of the global variable *token*
+  @param e {string} Error message if any. Null if no error
+  @param t {string} oAuth token
+ */
+refreshToken = (e,t) !->
+  throw new Error e if  e
+  token := t
 
 
 # Are we in prod or dev
@@ -93,8 +102,7 @@ getToken = (callback) !->
   @param t {string} oAuth token
  */
 harvest = (e,t) !->>
-  throw new Error e if  e
-  token := t # This will get refreshed on interval
+  refreshToken ... # Refresh the token
 
   /*
     The offset value is the index used for requesting 
@@ -115,9 +123,7 @@ harvest = (e,t) !->>
   url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
   hasMore = yes # This determines the end of the harvest
 
-  test = (callback) ->
-    console.log "testing hasMore", hasMore
-    callback !hasMore # XXX: Or this isn't firing
+  test = (callback) -> callback null, hasMore
 
   iterator = (callback) ->
     console.log "iterator: #offset"
@@ -148,22 +154,24 @@ harvest = (e,t) !->>
             '#{business_number}'
           ),
         """
-      sql = sql.slice 0,-1
+      sql = sql.slice 0,-1 # Remove last comma
       hasMore := json.hasMore # global
 
+      /*
+        Execute API query for next 25 records
+       */
       try
         await pgPool.query sql
-        console.log "inserted some rows"
         offset := offset + 25
-        callback null #XXX: This isn't executing
-      catch
+        callback null
+      catch # Pass the error to the async function
         callback e
 
 
-  done = (err) ->
+  done = (err) !->
     if err then console.error "Error: ", err
-    console.log 'Done'
     pgPool.end!
+    #TODO copy the temp table to the main table
 
   async.doWhilst iterator, test, done
 
