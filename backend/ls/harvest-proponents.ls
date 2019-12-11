@@ -16,7 +16,9 @@
 require! {
   pg
   async
+  morgan
   request
+  \node-schedule # Maps to nodeSchedule
 }
 
 /* Connect to the database
@@ -44,9 +46,15 @@ token = ''
   @param t {string} oAuth token
  */
 refreshToken = (e,t) !->
+  console.log 'Refreshing token'
   throw new Error e if  e
   token := t
 
+/*
+  Schedule the renewal of the token for every 30 minutes
+  The CAS token automatically expires after 1 hour
+*/
+nodeSchedule.scheduleJob '*/30 * * * *', !-> getToken refreshToken
 
 # Are we in prod or dev
 prod = if process.env.NODE_ENV is \production then yes else no
@@ -178,8 +186,3 @@ harvest = (e,t) !->>
 
 # Get token then kickoff harvest
 getToken <| harvest
-
-
-
-
-# TODO: Renew token every 30 minutes
