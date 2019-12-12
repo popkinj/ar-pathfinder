@@ -131,13 +131,22 @@ harvest = (e,t) !->>
     throw console.error 'Failed to count downloaded Proponents', e
 
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
-  url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
   hasMore = yes # This determines the end of the harvest
 
-  test = (callback) -> callback null, hasMore
+  /* ### test
+    The testing function for AsyncJS.
+    @param _ {object} Result from the postgresSQL insert statement.. ignored.
+    @param callback {function} AsyncJS callback function. It accepts two parameters. The first is an error message. If null the async function keeps running. The second value is a boolean for pass/fail.
+   */
+  test = (_,callback) !-> callback null, hasMore
 
+  /* ### iterator
+    The AsyncJS interator function that runs repeatedly until the test function returns *false*.
+    @param callback {function} AsyncJS callback function. It accepts two parameters. The first is an error message. If null the async function keeps running. The second value is a boolean for pass/fail.
+   */
   iterator = (callback) ->
-    console.log ts + "iterator: #offset"
+    url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
+    console.log ts! + " - iterator: #offset"
     request url, (err,res,body) ->>
       if err then callback err # If request failed
 
@@ -154,7 +163,7 @@ harvest = (e,t) !->>
       '''
 
       # Cycle through rows and form sql insert statement
-      for row in json.items
+      for row in json.items?
         {customer_name,party_number,business_number} = row
         customer_name = customer_name.replace /'/, "''"
 
@@ -165,28 +174,38 @@ harvest = (e,t) !->>
             '#{business_number}'
           ),
         """
-      sql = sql.slice 0,-1 # Remove last comma
+      sql = sql.replace /,$/,'' # Remove last comma
+
       hasMore := json.hasMore # global
 
-      /*
-        Execute API query for next 25 records
-       */
-      offset := offset + 25
+      # Only increase offset if there were records
+      offset := if json.items?length then offset + that else offset
+
+      
+      # Execute API query for next 25 records
       pgPool.query sql, callback
 
 
+  /* ### done
+    Run when AsyncJS has completed.
+    @param err {string} Error message if one has occurred.
+   */
   done = (err) !->
     if err
-      throw console.log ts + ' - Failure: '.red, err
+      throw console.log ts! + ' - Failure: '.red, err
       pgPool.end!
     else
       pgPool.end!
-      throw console.log ts + ' - complete'.orange
+      throw console.log ts! + ' - complete'.orange
 
     #TODO copy the temp table to the main table
 
+  /*
+    Request all Proponents/Parties. Insert into the temporary table
+    as we go. When done, Turn off the *getToken* loop and copy the 
+    temporary table into the main table.
+   */
   async.doWhilst iterator, test, done
-
 
 # Get token then kickoff harvest
 getToken <| harvest
