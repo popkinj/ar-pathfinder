@@ -16,7 +16,8 @@
 require! {
   pg
   async
-  morgan
+  colors
+  moment
   request
   \node-schedule # Maps to nodeSchedule
 }
@@ -40,13 +41,15 @@ pgPool = new pg.Pool do
  */
 token = ''
 
+ts = -> moment!format('h:mm:ss a').grey
+
 /* ## refreshToken
   This function handles the mutation of the global variable *token*
   @param e {string} Error message if any. Null if no error
   @param t {string} oAuth token
  */
 refreshToken = (e,t) !->
-  console.log 'Refreshing token'
+  console.log moment!format('h:mm:ss a').grey + ' - Refreshing token'
   throw new Error e if  e
   token := t
 
@@ -125,7 +128,7 @@ harvest = (e,t) !->>
     res = await pgPool.query 'select count(*) from proponents_loading'
     offset = parseInt res.rows.0.count
   catch
-    console.error 'Failed to count downloaded Proponents', e
+    throw console.error 'Failed to count downloaded Proponents', e
 
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
   url = "#dev/api/parties/?token=#{token.access_token}&offset=#offset"
@@ -134,7 +137,7 @@ harvest = (e,t) !->>
   test = (callback) -> callback null, hasMore
 
   iterator = (callback) ->
-    console.log "iterator: #offset"
+    console.log ts + "iterator: #offset"
     request url, (err,res,body) ->>
       if err then callback err # If request failed
 
@@ -168,17 +171,18 @@ harvest = (e,t) !->>
       /*
         Execute API query for next 25 records
        */
-      try
-        await pgPool.query sql
-        offset := offset + 25
-        callback null
-      catch # Pass the error to the async function
-        callback e
+      offset := offset + 25
+      pgPool.query sql, callback
 
 
   done = (err) !->
-    if err then console.error "Error: ", err
-    pgPool.end!
+    if err
+      throw console.log ts + ' - Failure: '.red, err
+      pgPool.end!
+    else
+      pgPool.end!
+      throw console.log ts + ' - complete'.orange
+
     #TODO copy the temp table to the main table
 
   async.doWhilst iterator, test, done
