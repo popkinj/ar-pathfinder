@@ -162,10 +162,13 @@ harvest = (e,t) !->>
         values 
       '''
 
+      console.log json.items.length
       # Cycle through rows and form sql insert statement
       for row in json.items?
+        console.log 'yo'
+        console.log row
         {customer_name,party_number,business_number} = row
-        customer_name = customer_name.replace /'/, "''"
+        customer_name = customer_name.replace /'/g, "''"
 
         sql += """
           (
@@ -175,6 +178,7 @@ harvest = (e,t) !->>
           ),
         """
       sql = sql.replace /,$/,'' # Remove last comma
+      console.log sql
 
       hasMore := json.hasMore # global
 
