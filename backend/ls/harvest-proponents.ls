@@ -164,6 +164,7 @@ harvest = (e,t) !->>
 
       console.log json.items.length
       # Cycle through rows and form sql insert statement
+      # TODO: This is not iterating
       for row in json.items?
         console.log 'yo'
         console.log row
