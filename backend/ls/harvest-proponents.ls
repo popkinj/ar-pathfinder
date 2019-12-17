@@ -30,7 +30,7 @@ pgPool = new pg.Pool do
   database: process.env.AR_PATHFINDER_DATABASE
   password: process.env.AR_PATHFINDER_PASSWORD
   host: if prod then 'postgresql' else 'localhost'
-  port: 5432 
+  port: 5432
   max: 10
   idleTimeoutMillis: 30000
 
@@ -57,7 +57,7 @@ refreshToken = (e,t) !->
   Schedule the renewal of the token for every 30 minutes
   The CAS token automatically expires after 1 hour
 */
-nodeSchedule.scheduleJob '*/30 * * * *', !-> getToken refreshToken
+schedule = nodeSchedule.scheduleJob '*/30 * * * *', !-> getToken refreshToken
 
 # Are we in prod or dev
 prod = if process.env.NODE_ENV is \production then yes else no
@@ -90,7 +90,7 @@ getToken = (callback) !->
   fetcher = if prod then request.post else request.get
 
   payload = form: grant_type: 'client_credentials'
-    
+
   fetcher url, payload , (err, code, body) !->
     if err
       callback err
@@ -162,12 +162,8 @@ harvest = (e,t) !->>
         values 
       '''
 
-      console.log json.items.length
       # Cycle through rows and form sql insert statement
-      # TODO: This is not iterating
-      for row in json.items?
-        console.log 'yo'
-        console.log row
+      for row in json.items
         {customer_name,party_number,business_number} = row
         customer_name = customer_name.replace /'/g, "''"
 
@@ -179,14 +175,12 @@ harvest = (e,t) !->>
           ),
         """
       sql = sql.replace /,$/,'' # Remove last comma
-      console.log sql
 
       hasMore := json.hasMore # global
 
       # Only increase offset if there were records
       offset := if json.items?length then offset + that else offset
 
-      
       # Execute API query for next 25 records
       pgPool.query sql, callback
 
@@ -196,12 +190,13 @@ harvest = (e,t) !->>
     @param err {string} Error message if one has occurred.
    */
   done = (err) !->
-    if err
+    if err and hasMore
       throw console.log ts! + ' - Failure: '.red, err
-      pgPool.end!
+      pgPool.end! # Close DB connection
     else
-      pgPool.end!
-      throw console.log ts! + ' - complete'.orange
+      pgPool.end! # Close DB connection
+      schedule.cancel! # Stop the token refresh
+      console.log ts! + ' - complete'
 
     #TODO copy the temp table to the main table
 
