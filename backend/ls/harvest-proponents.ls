@@ -49,7 +49,7 @@ ts = -> moment!format('h:mm:ss a').grey
   @param t {string} oAuth token
  */
 refreshToken = (e,t) !->
-  console.log moment!format('h:mm:ss a').grey + ' - Refreshing token'
+  console.log ts! + ' - Refreshing token'
   throw new Error e if  e
   token := t
 
@@ -78,7 +78,7 @@ getToken = (callback) !->
 
   # Make sure we have the credentials
   unless id and secret and cas
-    throw console.error 'Environmnent variables not set'
+    throw console.error ts! + 'Environmnent variables not set'
 
   url = if prod
     cas
@@ -128,7 +128,7 @@ harvest = (e,t) !->>
     res = await pgPool.query 'select count(*) from proponents_loading'
     offset = parseInt res.rows.0.count
   catch
-    throw console.error 'Failed to count downloaded Proponents', e
+    throw console.error ts! + 'Failed to count downloaded Proponents', e
 
   dev = process.env.AR_PATHFINDER_DEV_URL # The DEV API url
   hasMore = yes # This determines the end of the harvest
@@ -187,18 +187,40 @@ harvest = (e,t) !->>
 
   /* ### done
     Run when AsyncJS has completed.
+    The temporary table is copied into a brand new `proponents`
+    table. Use a SQL transaction statement so there can't be any
+    third party traffic until finished.
     @param err {string} Error message if one has occurred.
    */
   done = (err) !->
+    /*
+      If there's an error anywhere in the AsyncJS workflow
+      It will end up here.
+      With the `async.doWhilst` function an error is triggered
+      when the test fails (which is intentional). If `hasMore`
+      is still true then it's a real error
+     */
     if err and hasMore
       throw console.log ts! + ' - Failure: '.red, err
       pgPool.end! # Close DB connection
-    else
+    else # No errors
+      sql = '''
+        begin;
+          drop table proponents;
+          create table proponents as
+            select * from proponents_loading;
+        end;
+      '''
+
+      try
+        await pgPool.query sql
+      catch
+        throw console.error ts! + 'Failed to load new table', e
+
       pgPool.end! # Close DB connection
       schedule.cancel! # Stop the token refresh
       console.log ts! + ' - complete'
 
-    #TODO copy the temp table to the main table
 
   /*
     Request all Proponents/Parties. Insert into the temporary table
