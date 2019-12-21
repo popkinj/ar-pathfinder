@@ -209,6 +209,7 @@ harvest = (e,t) !->>
           drop table proponents;
           create table proponents as
             select * from proponents_loading;
+          create index proponents_idx on proponents(name);
         end;
       '''
 
