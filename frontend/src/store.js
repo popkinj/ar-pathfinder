@@ -21,20 +21,25 @@ export default new Vuex.Store({
   },
   mutations: {
     loadProponents (state,proponents) { // Load all propnents
+      // TODO: This will get deprecated
       state.proponents = proponents;
     },
     clearFocusProponents (state) {
       state.focusProponents = [];
     },
     focusProponents (state,text) { // Filter proponents by match
-      const findRegex = new RegExp(text,'i'); // Ignore case
-      state.focusProponents = state.proponents.filter((d) => {
-        if (text.length < 1) { // If no text
-          return false
-        } else {
-          return findRegex.test(d.name); // Else check match
-        }
-      });
+      // TODO: This will be extended to hit the database
+      console.log(text);
+
+      // TODO: Deprecate the following
+      // const findRegex = new RegExp(text,'i'); // Ignore case
+      // state.focusProponents = state.proponents.filter((d) => {
+      //   if (text.length < 1) { // If no text
+      //     return false
+      //   } else {
+      //     return findRegex.test(d.name); // Else check match
+      //   }
+      // });
     },
     activeProponent (state,proponent) {
       state.activeProponent = proponent;
@@ -51,9 +56,6 @@ export default new Vuex.Store({
     },
     clearToken (state) {
       state.token = false;
-    },
-    updateSearch (state,search) {
-      state.search = search;
     },
     loadAccounts (state,proponent) {
       // Formalate the url for the api call

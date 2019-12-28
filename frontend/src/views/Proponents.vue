@@ -43,9 +43,6 @@
       GetToken
     },
     methods: {
-      updateSearch(search){
-        this.$store.commit('updateSearch',search)
-      },
       getAllProponents(){
         const v = this
         v.$vs.loading({
