@@ -321,8 +321,7 @@ getProponents = (req,res) !->
   # Amount of proponents is optional... Defaults to 25
   amount = parseInt(req.query.amount) || 25
 
-  console.log search
-  console.log amount
+  # Form the sql
   sql = """
     select * from proponents
     where name ilike '%#search%'
@@ -330,7 +329,8 @@ getProponents = (req,res) !->
   """
 
   pgPool.query sql, (err,data) ->
-    console.error err
+    if err
+      return res.status 500 .json msg: "Database error: #{err.stack}"
     res.json data
 
 
