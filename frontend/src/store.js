@@ -28,8 +28,11 @@ export default new Vuex.Store({
       state.focusProponents = [];
     },
     focusProponents (state,text) { // Filter proponents by match
-      // TODO: This will be extended to hit the database
       console.log(text);
+      const serverUrl = this.getters.serverUrl;
+      const url  = `${serverUrl}/proponents?search=${text}`;
+      // TODO: Request to local server
+      console.log(url);
 
       // TODO: Deprecate the following
       // const findRegex = new RegExp(text,'i'); // Ignore case
