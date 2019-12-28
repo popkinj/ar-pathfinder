@@ -314,7 +314,23 @@ getProponentsLive = (req,res) !->
   @param res {object} Node/Express response object
  */
 getProponents = (req,res) !->
-  pgPool.query 'select * from proponents', (err,data) ->
+  # The search string is mandatory
+  unless search = req.query.search
+    return res.status 400 .json msg: 'Missing search string'
+
+  # Amount of proponents is optional... Defaults to 25
+  amount = parseInt(req.query.amount) || 25
+
+  console.log search
+  console.log amount
+  sql = """
+    select * from proponents
+    where name ilike '%#search%'
+    limit #amount
+  """
+
+  pgPool.query sql, (err,data) ->
+    console.error err
     res.json data
 
 
