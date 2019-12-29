@@ -9,6 +9,7 @@ export default new Vuex.Store({
     token: false,
     env: location.port == 8081 ? "development" : "production",
     search: '',
+    searchTimer: {abort: () => {}}, // Proponent request to allow aborting
     proponentsCas: {},
     proponents: [], // All proponents
     focusProponents: [], // The list of proponents matching the search
@@ -24,15 +25,19 @@ export default new Vuex.Store({
       state.focusProponents = [];
     },
     focusProponents (state,text) { // Filter proponents by match
-      if (text.length < 1) { // If no text
+      if (text.length < 1) { // If no text... when erasing
         return state.focusProponents = []; // Return zero entries
       }
+
+      // Abort previous request
+      state.searchTimer.abort();
 
       // Formulate url
       const serverUrl = this.getters.serverUrl;
       const url  = `${serverUrl}/proponents?search=${text}`;
 
-      request(url,{json:true}, (err,res) => {
+      // Request proponents
+      state.searchTimer = request(url,{json:true}, (err,res) => {
         if (err) {
           return this._vm.$vs.notify({
             color:'danger',
@@ -41,7 +46,7 @@ export default new Vuex.Store({
           })
         }
         state.focusProponents = res.body.rows;
-      })
+      });
     },
     activeProponent (state,proponent) {
       state.activeProponent = proponent;
