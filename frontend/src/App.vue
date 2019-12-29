@@ -41,20 +41,6 @@
 <script>
 import ProponentSearch from "@/components/ProponentSearch.vue";
 import ProponentList from "@/components/ProponentList.vue"
-// import request from 'request';
-
-// const load = function () {
-//   let v = this;
-//   request(`${v.$store.getters.serverUrl}/proponents`, (err,res) => {
-//     if (err) {return console.error("Could not access Proponents!")}
-//     try {
-//       const data = JSON.parse(res.body);
-//       v.$store.commit('loadProponents',data.rows);
-//     } catch (error) {
-//       return console.error("Did not receive valid json for Proponents");
-//     }
-//   })
-// };
 
 export default {
   components: {

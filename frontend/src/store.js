@@ -20,10 +20,6 @@ export default new Vuex.Store({
     contacts: []
   },
   mutations: {
-    loadProponents (state,proponents) { // Load all propnents
-      // TODO: This will get deprecated
-      state.proponents = proponents;
-    },
     clearFocusProponents (state) {
       state.focusProponents = [];
     },
