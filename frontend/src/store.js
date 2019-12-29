@@ -46,16 +46,6 @@ export default new Vuex.Store({
         }
         state.focusProponents = res.body.rows;
       })
-
-      // TODO: Deprecate the following
-      // const findRegex = new RegExp(text,'i'); // Ignore case
-      // state.focusProponents = state.proponents.filter((d) => {
-      //   if (text.length < 1) { // If no text
-      //     return false
-      //   } else {
-      //     return findRegex.test(d.name); // Else check match
-      //   }
-      // });
     },
     activeProponent (state,proponent) {
       state.activeProponent = proponent;
