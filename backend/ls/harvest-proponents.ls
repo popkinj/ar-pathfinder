@@ -192,7 +192,7 @@ harvest = (e,t) !->>
     third party traffic until finished.
     @param err {string} Error message if one has occurred.
    */
-  done = (err) !->
+  done = (err) !->>
     /*
       If there's an error anywhere in the AsyncJS workflow
       It will end up here.
