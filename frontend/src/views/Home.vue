@@ -53,6 +53,7 @@ div
         .postal_code {{$store.getters.activeSite.postal_code}}
 
     .contacts.card
+      .header Contacts
       vs-table(
         stripe
         v-if='$store.getters.contacts.length > 0'
@@ -71,6 +72,13 @@ div
 
     .invoices.card
       .header Invoices
+      vs-table(search :data="$store.getters.invoices")
+        template(slot="thead")
+          vs-th(sort-key='attribute1') Type
+          vs-th(sort-key='attribute2') Description
+          vs-th(sort-key='transaction_date') Date
+          vs-th(sort-key='total') Total
+      //- https://lusaxweb.github.io/vuesax/components/table.html#edit-data-table
 
 
 </template>
@@ -95,10 +103,11 @@ const connect = function () {
         break;
       case 'activeAccount':
         this.$store.commit('clearSites');
-        this.$store.commit('loadSites',mutation.payload)
+        this.$store.commit('loadSites',mutation.payload);
         break;
       case 'activeSite':
-        this.$store.commit('loadContacts',mutation.payload)
+        this.$store.commit('loadContacts',mutation.payload);
+        this.$store.commit('loadInvoices',mutation.payload);
         break;
     }
   });

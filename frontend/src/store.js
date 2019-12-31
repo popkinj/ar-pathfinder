@@ -18,7 +18,8 @@ export default new Vuex.Store({
     activeAccount: {}, // Currently selected account
     sites: [], // The list of proponent sites
     activeSite: {}, // The currently selected site
-    contacts: []
+    contacts: [],
+    invoices: [] // List of all invoices
   },
   mutations: {
     clearFocusProponents (state) {
@@ -154,6 +155,27 @@ export default new Vuex.Store({
           return console.error(msg);
         }
       });
+    },
+    loadInvoices (state,place) {
+      // Formalate the url for the api call
+      const site = place.site_number;
+      const token = this.getters.token;
+      const serverUrl = this.getters.serverUrl;
+      const party = this.getters.activeProponent.proponent_number;
+      const account = this.getters.activeAccount.account_number;
+      const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/${site}/invs/?token=${token}`;
+
+      request(url, {json:true}, (err,res) => {
+        if (err) {return console.error("Could not load invoices!")}
+        try { // If this is a valid items array
+          state.invoices = res.body.items;
+          console.log(res.body);
+        } catch (error) { // If no items array we got an error
+          const msg = `Could not obtain site invoices for account ${account}`;
+          this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
+          return console.error(msg);
+        }
+      });
     }
   },
   getters: {
@@ -183,6 +205,9 @@ export default new Vuex.Store({
     },
     contacts: state => {
       return state.contacts;
+    },
+    invoices: state => {
+      return state.invoices;
     },
     proponentsCas: state => {
       return state.proponentsCas;
