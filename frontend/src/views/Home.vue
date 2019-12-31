@@ -71,14 +71,26 @@ div
       .header(v-else) Contacts
 
     .invoices.card
-      .header Invoices
       vs-table(search :data="$store.getters.invoices")
+        template(slot='header')
+          h3 Invoices
         template(slot="thead")
           vs-th(sort-key='attribute1') Type
           vs-th(sort-key='attribute2') Description
           vs-th(sort-key='transaction_date') Date
           vs-th(sort-key='total') Total
-      //- https://lusaxweb.github.io/vuesax/components/table.html#edit-data-table
+        template(slot-scope="{data}")
+          vs-tr(:key="indextr" v-for="(tr,indextr) in data")
+            vs-td(:data="data[indextr].attribute1")
+              | {{data[indextr].attribute1}}
+            vs-td(:data="data[indextr].attribute2")
+              | {{data[indextr].attribute2}}
+            vs-td(:data="data[indextr].transaction_date")
+              | {{data[indextr].transaction_date}}
+            vs-td(:data="data[indextr].total")
+              | {{data[indextr].total}}
+
+
 
 
 </template>
