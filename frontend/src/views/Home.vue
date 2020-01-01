@@ -81,14 +81,14 @@ div
           vs-th(sort-key='total') Total
         template(slot-scope="{data}")
           vs-tr(:key="indextr" v-for="(tr,indextr) in data")
-            vs-td(:data="data[indextr].attribute1")
-              | {{data[indextr].attribute1}}
-            vs-td(:data="data[indextr].attribute2")
-              | {{data[indextr].attribute2}}
-            vs-td(:data="data[indextr].transaction_date")
-              | {{data[indextr].transaction_date}}
-            vs-td(:data="data[indextr].total")
-              | {{data[indextr].total}}
+            vs-td(:data="tr.attribute1")
+              | {{tr.attribute1}}
+            vs-td(:data="tr.attribute2")
+              | {{tr.attribute2}}
+            vs-td(:data="tr.transaction_date")
+              | {{tr.transaction_date}}
+            vs-td(:data="tr.total")
+              | {{tr.total}}
 
 
 
