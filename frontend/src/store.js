@@ -99,6 +99,7 @@ export default new Vuex.Store({
       state.sites = [];
       state.activeSite = {};
       state.contacts = [];
+      state.invoices = [];
     },
     loadSites (state,proponent) {
       // Formalate the url for the api call
@@ -169,7 +170,7 @@ export default new Vuex.Store({
         if (err) {return console.error("Could not load invoices!")}
         try { // If this is a valid items array
           state.invoices = res.body.items;
-          console.log(res.body);
+          // console.log(res.body);
         } catch (error) { // If no items array we got an error
           const msg = `Could not obtain site invoices for account ${account}`;
           this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});

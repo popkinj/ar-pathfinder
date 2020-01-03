@@ -68,7 +68,7 @@ div
             vs-td {{tr.full_name}}
             vs-td {{tr.phone_number}}
             vs-td {{tr.email_address}}
-      .header(v-else) Contacts
+      //- .header(v-else) Contacts
 
     .invoices.card
       vs-table(search :data="$store.getters.invoices")
