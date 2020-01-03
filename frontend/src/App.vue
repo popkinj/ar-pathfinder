@@ -12,7 +12,7 @@
           .header-sidebar(slot="header")
             h4 Environmental Assessment Office
             hr
-            h5 Accounts Recievable Explorer
+            h5 Accounts Recievable
 
           .active-proponent(v-if='$store.getters.activeProponent.name')
             | {{$store.getters.activeProponent.name}}
