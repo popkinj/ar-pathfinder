@@ -71,7 +71,13 @@ div
       //- .header(v-else) Contacts
 
     .invoices.card
-      vs-table(search :data="$store.getters.invoices")
+      vs-table(
+        search
+        @selected='invoiceSelected'
+        :data="$store.getters.invoices"
+        pagination
+        max-items='5'
+      )
         template(slot='header')
           h3 Invoices
         template(slot="thead")
@@ -80,7 +86,11 @@ div
           vs-th(sort-key='transaction_date') Date
           vs-th(sort-key='total') Total
         template(slot-scope="{data}")
-          vs-tr(:key="indextr" v-for="(tr,indextr) in data")
+          vs-tr(
+            :key="indextr"
+            :data='tr'
+            v-for="(tr,indextr) in data"
+          )
             vs-td(:data="tr.attribute1")
               | {{tr.attribute1}}
             vs-td(:data="tr.attribute2")
@@ -89,8 +99,6 @@ div
               | {{tr.transaction_date}}
             vs-td(:data="tr.total")
               | {{tr.total}}
-
-
 
 
 </template>
@@ -103,6 +111,11 @@ import MoreOptions from '@/components/MoreOptions.vue';
 
 // Dependencies
 import request from 'request';
+
+const invoiceSelected = function (event) {
+  console.log('yo');
+  console.log(event);
+}
 
 const connect = function () {
 
@@ -219,7 +232,8 @@ export default {
   methods: {
     saveNewAccount,
     saveNewSite,
-    saveSiteChange
+    saveSiteChange,
+    invoiceSelected
   }
 }
 </script>
@@ -242,10 +256,13 @@ export default {
   .invoices
     grid-column-start 1
     grid-column-end 3
-
+    
+    tr
+      cursor pointer
+    tr:hover
+      background #e0f1ff
   .card
     background white
-    height 20rem
     padding 1rem
     margin 1rem
     font-size 14px
