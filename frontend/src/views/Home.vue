@@ -89,16 +89,13 @@ div
           vs-tr(
             :key="indextr"
             :data='tr'
+            :state='invoiceState(tr)'
             v-for="(tr,indextr) in data"
           )
-            vs-td(:data="tr.attribute1")
-              | {{tr.attribute1}}
-            vs-td(:data="tr.attribute2")
-              | {{tr.attribute2}}
-            vs-td(:data="tr.transaction_date")
-              | {{tr.transaction_date}}
-            vs-td(:data="tr.total")
-              | {{tr.total}}
+            vs-td {{tr.attribute1}}
+            vs-td {{tr.attribute2}}
+            vs-td {{tr.transaction_date}}
+            vs-td {{tr.total}}
 
 
 </template>
@@ -111,10 +108,19 @@ import MoreOptions from '@/components/MoreOptions.vue';
 
 // Dependencies
 import request from 'request';
+import moment from 'moment';
 
-const invoiceSelected = function (event) {
-  console.log('yo');
-  console.log(event);
+const invoiceSelected = function (data) {
+  console.log(data);
+}
+
+const invoiceState = function (data) {
+  const late = moment().isAfter(data.term_due_date);
+  if (late && data.amount_due > 0) {
+    return 'danger';
+  } else {
+    return null;
+  }
 }
 
 const connect = function () {
@@ -233,7 +239,8 @@ export default {
     saveNewAccount,
     saveNewSite,
     saveSiteChange,
-    invoiceSelected
+    invoiceSelected,
+    invoiceState
   }
 }
 </script>
