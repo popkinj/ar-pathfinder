@@ -25,11 +25,11 @@
           vs-sidebar-item(index="1" icon="home" class="page-home")
             router-link(to="/") Home
 
-          vs-sidebar-item(index="2" icon="people_outline" class="page-proponents")
-            router-link(to="/proponents") All Proponents - Testing
-
-          vs-sidebar-item(index="3" icon="library_books" class="page-invoices")
+          vs-sidebar-item(index="2" icon="library_books" class="page-invoices")
             router-link(to="/invoices") Invoices
+
+          vs-sidebar-item(index="3" icon="people_outline" class="page-proponents")
+            router-link(to="/proponents") All Proponents - Testing
 
     .page
       keep-alive
