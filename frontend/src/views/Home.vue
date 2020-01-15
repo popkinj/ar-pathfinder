@@ -114,6 +114,13 @@ const invoiceSelected = function (data) {
   console.log(data);
 }
 
+/* ## invoiceState
+  Calculate whether an invoice is late.
+  Check the due date with current data... And 
+  Check if there is balance owing.
+  @param data {object} The invoice object
+  @return {string} The Vuesax symbol class
+ */
 const invoiceState = function (data) {
   const late = moment().isAfter(data.term_due_date);
   if (late && data.amount_due > 0) {
