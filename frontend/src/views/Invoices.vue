@@ -1,20 +1,75 @@
 <template lang="pug">
   .invoices
     h2 Invoice
+
     GetToken
+
     vs-divider
+
     .invoice
-      .card.proponent yo
-      .card.status yo
-      .card.description yo
-      .card.items yo
+      .card.proponent
+        .invoice-date Invoice Date: {{niceDate(invoice.transaction_date)}}
+        .invoice-to Invoiced To:
+          .invoice-to-name {{proponent.name}}
+          .invoice-to-address1 {{site.address_line_1}}
+          .invoice-to-address2 {{site.address_line_2}}
+          .invoice-to-address3 {{site.address_line_3}}
+          .invoice-to-city
+            span {{site.city}}
+            span , {{site.province}}
+          .invoice-to-postalcode {{site.postal_code}}
+      .card.status
+        table
+          tr
+            td Invoice Number:
+            td.value {{invoice.invoice_number}}
+          tr
+            td Invoice Due:
+            td.value {{niceDate(invoice.term_due_date)}}
+          tr
+            td Fee Total:
+            td.value ${{invoice.total}}
+          tr
+            td Payments Received:
+            td.value ${{invoice.total - invoice.amount_due}}
+          tr
+            td Amount Due:
+            td.value ${{invoice.amount_due}}
+      .card.description
+        .description-title {{invoice.attribute1}}
+        .description-text {{invoice.attribute2}}
+      .card.items
+        vs-divider(position='center') Fees
 </template>
 
 <script>
+// Components..  @ is an alias to /src
 import GetToken from '@/components/GetToken.vue';
 
+// Dependencies
+import moment from 'moment';
+
+/* ## niceDate
+  Format a date string into one suitable for the invoice
+  @param date {string} Date string like this "2019-12-29T08:00:00Z"
+  @return {string} Date string like this "December 29, 2019"
+ */
+const niceDate = function (date) {
+  return moment(date).format('MMMM DD, YYYY')
+};
+
 export default {
-  components: {GetToken}
+  components: {GetToken},
+  methods: {
+    niceDate
+  },
+  data() {
+    return {
+      invoice: this.$store.getters.activeInvoice,
+      proponent: this.$store.getters.activeProponent,
+      site: this.$store.getters.activeSite
+    }
+  }
 }
 </script>
 
@@ -22,23 +77,27 @@ export default {
 .invoice
   display grid
   justify-content center
-  grid-template-columns 70% 30%
+  grid-template-columns 50% 50%
 
-  .proponent
-    background red
+  .invoice-to div
+    margin-left 1rem
 
   .status
-    background blue
+    td.value
+      text-align right
+      padding-left 2rem
+
+  .card.status
+    align-items end
+    justify-content end
 
   .description
     grid-column-start 1
     grid-column-end 3
-    background orange 
   
   .items
     grid-column-start 1
     grid-column-end 3
-    background green
 
   .card
     padding 1rem

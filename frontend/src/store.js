@@ -10,7 +10,7 @@ export default new Vuex.Store({
     env: location.port == 8081 ? "development" : "production",
     search: '',
     searchTimer: {abort: () => {}}, // Proponent request to allow aborting
-    proponentsCas: {},
+    proponentsCas: {}, // TBD: **Deprecate** selecting proponents directly from CAS
     proponents: [], // All proponents
     focusProponents: [], // The list of proponents matching the search
     activeProponent: {}, // The currently selected proponent
@@ -18,8 +18,9 @@ export default new Vuex.Store({
     activeAccount: {}, // Currently selected account
     sites: [], // The list of proponent sites
     activeSite: {}, // The currently selected site
-    contacts: [],
-    invoices: [] // List of all invoices
+    contacts: [], // The site contact list
+    invoices: [], // List of all invoices
+    activeInvoice: {} // The currently selected invoice
   },
   mutations: {
     clearFocusProponents (state) {
@@ -177,6 +178,27 @@ export default new Vuex.Store({
           return console.error(msg);
         }
       });
+    },
+    loadInvoice (state,invoice) {
+      // Formalate the url for the api call
+      const site = this.getters.activeSite.site_number;
+      const token = this.getters.token;
+      const serverUrl = this.getters.serverUrl;
+      const party = this.getters.activeProponent.proponent_number;
+      const account = this.getters.activeAccount.account_number;
+      const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/${site}/invs/${invoice}/?token=${token}`;
+
+      request(url, {json:true}, (err,res) => {
+        if (err) {return console.error("Could not load invoice!")}
+        try { // If this is a valid items array
+          state.activeInvoice = res.body;
+        } catch (error) { // If no items array we got an error
+          const msg = `Could not obtain site invoice for account ${account}`;
+          this._vm.$vs.notify({color:'danger',title: 'Error',text:msg});
+          return console.error(msg);
+        }
+      });
+
     }
   },
   getters: {
@@ -209,6 +231,9 @@ export default new Vuex.Store({
     },
     invoices: state => {
       return state.invoices;
+    },
+    activeInvoice: state => {
+      return state.activeInvoice;
     },
     proponentsCas: state => {
       return state.proponentsCas;

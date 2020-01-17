@@ -111,7 +111,9 @@ import request from 'request';
 import moment from 'moment';
 
 const invoiceSelected = function (data) {
+  console.log("invoice selected");
   console.log(data);
+  this.$store.commit('loadInvoice',data.invoice_number)
 }
 
 /* ## invoiceState
