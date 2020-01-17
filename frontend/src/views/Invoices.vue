@@ -32,7 +32,7 @@
           tr
             td Payments Received:
             td.value ${{invoice.total - invoice.amount_due}}
-          tr
+          tr.due
             td Amount Due:
             td.value ${{invoice.amount_due}}
       .card.description
@@ -56,6 +56,8 @@
               vs-td {{tr.quantity}}
               vs-td $0
               vs-td ${{tr.unit_price * tr.quantity}}
+        vs-divider
+        .grand-total Total: ${{invoice.total}}
 </template>
 
 <script>
@@ -107,6 +109,9 @@ export default {
     align-items end
     justify-content end
 
+    tr.due
+      font-weight bolder
+
   .description
     grid-column-start 1
     grid-column-end 3
@@ -114,6 +119,11 @@ export default {
   .fees
     grid-column-start 1
     grid-column-end 3
+
+    .grand-total
+      float right
+      font-weight bolder
+      margin-right 5rem
 
   .card
     padding 1rem
