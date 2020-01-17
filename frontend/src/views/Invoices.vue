@@ -38,8 +38,24 @@
       .card.description
         .description-title {{invoice.attribute1}}
         .description-text {{invoice.attribute2}}
-      .card.items
+      .card.fees
         vs-divider(position='center') Fees
+        vs-table(:data='invoice.lines' stripe)
+          template(slot='thead')
+            vs-th Date
+            vs-th Description
+            vs-th Amount
+            vs-th Quantity
+            vs-th Tax
+            vs-th Fee Total
+          template(slot-scope='{data}')
+            vs-tr(:key='indextr' v-for='(tr,indextr) in data')
+              vs-td {{niceDate(invoice.transaction_date)}}
+              vs-td {{tr.attribute1}}
+              vs-td ${{tr.unit_price}}
+              vs-td {{tr.quantity}}
+              vs-td $0
+              vs-td ${{tr.unit_price * tr.quantity}}
 </template>
 
 <script>
@@ -95,7 +111,7 @@ export default {
     grid-column-start 1
     grid-column-end 3
   
-  .items
+  .fees
     grid-column-start 1
     grid-column-end 3
 
