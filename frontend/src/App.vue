@@ -17,18 +17,33 @@
           .active-proponent(v-if='$store.getters.activeProponent.name')
             | {{$store.getters.activeProponent.name}}
 
-          // - TODO: Add the active proponent header. Maybe make it wiggle when it is first added
           .search
             ProponentSearch
             ProponentList
 
-          vs-sidebar-item(index="1" icon="home" class="page-home")
+          vs-sidebar-item(
+            index="1"
+            icon="home"
+            class="page-home"
+            ref="homeButton"
+          )
             router-link(to="/") Home
 
-          vs-sidebar-item(index="2" icon="library_books" class="page-invoices")
-            router-link(to="/invoices") Invoices
+          vs-sidebar-item(
+            index="2"
+            icon="library_books"
+            class="page-invoices"
+          )
+            router-link(
+              to="/invoices"
+              ref="invoicesButton"
+            ) Invoices
 
-          vs-sidebar-item(index="3" icon="people_outline" class="page-proponents")
+          vs-sidebar-item(
+            index="3" 
+            icon="people_outline" 
+            class="page-proponents"
+          )
             router-link(to="/proponents") All Proponents - Testing
 
     .page

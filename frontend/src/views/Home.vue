@@ -94,7 +94,7 @@ div
           )
             vs-td {{tr.attribute1}}
             vs-td {{tr.attribute2}}
-            vs-td {{tr.transaction_date}}
+            vs-td {{niceDate(tr.transaction_date)}}
             vs-td {{tr.total}}
 
 
@@ -110,13 +110,21 @@ import MoreOptions from '@/components/MoreOptions.vue';
 import request from 'request';
 import moment from 'moment';
 
+/* ## niceDate
+  Format a date string into one suitable for the invoice
+  @param date {string} Date string like this "2019-12-29T08:00:00Z"
+  @return {string} Date string like this "December 29, 2019"
+ */
+const niceDate = function (date) {
+  return moment(date).format('MMMM DD, YYYY')
+};
+
+
 const invoiceSelected = function (data) {
+  this.$store.commit('clearActiveInvoice');
   this.$store.commit('loadInvoice',data.invoice_number);
-  // this.$router.push({name: 'invoices'});
-  // this.$router.push('invoices');
-  // setTimeout( () => {
-  //   console.log(this.$store.getters.activeInvoice);
-  // },2000);
+  this.$parent.$refs.invoicesButton.$el.click(); // Click the menu item
+  // this.$router.push('invoices') // This doesn't update the menu
 }
 
 /* ## invoiceState
@@ -238,7 +246,8 @@ export default {
     saveNewSite,
     saveSiteChange,
     invoiceSelected,
-    invoiceState
+    invoiceState,
+    niceDate
   }
 }
 </script>

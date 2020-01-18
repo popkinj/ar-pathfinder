@@ -200,7 +200,9 @@ export default new Vuex.Store({
           return console.error(msg);
         }
       });
-
+    },
+    clearActiveInvoice (state) {
+      state.activeInvoice = {};
     }
   },
   getters: {

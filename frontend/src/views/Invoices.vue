@@ -8,39 +8,39 @@
 
     .invoice
       .card.proponent
-        .invoice-date Invoice Date: {{niceDate(invoice.transaction_date)}}
+        .invoice-date Invoice Date: {{niceDate($store.getters.activeInvoice.transaction_date)}}
         .invoice-to Invoiced To:
-          .invoice-to-name {{proponent.name}}
-          .invoice-to-address1 {{site.address_line_1}}
-          .invoice-to-address2 {{site.address_line_2}}
-          .invoice-to-address3 {{site.address_line_3}}
+          .invoice-to-name {{$store.getters.activeProponent.name}}
+          .invoice-to-address1 {{$store.getters.activeSite.address_line_1}}
+          .invoice-to-address2 {{$store.getters.activeSite.address_line_2}}
+          .invoice-to-address3 {{$store.getters.activeSite.address_line_3}}
           .invoice-to-city
-            span {{site.city}}
-            span , {{site.province}}
-          .invoice-to-postalcode {{site.postal_code}}
+            span {{$store.getters.activeSite.city}}
+            span , {{$store.getters.activeSite.province}}
+          .invoice-to-postalcode {{$store.getters.activeSite.postal_code}}
       .card.status
         table
           tr
             td Invoice Number:
-            td.value {{invoice.invoice_number}}
+            td.value {{$store.getters.activeInvoice.invoice_number}}
           tr
             td Invoice Due:
-            td.value {{niceDate(invoice.term_due_date)}}
+            td.value {{niceDate($store.getters.activeInvoice.term_due_date)}}
           tr
             td Fee Total:
-            td.value ${{invoice.total}}
+            td.value ${{$store.getters.activeInvoice.total}}
           tr
             td Payments Received:
-            td.value ${{invoice.total - invoice.amount_due}}
+            td.value ${{$store.getters.activeInvoice.total - $store.getters.activeInvoice.amount_due}}
           tr.due
             td Amount Due:
-            td.value ${{invoice.amount_due}}
+            td.value ${{$store.getters.activeInvoice.amount_due}}
       .card.description
-        .description-title {{invoice.attribute1}}
-        .description-text {{invoice.attribute2}}
+        .description-title {{$store.getters.activeInvoice.attribute1}}
+        .description-text {{$store.getters.activeInvoice.attribute2}}
       .card.fees
         vs-divider(position='center') Fees
-        vs-table(:data='invoice.lines' stripe)
+        vs-table(:data='$store.getters.activeInvoice.lines' stripe)
           template(slot='thead')
             vs-th Date
             vs-th Description
@@ -50,14 +50,14 @@
             vs-th Fee Total
           template(slot-scope='{data}')
             vs-tr(:key='indextr' v-for='(tr,indextr) in data')
-              vs-td {{niceDate(invoice.transaction_date)}}
+              vs-td {{niceDate($store.getters.activeInvoice.transaction_date)}}
               vs-td {{tr.attribute1}}
               vs-td ${{tr.unit_price}}
               vs-td {{tr.quantity}}
               vs-td $0
               vs-td ${{tr.unit_price * tr.quantity}}
         vs-divider
-        .grand-total Total: ${{invoice.total}}
+        .grand-total Total: ${{$store.getters.activeInvoice.total}}
 </template>
 
 <script>
@@ -80,13 +80,6 @@ export default {
   components: {GetToken},
   methods: {
     niceDate
-  },
-  data() {
-    return {
-      invoice: this.$store.getters.activeInvoice,
-      proponent: this.$store.getters.activeProponent,
-      site: this.$store.getters.activeSite
-    }
   }
 }
 </script>
