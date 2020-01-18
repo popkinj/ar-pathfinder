@@ -111,9 +111,10 @@ import request from 'request';
 import moment from 'moment';
 
 const invoiceSelected = function (data) {
-  console.log("invoice selected");
-  console.log(data);
   this.$store.commit('loadInvoice',data.invoice_number)
+  setTimeout( () => {
+    this.$router.push('invoices');
+  },1000);
 }
 
 /* ## invoiceState
@@ -132,6 +133,10 @@ const invoiceState = function (data) {
   }
 }
 
+/* ## connect
+  TODO: May need to move all state logic to *App.vue*
+  TODO: Yes... Definitely move
+ */
 const connect = function () {
 
   // Listen to state changes
