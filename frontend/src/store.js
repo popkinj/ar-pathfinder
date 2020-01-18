@@ -101,6 +101,7 @@ export default new Vuex.Store({
       state.activeSite = {};
       state.contacts = [];
       state.invoices = [];
+      state.activeInvoice = {};
     },
     loadSites (state,proponent) {
       // Formalate the url for the api call
@@ -189,6 +190,7 @@ export default new Vuex.Store({
       const url = `${serverUrl}/api/parties/${party}/accs/${account}/sites/${site}/invs/${invoice}/?token=${token}`;
 
       request(url, {json:true}, (err,res) => {
+        console.log('loadInvoice');
         if (err) {return console.error("Could not load invoice!")}
         try { // If this is a valid items array
           state.activeInvoice = res.body;

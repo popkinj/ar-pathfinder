@@ -111,10 +111,12 @@ import request from 'request';
 import moment from 'moment';
 
 const invoiceSelected = function (data) {
-  this.$store.commit('loadInvoice',data.invoice_number)
-  setTimeout( () => {
-    this.$router.push('invoices');
-  },1000);
+  this.$store.commit('loadInvoice',data.invoice_number);
+  // this.$router.push({name: 'invoices'});
+  // this.$router.push('invoices');
+  // setTimeout( () => {
+  //   console.log(this.$store.getters.activeInvoice);
+  // },2000);
 }
 
 /* ## invoiceState
@@ -134,28 +136,10 @@ const invoiceState = function (data) {
 }
 
 /* ## connect
-  TODO: May need to move all state logic to *App.vue*
-  TODO: Yes... Definitely move
+  Set up event handling when Vue has been initialized
  */
 const connect = function () {
 
-  // Listen to state changes
-  this.$store.subscribe((mutation) => {
-    switch (mutation.type) {
-      case 'activeProponent':
-        this.$store.commit('clearAccounts');
-        this.$store.commit('loadAccounts',mutation.payload);
-        break;
-      case 'activeAccount':
-        this.$store.commit('clearSites');
-        this.$store.commit('loadSites',mutation.payload);
-        break;
-      case 'activeSite':
-        this.$store.commit('loadContacts',mutation.payload);
-        this.$store.commit('loadInvoices',mutation.payload);
-        break;
-    }
-  });
 
   /* Listen to events
    * The 'MoreOptions' component emits 'option-selected' when an option

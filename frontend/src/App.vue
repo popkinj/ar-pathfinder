@@ -42,11 +42,33 @@
 import ProponentSearch from "@/components/ProponentSearch.vue";
 import ProponentList from "@/components/ProponentList.vue"
 
+const connect = function () {
+  console.log("mounted");
+  // Listen to state changes
+  this.$store.subscribe((mutation) => {
+    switch (mutation.type) {
+      case 'activeProponent':
+        this.$store.commit('clearAccounts');
+        this.$store.commit('loadAccounts',mutation.payload);
+        break;
+      case 'activeAccount':
+        this.$store.commit('clearSites');
+        this.$store.commit('loadSites',mutation.payload);
+        break;
+      case 'activeSite':
+        this.$store.commit('loadContacts',mutation.payload);
+        this.$store.commit('loadInvoices',mutation.payload);
+        break;
+    }
+  });
+};
+
 export default {
   components: {
     ProponentSearch,
     ProponentList
   },
+  mounted: connect,
   data:()=>({
     active:true
   })
