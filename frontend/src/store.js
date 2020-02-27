@@ -20,9 +20,16 @@ export default new Vuex.Store({
     activeSite: {}, // The currently selected site
     contacts: [], // The site contact list
     invoices: [], // List of all invoices
-    activeInvoice: {} // The currently selected invoice
+    activeInvoice: {}, // The currently selected invoice
+    timers: {} // Hold all state timers
   },
   mutations: {
+    addTimer (state, name, timer) {
+      state.timers[name] = timer;
+    },
+    removeTimer (state, name) {
+      clearTimeout(state.timers[name]);
+    },
     clearFocusProponents (state) {
       state.focusProponents = [];
     },

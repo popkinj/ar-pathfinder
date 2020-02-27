@@ -353,6 +353,7 @@ app = express!
   .get '/api/get-token', getToken
   .get '/api/:endpoint', readCas # All CAS read api calls
   .post '/api/:endpoint', writeCas # All CAS write api calls
+  .put '/api/:endpoint', writeCas # All CAS write api calls
   .get '*', lost
   .post '*', lostWrite
   .listen 8080

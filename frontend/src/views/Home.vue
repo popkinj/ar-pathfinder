@@ -13,7 +13,11 @@ div
   .content
     .account.card
       .header
-        span.name(v-if='$store.getters.activeAccount.account_description')
+        span.name(
+          @input='updateAccount'
+          contenteditable='true'
+          v-if='$store.getters.activeAccount.account_description'
+        )
           | {{$store.getters.activeAccount.account_description}}
         .header(v-else) Accounts
 
@@ -226,6 +230,43 @@ const saveSiteChange = function (value) {
   console.log('class: ',value.target.className);
 }
 
+
+const updateAccount = function (event) {
+  const name = event.target.innerText;
+  const token = this.$store.getters.token;
+  const proponent = this.$store.getters.activeProponent.proponent_number;
+  const account = this.$store.getters.activeAccount.account_number;
+  const server = this.$store.getters.serverUrl;
+  const url = `${server}/api/parties/${proponent}/accs/${account}/?token=${token}`;
+
+  const data = {"account_description":name};
+
+  const timerName = "account";
+
+  // Clear the timer
+  this.$store.commit('removeTimer',timerName);
+
+  const v = this; // Save the vue object
+  const req = () => {
+    request.put({
+      url: url,
+      json: true,
+      body: data,
+    }, function (err,res,body) {
+      if (err) {
+        console.error(err);
+        // v.$root.$emit('new-option-failed','account'); // Emit this when Failed
+      } else {
+        console.log(body);
+        // v.$store.commit('addSite', body);
+        // v.$root.$emit('new-option-saved','account'); // Emit this when saved
+      }
+    });
+  }
+  const timer = setTimeout(req,1000);
+  this.$store.commit('addTimer',timerName,timer);
+}
+
 export default {
   name: 'home',
   mounted: connect,
@@ -247,7 +288,8 @@ export default {
     saveSiteChange,
     invoiceSelected,
     invoiceState,
-    niceDate
+    niceDate,
+    updateAccount
   }
 }
 </script>
