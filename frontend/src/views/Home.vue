@@ -231,6 +231,9 @@ const saveSiteChange = function (value) {
 }
 
 
+/* ## updateAccount
+  TODO: Currently half backed.
+ */
 const updateAccount = function (event) {
   const name = event.target.innerText;
   const token = this.$store.getters.token;
@@ -244,6 +247,7 @@ const updateAccount = function (event) {
   const timerName = "account";
 
   // Clear the timer
+  // XXX: The timeout is not being cancelled
   this.$store.commit('removeTimer',timerName);
 
   const v = this; // Save the vue object
