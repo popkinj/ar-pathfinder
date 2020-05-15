@@ -30,7 +30,7 @@ pgPool = new pg.Pool do
   database: process.env.AR_PATHFINDER_DATABASE
   password: process.env.AR_PATHFINDER_PASSWORD
   host: if prod then 'postgresql' else 'localhost'
-  port: 5432 
+  port: 5432
   max: 10
   idleTimeoutMillis: 30000
 
@@ -167,7 +167,7 @@ getToken = (req,res) !->
   fetcher = if prod then request.post else request.get
 
   payload = form: grant_type: 'client_credentials'
-  
+
   fetcher url, payload , (err, code, body) !->
     if err
       console.error "Could not fetch token: ",err
